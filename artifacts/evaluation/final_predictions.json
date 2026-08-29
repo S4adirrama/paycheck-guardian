@@ -18,8 +18,8 @@
     "baseline": 0,
     "final": 3,
     "normalization_only": 0,
-    "removed_unsafe_recurrence": 0,
-    "unverified_agent": 0
+    "removed_unsafe_recurrence": 1,
+    "unverified_agent": 1
   },
   "execution_mode": "offline",
   "mode": "final",
@@ -29,7 +29,8 @@
   "predictions": {
     "ambiguous_recurrence": [
       {
-        "caveat": "Savings are estimates based on the observed recurring charges.",
+        "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+        "confidence": "low",
         "evidence_ids": [
           "ar-h1",
           "ar-h2"
@@ -42,6 +43,7 @@
     "annual_subscription": [
       {
         "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "medium",
         "evidence_ids": [
           "as-p1",
           "as-p2"
@@ -54,6 +56,7 @@
     "challenge_alias_price_essential": [
       {
         "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "high",
         "evidence_ids": [
           "ch-n1",
           "ch-n2",
@@ -67,6 +70,7 @@
     "duplicate_charge": [
       {
         "caveat": "Savings are an estimate pending merchant confirmation.",
+        "confidence": "medium",
         "evidence_ids": [
           "dc-d1",
           "dc-d2"
@@ -81,6 +85,7 @@
     "food_delivery_pattern": [
       {
         "caveat": "Savings are an estimate based on the observed 30-day pattern.",
+        "confidence": "high",
         "evidence_ids": [
           "fd-d1",
           "fd-d2",
@@ -94,6 +99,7 @@
     "merchant_aliases": [
       {
         "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "high",
         "evidence_ids": [
           "ma-n1",
           "ma-n2",
@@ -107,6 +113,7 @@
     "mixed_opportunities": [
       {
         "caveat": "Savings are an estimate based on the observed 30-day pattern.",
+        "confidence": "high",
         "evidence_ids": [
           "mo-d1",
           "mo-d2",
@@ -118,6 +125,7 @@
       },
       {
         "caveat": "Savings are an estimate pending merchant confirmation.",
+        "confidence": "medium",
         "evidence_ids": [
           "mo-c1",
           "mo-c2"
@@ -128,6 +136,7 @@
       },
       {
         "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "high",
         "evidence_ids": [
           "mo-n1",
           "mo-n2",
@@ -141,6 +150,7 @@
     "monthly_streaming": [
       {
         "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "high",
         "evidence_ids": [
           "ms-n1",
           "ms-n2",
@@ -154,6 +164,7 @@
     "subscription_price_drift": [
       {
         "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "high",
         "evidence_ids": [
           "sd-s1",
           "sd-s2",
@@ -167,6 +178,7 @@
     "trial_conversion": [
       {
         "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "high",
         "evidence_ids": [
           "tc-h1",
           "tc-h2",

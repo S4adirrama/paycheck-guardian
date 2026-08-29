@@ -17,8 +17,8 @@
     "baseline": 0,
     "final": 3,
     "normalization_only": 0,
-    "removed_unsafe_recurrence": 0,
-    "unverified_agent": 0
+    "removed_unsafe_recurrence": 1,
+    "unverified_agent": 1
   },
   "execution_mode": "offline",
   "mode": "offline",
@@ -143,20 +143,15 @@
         "unsupported_claims": 0
       },
       "normalization_only": {
-        "evidence_coverage": "1.0000",
-        "f1": "1.0000",
-        "false_negatives": 0,
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
         "false_positives": 0,
-        "matched_pairs": [
-          [
-            0,
-            0
-          ]
-        ],
+        "matched_pairs": [],
         "mean_savings_error_usd": "0.0000",
-        "precision": "1.0000",
-        "recall": "1.0000",
-        "true_positives": 1,
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
         "unsupported_claims": 0
       },
       "removed_unsafe_recurrence": {
@@ -260,9 +255,9 @@
       },
       "unverified_agent": {
         "evidence_coverage": "1.0000",
-        "f1": "1.0000",
+        "f1": "0.6667",
         "false_negatives": 0,
-        "false_positives": 0,
+        "false_positives": 1,
         "matched_pairs": [
           [
             0,
@@ -270,10 +265,10 @@
           ]
         ],
         "mean_savings_error_usd": "0.0000",
-        "precision": "1.0000",
+        "precision": "0.5000",
         "recall": "1.0000",
         "true_positives": 1,
-        "unsupported_claims": 0
+        "unsupported_claims": 1
       }
     },
     "duplicate_charge": {
@@ -406,13 +401,13 @@
         "evidence_coverage": "0.0000",
         "f1": "0.0000",
         "false_negatives": 0,
-        "false_positives": 0,
+        "false_positives": 1,
         "matched_pairs": [],
         "mean_savings_error_usd": "0.0000",
         "precision": "0.0000",
         "recall": "1.0000",
         "true_positives": 0,
-        "unsupported_claims": 0
+        "unsupported_claims": 1
       }
     },
     "essential_rent": {
@@ -468,13 +463,13 @@
         "evidence_coverage": "0.0000",
         "f1": "0.0000",
         "false_negatives": 0,
-        "false_positives": 0,
+        "false_positives": 1,
         "matched_pairs": [],
         "mean_savings_error_usd": "0.0000",
         "precision": "0.0000",
         "recall": "1.0000",
         "true_positives": 0,
-        "unsupported_claims": 0
+        "unsupported_claims": 1
       }
     },
     "food_delivery_pattern": {

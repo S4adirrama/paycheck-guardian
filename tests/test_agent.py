@@ -5,7 +5,7 @@ from decimal import Decimal
 import pytest
 
 from paycheck_guardian.agent import run_offline_agent, simulate_cancellation
-from paycheck_guardian.models import RecommendationStatus, SourceType, Transaction
+from paycheck_guardian.models import Confidence, RecommendationStatus, SourceType, Transaction
 from paycheck_guardian.trajectory import TrajectoryRecorder
 
 
@@ -193,3 +193,38 @@ def test_trajectory_recorder_redacts_sensitive_values_recursively() -> None:
 
     assert event.tool_input == {"token": "***REDACTED***", "nested": {"api_key": "***REDACTED***"}}
     assert event.tool_result == {"items": [{"authorization": "***REDACTED***"}]}
+
+
+def test_two_observation_monthly_recurrence_is_low_confidence_with_an_ambiguity_caveat() -> None:
+    """Treating two monthly observations as high confidence would overstate thin evidence."""
+    rows = [
+        make_transaction("h1", date(2026, 6, 1), "Hulu", "7.99", "streaming"),
+        make_transaction("h2", date(2026, 7, 1), "Hulu", "7.99", "streaming"),
+    ]
+
+    run = run_offline_agent(rows, date(2026, 8, 1), date(2026, 8, 15), "ambiguous")
+    recommendation = next(item for item in run.recommendations if item.recommendation_id == "subscription-hulu")
+
+    assert recommendation.confidence == Confidence.LOW
+    assert recommendation.caveat and "Only two" in recommendation.caveat
+
+
+def test_verifier_receives_and_rejects_essential_recurring_draft() -> None:
+    """Omitting an essential draft before verification would leave the safeguard unmeasured."""
+    rows = [
+        make_transaction("r1", date(2026, 6, 1), "Rent", "1500.00", "housing"),
+        make_transaction("r2", date(2026, 7, 1), "Rent", "1500.00", "housing"),
+    ]
+
+    run = run_offline_agent(rows, date(2026, 8, 1), date(2026, 8, 15), "rent")
+    rent_results = [
+        event.tool_result
+        for event in run.trajectory
+        if event.tool_name == "verify_recommendation"
+        and event.event_type == "tool_result"
+        and event.tool_input["recommendation"]["recommendation_id"] == "subscription-rent"
+    ]
+
+    assert run.recommendations == []
+    assert rent_results and rent_results[0]["accepted"] is False
+    assert any("essential" in reason for reason in rent_results[0]["reasons"])

@@ -13,13 +13,13 @@
     "subscription_price_drift": "febe0b2aeece175925818601da3c7ad781b098473e3cdd1a49b303c76d6ec336",
     "trial_conversion": "ccb599c740277ee8bd63d87c85e625a9406c33d7ec0ac51b9294684a312fb400"
   },
-  "elapsed_ms": 0,
+  "elapsed_ms": 1,
   "elapsed_ms_by_mode": {
     "baseline": 0,
     "final": 3,
     "normalization_only": 0,
-    "removed_unsafe_recurrence": 0,
-    "unverified_agent": 0
+    "removed_unsafe_recurrence": 1,
+    "unverified_agent": 1
   },
   "execution_mode": "offline",
   "mode": "unverified_agent",
@@ -29,7 +29,8 @@
   "predictions": {
     "ambiguous_recurrence": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+        "confidence": "low",
         "evidence_ids": [
           "ar-h1",
           "ar-h2"
@@ -41,7 +42,8 @@
     ],
     "annual_subscription": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "medium",
         "evidence_ids": [
           "as-p1",
           "as-p2"
@@ -53,7 +55,8 @@
     ],
     "challenge_alias_price_essential": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "high",
         "evidence_ids": [
           "ch-n1",
           "ch-n2",
@@ -62,11 +65,23 @@
         "kind": "subscription",
         "monthly_savings_usd": "16.49",
         "target": "Netflix"
+      },
+      {
+        "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+        "confidence": "low",
+        "evidence_ids": [
+          "ch-r1",
+          "ch-r2"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "1500.00",
+        "target": "Rent"
       }
     ],
     "duplicate_charge": [
       {
-        "caveat": "Estimate pending merchant confirmation.",
+        "caveat": "Savings are an estimate pending merchant confirmation.",
+        "confidence": "medium",
         "evidence_ids": [
           "dc-d1",
           "dc-d2"
@@ -76,11 +91,36 @@
         "target": "DoorDash"
       }
     ],
-    "essential_insurance": [],
-    "essential_rent": [],
+    "essential_insurance": [
+      {
+        "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+        "confidence": "low",
+        "evidence_ids": [
+          "ei-i1",
+          "ei-i2"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "120.00",
+        "target": "State Farm"
+      }
+    ],
+    "essential_rent": [
+      {
+        "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+        "confidence": "low",
+        "evidence_ids": [
+          "er-r1",
+          "er-r2"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "1500.00",
+        "target": "Rent"
+      }
+    ],
     "food_delivery_pattern": [
       {
-        "caveat": "Estimate based on the observed 30-day pattern.",
+        "caveat": "Savings are an estimate based on the observed 30-day pattern.",
+        "confidence": "high",
         "evidence_ids": [
           "fd-d1",
           "fd-d2",
@@ -93,7 +133,8 @@
     ],
     "merchant_aliases": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "high",
         "evidence_ids": [
           "ma-n1",
           "ma-n2",
@@ -106,7 +147,8 @@
     ],
     "mixed_opportunities": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "high",
         "evidence_ids": [
           "mo-n1",
           "mo-n2",
@@ -117,7 +159,8 @@
         "target": "Netflix"
       },
       {
-        "caveat": "Estimate pending merchant confirmation.",
+        "caveat": "Savings are an estimate pending merchant confirmation.",
+        "confidence": "medium",
         "evidence_ids": [
           "mo-c1",
           "mo-c2"
@@ -127,7 +170,8 @@
         "target": "Cinema"
       },
       {
-        "caveat": "Estimate based on the observed 30-day pattern.",
+        "caveat": "Savings are an estimate based on the observed 30-day pattern.",
+        "confidence": "high",
         "evidence_ids": [
           "mo-d1",
           "mo-d2",
@@ -140,7 +184,8 @@
     ],
     "monthly_streaming": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "high",
         "evidence_ids": [
           "ms-n1",
           "ms-n2",
@@ -153,7 +198,8 @@
     ],
     "subscription_price_drift": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "high",
         "evidence_ids": [
           "sd-s1",
           "sd-s2",
@@ -166,7 +212,8 @@
     ],
     "trial_conversion": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Savings are estimates based on the observed recurring charges.",
+        "confidence": "high",
         "evidence_ids": [
           "tc-h1",
           "tc-h2",

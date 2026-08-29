@@ -13,7 +13,7 @@ from paycheck_guardian.evaluation import (
     evaluate_cases,
     write_artifacts,
 )
-from paycheck_guardian.models import GroundTruthOpportunity, RecommendationKind
+from paycheck_guardian.models import Confidence, GroundTruthOpportunity, RecommendationKind
 
 
 def truth() -> GroundTruthOpportunity:
@@ -31,6 +31,7 @@ def correct_prediction() -> PredictedOpportunity:
         target="Netflix",
         evidence_ids=["netflix-1", "netflix-2"],
         monthly_savings_usd="15.49",
+        confidence=Confidence.HIGH,
         caveat="Estimate based on recurring charges.",
     )
 
@@ -41,6 +42,7 @@ def false_positive() -> PredictedOpportunity:
         target="Gym",
         evidence_ids=["gym-1", "gym-2"],
         monthly_savings_usd="20.00",
+        confidence=Confidence.LOW,
     )
 
 
@@ -121,3 +123,56 @@ def test_retained_artifacts_include_reproducibility_metadata(tmp_path: Path) -> 
         assert artifact["case_fingerprints"]
         assert artifact["model_cost_usd"] == "0.00"
         assert artifact.get("elapsed_ms") is not None or artifact.get("elapsed_ms_by_mode")
+
+
+def test_normalization_only_changes_only_the_merchant_grouping() -> None:
+    """Adding cadence conversion or drift rules would make this ablation more than normalization."""
+    cases = load_cases(Path("data/evaluation/cases.json"))
+    summary = evaluate_cases(cases)
+
+    aliases = summary.modes["normalization_only"].predictions["merchant_aliases"]
+    annual = summary.modes["normalization_only"].predictions["annual_subscription"]
+
+    assert [(item.target, item.monthly_savings_usd) for item in aliases] == [
+        ("Netflix", Decimal("15.49"))
+    ]
+    assert annual == []
+
+
+def test_unverified_predictions_retain_the_essential_draft_rejected_by_final() -> None:
+    """Filtering essential candidates before verification would hide the verifier's safety effect."""
+    cases = load_cases(Path("data/evaluation/cases.json"))
+    summary = evaluate_cases(cases)
+
+    unverified = summary.modes["unverified_agent"].predictions["essential_rent"]
+    final = summary.modes["final"].predictions["essential_rent"]
+
+    assert [(item.kind, item.target) for item in unverified] == [
+        (RecommendationKind.SUBSCRIPTION, "Rent")
+    ]
+    assert final == []
+
+
+def test_matching_rejects_required_confidence_or_caveat_mismatch() -> None:
+    """A target match cannot mask an unsupported high-confidence, caveat-free claim."""
+    ambiguous_truth = GroundTruthOpportunity(
+        kind=RecommendationKind.SUBSCRIPTION,
+        target="Hulu",
+        required_evidence_ids=["h1", "h2"],
+        monthly_savings_usd="7.99",
+        expected_confidence=Confidence.LOW,
+        caveat_required=True,
+    )
+    prediction = PredictedOpportunity(
+        kind=RecommendationKind.SUBSCRIPTION,
+        target="Hulu",
+        evidence_ids=["h1", "h2"],
+        monthly_savings_usd="7.99",
+        confidence=Confidence.MEDIUM,
+    )
+
+    score = match_predictions([prediction], [ambiguous_truth])
+
+    assert score.true_positives == 0
+    assert score.false_positives == 1
+    assert score.false_negatives == 1

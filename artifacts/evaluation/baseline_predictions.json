@@ -18,8 +18,8 @@
     "baseline": 0,
     "final": 3,
     "normalization_only": 0,
-    "removed_unsafe_recurrence": 0,
-    "unverified_agent": 0
+    "removed_unsafe_recurrence": 1,
+    "unverified_agent": 1
   },
   "execution_mode": "offline",
   "mode": "baseline",
@@ -30,6 +30,7 @@
     "ambiguous_recurrence": [
       {
         "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "ar-h1",
           "ar-h2"
@@ -43,6 +44,7 @@
     "challenge_alias_price_essential": [
       {
         "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "ch-r1",
           "ch-r2"
@@ -56,6 +58,7 @@
     "essential_insurance": [
       {
         "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "ei-i1",
           "ei-i2"
@@ -68,6 +71,7 @@
     "essential_rent": [
       {
         "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "er-r1",
           "er-r2"
@@ -82,6 +86,7 @@
     "mixed_opportunities": [
       {
         "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "mo-n1",
           "mo-n2",
@@ -95,6 +100,7 @@
     "monthly_streaming": [
       {
         "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "ms-n1",
           "ms-n2",
@@ -108,6 +114,7 @@
     "subscription_price_drift": [
       {
         "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "sd-s1",
           "sd-s2",
@@ -121,6 +128,7 @@
     "trial_conversion": [
       {
         "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "tc-h1",
           "tc-h2",

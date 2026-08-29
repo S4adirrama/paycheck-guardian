@@ -127,6 +127,7 @@ class GroundTruthOpportunity(DomainModel):
     target: str = Field(min_length=1)
     required_evidence_ids: list[str] = Field(min_length=1)
     monthly_savings_usd: Money
+    expected_confidence: Confidence | None = None
     caveat_required: bool = False
 
     @field_validator("monthly_savings_usd", mode="before")

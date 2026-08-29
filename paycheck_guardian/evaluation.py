@@ -16,7 +16,7 @@ import time
 
 from pydantic import Field
 
-from .agent import run_offline_agent
+from .agent import draft_offline_recommendations, run_offline_agent
 from .models import (
     Confidence,
     DomainModel,
@@ -28,7 +28,6 @@ from .models import (
     money,
 )
 from .normalize import load_aliases, normalize_merchant
-from .tools import find_discretionary_patterns, find_duplicates, find_recurring, savings_before_paycheck
 
 
 _FOUR_PLACES = Decimal("0.0001")
@@ -44,6 +43,7 @@ class PredictedOpportunity(DomainModel):
     target: str = Field(min_length=1)
     evidence_ids: list[str] = Field(min_length=1)
     monthly_savings_usd: Decimal
+    confidence: Confidence
     caveat: str | None = None
 
 
@@ -132,13 +132,19 @@ def load_cases(path: Path) -> list[EvaluationCase]:
 
 
 def _prediction(
-    kind: RecommendationKind, target: str, evidence_ids: list[str], monthly: Decimal, caveat: str | None = None
+    kind: RecommendationKind,
+    target: str,
+    evidence_ids: list[str],
+    monthly: Decimal,
+    confidence: Confidence,
+    caveat: str | None = None,
 ) -> PredictedOpportunity:
     return PredictedOpportunity(
         kind=kind,
         target=target,
         evidence_ids=evidence_ids,
         monthly_savings_usd=money(monthly),
+        confidence=confidence,
         caveat=caveat,
     )
 
@@ -161,52 +167,54 @@ def run_baseline(case: EvaluationCase) -> list[PredictedOpportunity]:
                     raw,
                     [row.transaction_id for row in ordered],
                     ordered[-1].amount_usd,
+                    Confidence.LOW,
                     "Unverified recurrence estimate.",
                 )
             )
     return predictions
 
 
-def _recurring_predictions(case: EvaluationCase, *, include_essential: bool) -> list[PredictedOpportunity]:
+def _normalization_only_predictions(case: EvaluationCase) -> list[PredictedOpportunity]:
+    """Apply only production merchant normalization to the baseline's recurrence rule."""
+    grouped: dict[str, list[Transaction]] = {}
+    for row in case.transactions:
+        grouped.setdefault(row.merchant_normalized, []).append(row)
     predictions: list[PredictedOpportunity] = []
-    for candidate in find_recurring(case.transactions):
-        if not include_essential and not candidate.cancellable:
+    for merchant, rows in sorted(grouped.items()):
+        ordered = sorted(rows, key=lambda item: (item.date, item.transaction_id))
+        if len(ordered) < 2:
             continue
-        predictions.append(
-            _prediction(
-                RecommendationKind.SUBSCRIPTION,
-                candidate.merchant,
-                candidate.evidence_ids,
-                candidate.monthly_amount,
-                "Estimate based on observed recurring charges.",
+        gaps = [(later.date - earlier.date).days for earlier, later in zip(ordered, ordered[1:])]
+        if all(26 <= gap <= 35 for gap in gaps):
+            predictions.append(
+                _prediction(
+                    RecommendationKind.SUBSCRIPTION,
+                    merchant,
+                    [row.transaction_id for row in ordered],
+                    ordered[-1].amount_usd,
+                    Confidence.LOW,
+                    "Unverified recurrence estimate.",
+                )
             )
-        )
     return predictions
 
 
-def _agent_like_predictions(case: EvaluationCase, *, include_essential: bool) -> list[PredictedOpportunity]:
-    predictions = _recurring_predictions(case, include_essential=include_essential)
-    predictions.extend(
+def _draft_predictions(case: EvaluationCase) -> list[PredictedOpportunity]:
+    """Expose the same drafts final mode submits to verification, before acceptance filtering."""
+    transactions = {row.transaction_id: row for row in case.transactions}
+    return [
         _prediction(
-            RecommendationKind.DUPLICATE,
-            candidate.merchant,
-            candidate.evidence_ids,
-            candidate.amount,
-            "Estimate pending merchant confirmation.",
+            recommendation.kind,
+            transactions[recommendation.evidence_transaction_ids[0]].merchant_normalized,
+            recommendation.evidence_transaction_ids,
+            recommendation.monthly_savings_usd,
+            recommendation.confidence,
+            recommendation.caveat,
         )
-        for candidate in find_duplicates(case.transactions)
-    )
-    predictions.extend(
-        _prediction(
-            RecommendationKind.BEHAVIORAL_PATTERN,
-            candidate.merchant,
-            candidate.evidence_ids,
-            candidate.monthly_amount,
-            "Estimate based on the observed 30-day pattern.",
+        for recommendation in draft_offline_recommendations(
+            case.transactions, _ANALYSIS_DATE, _NEXT_PAYCHECK
         )
-        for candidate in find_discretionary_patterns(case.transactions)
-    )
-    return predictions
+    ]
 
 
 def _final_predictions(case: EvaluationCase) -> list[PredictedOpportunity]:
@@ -218,6 +226,7 @@ def _final_predictions(case: EvaluationCase) -> list[PredictedOpportunity]:
             transactions[recommendation.evidence_transaction_ids[0]].merchant_normalized,
             recommendation.evidence_transaction_ids,
             recommendation.monthly_savings_usd,
+            recommendation.confidence,
             recommendation.caveat,
         )
         for recommendation in run.recommendations
@@ -225,7 +234,12 @@ def _final_predictions(case: EvaluationCase) -> list[PredictedOpportunity]:
 
 
 def _is_match(prediction: PredictedOpportunity, truth: GroundTruthOpportunity) -> bool:
-    return prediction.kind == truth.kind and _target(prediction.target) == _target(truth.target)
+    return (
+        prediction.kind == truth.kind
+        and _target(prediction.target) == _target(truth.target)
+        and (truth.expected_confidence is None or prediction.confidence == truth.expected_confidence)
+        and (not truth.caveat_required or bool(prediction.caveat and prediction.caveat.strip()))
+    )
 
 
 def match_predictions(
@@ -303,9 +317,9 @@ def evaluate_cases(cases: list[EvaluationCase]) -> EvaluationSummary:
     """Evaluate baseline, ablations, and final verified agent on identical rows."""
     modes = {
         "baseline": lambda case: run_baseline(case),
-        "normalization_only": lambda case: _recurring_predictions(case, include_essential=True),
-        "unverified_agent": lambda case: _agent_like_predictions(case, include_essential=False),
-        "removed_unsafe_recurrence": lambda case: _agent_like_predictions(case, include_essential=True),
+        "normalization_only": _normalization_only_predictions,
+        "unverified_agent": _draft_predictions,
+        "removed_unsafe_recurrence": _draft_predictions,
         "final": _final_predictions,
     }
     results: dict[str, ModeResult] = {}

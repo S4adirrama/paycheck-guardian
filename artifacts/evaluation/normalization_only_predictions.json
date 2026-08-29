@@ -18,8 +18,8 @@
     "baseline": 0,
     "final": 3,
     "normalization_only": 0,
-    "removed_unsafe_recurrence": 0,
-    "unverified_agent": 0
+    "removed_unsafe_recurrence": 1,
+    "unverified_agent": 1
   },
   "execution_mode": "offline",
   "mode": "normalization_only",
@@ -29,7 +29,8 @@
   "predictions": {
     "ambiguous_recurrence": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "ar-h1",
           "ar-h2"
@@ -39,21 +40,11 @@
         "target": "Hulu"
       }
     ],
-    "annual_subscription": [
-      {
-        "caveat": "Estimate based on observed recurring charges.",
-        "evidence_ids": [
-          "as-p1",
-          "as-p2"
-        ],
-        "kind": "subscription",
-        "monthly_savings_usd": "11.67",
-        "target": "Amazon Prime"
-      }
-    ],
+    "annual_subscription": [],
     "challenge_alias_price_essential": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "ch-n1",
           "ch-n2",
@@ -64,7 +55,8 @@
         "target": "Netflix"
       },
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "ch-r1",
           "ch-r2"
@@ -77,7 +69,8 @@
     "duplicate_charge": [],
     "essential_insurance": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "ei-i1",
           "ei-i2"
@@ -89,7 +82,8 @@
     ],
     "essential_rent": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "er-r1",
           "er-r2"
@@ -102,7 +96,8 @@
     "food_delivery_pattern": [],
     "merchant_aliases": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "ma-n1",
           "ma-n2",
@@ -115,7 +110,8 @@
     ],
     "mixed_opportunities": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "mo-n1",
           "mo-n2",
@@ -128,7 +124,8 @@
     ],
     "monthly_streaming": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "ms-n1",
           "ms-n2",
@@ -141,7 +138,8 @@
     ],
     "subscription_price_drift": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "sd-s1",
           "sd-s2",
@@ -154,7 +152,8 @@
     ],
     "trial_conversion": [
       {
-        "caveat": "Estimate based on observed recurring charges.",
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
         "evidence_ids": [
           "tc-h1",
           "tc-h2",

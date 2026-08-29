@@ -45,7 +45,17 @@ def _next_paycheck_savings(monthly: Decimal, analysis_date: date, next_paycheck:
 def _subscription_draft(
     candidate: RecurringCandidate, analysis_date: date, next_paycheck: date
 ) -> _CandidateDraft:
-    confidence = Confidence.HIGH if len(candidate.evidence_ids) >= 3 else Confidence.MEDIUM
+    ambiguous_two_observation_monthly = len(candidate.evidence_ids) == 2 and candidate.interval_days == 30
+    confidence = (
+        Confidence.LOW
+        if ambiguous_two_observation_monthly
+        else Confidence.HIGH if len(candidate.evidence_ids) >= 3 else Confidence.MEDIUM
+    )
+    caveat = (
+        "Only two monthly charges were observed; confirm this possible subscription before cancelling."
+        if ambiguous_two_observation_monthly
+        else "Savings are estimates based on the observed recurring charges."
+    )
 
     def build() -> Recommendation:
         return Recommendation(
@@ -62,7 +72,7 @@ def _subscription_draft(
                 candidate.monthly_amount, analysis_date, next_paycheck
             ),
             confidence=confidence,
-            caveat="Savings are estimates based on the observed recurring charges.",
+            caveat=caveat,
         )
 
     recommendation = build()
@@ -154,6 +164,36 @@ def _tool_result(candidates: list[object]) -> dict[str, object]:
                 }
             )
     return {"candidates": serialized}
+
+
+def _drafts_from_candidates(
+    recurring: list[RecurringCandidate],
+    duplicates: list[DuplicateCandidate],
+    patterns: list[SpendingPattern],
+    analysis_date: date,
+    next_paycheck: date,
+) -> list[_CandidateDraft]:
+    """Create every deterministic candidate draft; verifier policy decides what is retained."""
+    drafts = [_subscription_draft(candidate, analysis_date, next_paycheck) for candidate in recurring]
+    drafts.extend(_duplicate_draft(candidate, analysis_date, next_paycheck) for candidate in duplicates)
+    drafts.extend(_pattern_draft(candidate, analysis_date, next_paycheck) for candidate in patterns)
+    return drafts
+
+
+def draft_offline_recommendations(
+    transactions: list[Transaction], analysis_date: date, next_paycheck: date
+) -> list[Recommendation]:
+    """Return the exact pre-verification drafts submitted by the offline agent."""
+    return [
+        draft.recommendation.model_copy(deep=True)
+        for draft in _drafts_from_candidates(
+            find_recurring(transactions),
+            find_duplicates(transactions),
+            find_discretionary_patterns(transactions),
+            analysis_date,
+            next_paycheck,
+        )
+    ]
 
 
 def _should_retry(result: VerificationResult) -> bool:
@@ -292,18 +332,7 @@ def run_offline_agent(
         tool_result=_tool_result(patterns),
     )
 
-    drafts: list[_CandidateDraft] = []
-    for candidate in recurring:
-        if not candidate.cancellable:
-            recorder.record(
-                component="policy",
-                event_type="candidate_omitted",
-                verification_feedback=["essential recurring payment is not cancellable"],
-            )
-            continue
-        drafts.append(_subscription_draft(candidate, analysis_date, next_paycheck))
-    drafts.extend(_duplicate_draft(candidate, analysis_date, next_paycheck) for candidate in duplicates)
-    drafts.extend(_pattern_draft(candidate, analysis_date, next_paycheck) for candidate in patterns)
+    drafts = _drafts_from_candidates(recurring, duplicates, patterns, analysis_date, next_paycheck)
 
     verified = [
         recommendation

@@ -28,8 +28,8 @@
     "baseline": 0,
     "final": 3,
     "normalization_only": 0,
-    "removed_unsafe_recurrence": 0,
-    "unverified_agent": 0
+    "removed_unsafe_recurrence": 1,
+    "unverified_agent": 1
   },
   "execution_mode": "offline",
   "final": {
@@ -47,13 +47,13 @@
   "model_cost_usd": "0.00",
   "normalization_only": {
     "evidence_coverage": "1.0000",
-    "f1": "0.6957",
-    "false_negatives": 4,
+    "f1": "0.6363",
+    "false_negatives": 5,
     "false_positives": 3,
     "mean_savings_error_usd": "0.0000",
-    "precision": "0.7273",
-    "recall": "0.6667",
-    "true_positives": 8,
+    "precision": "0.7000",
+    "recall": "0.5833",
+    "true_positives": 7,
     "unsupported_claims": 3
   },
   "package_version": "0.1.0",
@@ -72,13 +72,13 @@
   },
   "unverified_agent": {
     "evidence_coverage": "1.0000",
-    "f1": "1.0000",
+    "f1": "0.8889",
     "false_negatives": 0,
-    "false_positives": 0,
+    "false_positives": 3,
     "mean_savings_error_usd": "0.0000",
-    "precision": "1.0000",
+    "precision": "0.8000",
     "recall": "1.0000",
     "true_positives": 12,
-    "unsupported_claims": 0
+    "unsupported_claims": 3
   }
 }

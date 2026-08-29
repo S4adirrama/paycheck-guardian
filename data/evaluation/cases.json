@@ -83,7 +83,7 @@
         {"transaction_id": "ar-x1", "date": "2026-07-02", "merchant_raw": "CORNER STORE", "amount_usd": "8.00"},
         {"transaction_id": "ar-x2", "date": "2026-07-05", "merchant_raw": "TRAIN TICKET", "amount_usd": "6.00"}
       ],
-      "ground_truth": [{"kind": "subscription", "target": "Hulu", "required_evidence_ids": ["ar-h1", "ar-h2"], "monthly_savings_usd": "7.99", "caveat_required": true}]
+      "ground_truth": [{"kind": "subscription", "target": "Hulu", "required_evidence_ids": ["ar-h1", "ar-h2"], "monthly_savings_usd": "7.99", "expected_confidence": "low", "caveat_required": true}]
     },
     {
       "case_id": "essential_rent",
