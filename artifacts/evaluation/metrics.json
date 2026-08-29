@@ -28,7 +28,7 @@
     "baseline": 0,
     "final": 3,
     "normalization_only": 0,
-    "removed_unsafe_recurrence": 1,
+    "removed_unsafe_recurrence": 0,
     "unverified_agent": 1
   },
   "execution_mode": "offline",

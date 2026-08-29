@@ -380,9 +380,9 @@ def _jsonable(value: object) -> object:
     return value
 
 
-def write_artifacts(cases: list[EvaluationCase], summary: EvaluationSummary, destination: Path) -> None:
+def write_artifacts(cases: list[EvaluationCase], summary: EvaluationSummary, output_dir: Path) -> None:
     """Persist complete predictions and score evidence for a reproducible offline run."""
-    destination.mkdir(parents=True, exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
     fingerprints = input_fingerprint_for_baseline(cases)
     metadata = {
         "package_version": "0.1.0",
@@ -395,7 +395,7 @@ def write_artifacts(cases: list[EvaluationCase], summary: EvaluationSummary, des
         "elapsed_ms_by_mode": {mode: result.elapsed_ms for mode, result in summary.modes.items()},
     }
     for mode, result in summary.modes.items():
-        (destination / f"{mode}_predictions.json").write_text(
+        (output_dir / f"{mode}_predictions.json").write_text(
             json.dumps(
                 _jsonable({**metadata, "mode": mode, "elapsed_ms": result.elapsed_ms, "predictions": result.predictions}),
                 indent=2,
@@ -404,7 +404,7 @@ def write_artifacts(cases: list[EvaluationCase], summary: EvaluationSummary, des
             encoding="utf-8",
         )
     final_result = summary.modes["final"]
-    (destination / "final_trajectories.json").write_text(
+    (output_dir / "final_trajectories.json").write_text(
         json.dumps(
             _jsonable(
                 {
@@ -429,11 +429,11 @@ def write_artifacts(cases: list[EvaluationCase], summary: EvaluationSummary, des
         }
         for case in cases
     }
-    (destination / "per_case_results.json").write_text(
+    (output_dir / "per_case_results.json").write_text(
         json.dumps(_jsonable({**metadata, "per_case": per_case}), indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
-    (destination / "metrics.json").write_text(
+    (output_dir / "metrics.json").write_text(
         json.dumps(_jsonable({**metadata, **summary.metrics}), indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
@@ -443,4 +443,4 @@ def write_artifacts(cases: list[EvaluationCase], summary: EvaluationSummary, des
             f"| {mode} | {metrics['precision']} | {metrics['recall']} | {metrics['f1']} | {metrics['evidence_coverage']} | {metrics['unsupported_claims']} |"
         )
     rows.extend(["", "All modes received the identical retained original transaction rows; no online model was called."])
-    (destination / "comparison.md").write_text("\n".join(rows) + "\n", encoding="utf-8")
+    (output_dir / "comparison.md").write_text("\n".join(rows) + "\n", encoding="utf-8")

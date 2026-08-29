@@ -16,6 +16,19 @@ from paycheck_guardian.evaluation import (
 from paycheck_guardian.models import Confidence, GroundTruthOpportunity, RecommendationKind
 
 
+REQUIRED_ARTIFACTS = {
+    "baseline_predictions.json",
+    "normalization_only_predictions.json",
+    "unverified_agent_predictions.json",
+    "removed_unsafe_recurrence_predictions.json",
+    "final_predictions.json",
+    "final_trajectories.json",
+    "per_case_results.json",
+    "metrics.json",
+    "comparison.md",
+}
+
+
 def truth() -> GroundTruthOpportunity:
     return GroundTruthOpportunity(
         kind=RecommendationKind.SUBSCRIPTION,
@@ -83,19 +96,30 @@ def test_matching_scores_evidence_and_savings_separately() -> None:
     assert score.mean_savings_error_usd == Decimal("1.4900")
 
 
-def test_baseline_and_solution_entry_points_run_directly() -> None:
-    """Importing helper scripts as a package would break their documented direct execution."""
+def test_baseline_and_solution_entry_points_write_only_to_requested_directory(
+    tmp_path: Path,
+) -> None:
+    """Ignoring the output option would dirty retained artifacts during routine tests."""
     root = Path(__file__).resolve().parents[1]
 
     for script in ("scripts/run_baseline.py", "scripts/run_solution.py"):
+        output_dir = tmp_path / Path(script).stem
         result = subprocess.run(
-            [sys.executable, script, "--mode", "offline"],
+            [
+                sys.executable,
+                script,
+                "--mode",
+                "offline",
+                "--output-dir",
+                str(output_dir),
+            ],
             cwd=root,
             text=True,
             capture_output=True,
             check=False,
         )
         assert result.returncode == 0, result.stderr
+        assert {path.name for path in output_dir.iterdir()} == REQUIRED_ARTIFACTS
 
 
 def test_retained_artifacts_include_reproducibility_metadata(tmp_path: Path) -> None:
@@ -103,19 +127,8 @@ def test_retained_artifacts_include_reproducibility_metadata(tmp_path: Path) -> 
     cases = load_cases(Path("data/evaluation/cases.json"))
     write_artifacts(cases, evaluate_cases(cases), tmp_path)
 
-    required = {
-        "baseline_predictions.json",
-        "normalization_only_predictions.json",
-        "unverified_agent_predictions.json",
-        "removed_unsafe_recurrence_predictions.json",
-        "final_predictions.json",
-        "final_trajectories.json",
-        "per_case_results.json",
-        "metrics.json",
-        "comparison.md",
-    }
-    assert {path.name for path in tmp_path.iterdir()} == required
-    for name in required - {"comparison.md"}:
+    assert {path.name for path in tmp_path.iterdir()} == REQUIRED_ARTIFACTS
+    for name in REQUIRED_ARTIFACTS - {"comparison.md"}:
         artifact = json.loads((tmp_path / name).read_text(encoding="utf-8"))
         assert artifact["mode"]
         assert artifact["execution_mode"] == "offline"

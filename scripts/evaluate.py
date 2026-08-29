@@ -11,11 +11,17 @@ from paycheck_guardian.evaluation import evaluate_cases, load_cases, write_artif
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", choices=["offline"], default="offline")
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        help="artifact output directory (default: artifacts/evaluation)",
+    )
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     cases = load_cases(root / "data" / "evaluation" / "cases.json")
     summary = evaluate_cases(cases)
-    write_artifacts(cases, summary, root / "artifacts" / "evaluation")
+    output_dir = args.output_dir if args.output_dir is not None else root / "artifacts" / "evaluation"
+    write_artifacts(cases, summary, output_dir)
     print(f"evaluated {len(cases)} cases in {args.mode} mode")
 
 

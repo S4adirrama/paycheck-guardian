@@ -13,12 +13,12 @@
     "subscription_price_drift": "febe0b2aeece175925818601da3c7ad781b098473e3cdd1a49b303c76d6ec336",
     "trial_conversion": "ccb599c740277ee8bd63d87c85e625a9406c33d7ec0ac51b9294684a312fb400"
   },
-  "elapsed_ms": 1,
+  "elapsed_ms": 0,
   "elapsed_ms_by_mode": {
     "baseline": 0,
     "final": 3,
     "normalization_only": 0,
-    "removed_unsafe_recurrence": 1,
+    "removed_unsafe_recurrence": 0,
     "unverified_agent": 1
   },
   "execution_mode": "offline",
