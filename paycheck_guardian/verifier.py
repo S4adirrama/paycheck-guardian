@@ -1,6 +1,7 @@
 """Offline safeguards for evidence-backed savings recommendations."""
 
 from dataclasses import dataclass
+from datetime import date
 from decimal import Decimal
 
 from .models import Confidence, Recommendation, RecommendationKind, Transaction
@@ -9,6 +10,7 @@ from .tools import (
     find_discretionary_patterns,
     find_duplicates,
     find_recurring,
+    savings_before_paycheck,
 )
 
 
@@ -66,7 +68,11 @@ def _ambiguous_recurrence(
 
 
 def verify_recommendation(
-    candidate: object, transactions: list[Transaction]
+    candidate: object,
+    transactions: list[Transaction],
+    *,
+    analysis_date: date | None = None,
+    next_paycheck: date | None = None,
 ) -> VerificationResult:
     """Independently recompute evidence and savings without trusting a candidate.
 
@@ -98,6 +104,9 @@ def verify_recommendation(
         )
         return VerificationResult(False, None, reasons)
 
+    if len(set(candidate.evidence_transaction_ids)) != len(candidate.evidence_transaction_ids):
+        reasons.append("duplicate evidence transaction IDs cannot increase confidence")
+
     evidence = [
         known_transactions[evidence_id] for evidence_id in candidate.evidence_transaction_ids
     ]
@@ -126,6 +135,24 @@ def verify_recommendation(
             "monthly savings estimate "
             f"${candidate.monthly_savings_usd} does not match recomputed ${expected}"
         )
+
+    if (analysis_date is None) != (next_paycheck is None):
+        reasons.append("analysis date and next paycheck must be provided together")
+    elif analysis_date is not None and next_paycheck is not None and expected_amounts:
+        expected_next_paychecks = [
+            savings_before_paycheck(expected, analysis_date, next_paycheck)
+            for expected in expected_amounts
+        ]
+        if not any(
+            abs(candidate.next_paycheck_savings_usd - expected) <= CENT_TOLERANCE
+            for expected in expected_next_paychecks
+        ):
+            expected_next_paycheck = min(expected_next_paychecks)
+            reasons.append(
+                "next-paycheck savings estimate "
+                f"${candidate.next_paycheck_savings_usd} does not match recomputed "
+                f"${expected_next_paycheck}"
+            )
 
     if _ambiguous_recurrence(evidence, candidate) and not candidate.caveat:
         reasons.append("ambiguous recurrence requires a caveat")

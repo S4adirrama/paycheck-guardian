@@ -95,6 +95,50 @@ def test_verifier_rejects_inflated_savings(
     assert verify_recommendation(candidate, transactions).accepted is False
 
 
+def test_verifier_rejects_inflated_next_paycheck_savings(
+    candidate: Recommendation, transactions: list[Transaction]
+) -> None:
+    candidate.next_paycheck_savings_usd = Decimal("999.00")
+
+    result = verify_recommendation(
+        candidate,
+        transactions,
+        analysis_date=date(2026, 7, 1),
+        next_paycheck=date(2026, 7, 13),
+    )
+
+    assert result.accepted is False
+    assert any("next-paycheck" in reason for reason in result.reasons)
+
+
+def test_verifier_prorates_from_recomputed_monthly_savings(
+    candidate: Recommendation, transactions: list[Transaction]
+) -> None:
+    candidate.monthly_savings_usd = Decimal("16.50")
+    candidate.next_paycheck_savings_usd = Decimal("198.00")
+
+    result = verify_recommendation(
+        candidate,
+        transactions,
+        analysis_date=date(2026, 1, 1),
+        next_paycheck=date(2027, 1, 1),
+    )
+
+    assert result.accepted is False
+    assert any("next-paycheck" in reason for reason in result.reasons)
+
+
+def test_verifier_rejects_duplicate_evidence_ids_for_high_confidence(
+    candidate: Recommendation, transactions: list[Transaction]
+) -> None:
+    candidate.evidence_transaction_ids = ["n1", "n2", "n2"]
+
+    result = verify_recommendation(candidate, transactions)
+
+    assert result.accepted is False
+    assert any("duplicate evidence" in reason for reason in result.reasons)
+
+
 def test_verifier_blocks_cancellation_of_essential_payment(
     rent_candidate: Recommendation, rent_transactions: list[Transaction]
 ) -> None:

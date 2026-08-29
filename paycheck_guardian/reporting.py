@@ -13,7 +13,14 @@ def _verified_recommendations(run: AgentRun) -> list[Recommendation]:
     verified = [
         result.recommendation
         for recommendation in run.recommendations
-        if (result := verify_recommendation(recommendation, run.transactions)).accepted
+        if (
+            result := verify_recommendation(
+                recommendation,
+                run.transactions,
+                analysis_date=run.analysis_date,
+                next_paycheck=run.next_paycheck,
+            )
+        ).accepted
     ]
     return sorted(
         cast(list[Recommendation], verified),
