@@ -63,6 +63,16 @@ def test_non_usd_csv_currency_reports_filename_and_row() -> None:
         )
 
 
+@pytest.mark.parametrize("amount", ["NaN", "Infinity"])
+def test_non_finite_csv_amount_reports_filename_and_row(amount: str) -> None:
+    """Non-finite Decimal values must not bypass location-rich validation."""
+    with pytest.raises(InputValidationError, match=r"nonfinite\.csv:2"):
+        parse_bank_csv(
+            StringIO(f"date,description,amount\n2026-05-01,Netflix,{amount}\n"),
+            "nonfinite.csv",
+        )
+
+
 def test_receipt_fixture_is_deterministic() -> None:
     """A text receipt must produce the same normalized, cent-accurate transaction."""
     text = "DATE: 2026-05-02\nMERCHANT: DoorDash\nTOTAL: 28.40\n"
@@ -72,6 +82,16 @@ def test_receipt_fixture_is_deterministic() -> None:
     assert rows[0].amount_usd == money("28.40")
     assert rows[0].merchant_normalized == "DoorDash"
     assert rows[0].source_reference == "receipt-01.txt:1"
+
+
+@pytest.mark.parametrize("amount", ["NaN", "Infinity"])
+def test_non_finite_receipt_amount_reports_filename_and_reference(amount: str) -> None:
+    """Receipt fixture values receive the same safe, source-qualified rejection."""
+    with pytest.raises(InputValidationError, match=r"receipt-nonfinite\.txt:1"):
+        parse_receipt_fixture(
+            f"DATE: 2026-05-02\nMERCHANT: DoorDash\nTOTAL: {amount}\n",
+            "receipt-nonfinite.txt",
+        )
 
 
 def test_generated_receipt_text_and_transactions_are_repeatable() -> None:

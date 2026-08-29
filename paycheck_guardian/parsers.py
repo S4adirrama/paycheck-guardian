@@ -36,7 +36,7 @@ def _parse_amount(value: str, source_name: str, row: int) -> Decimal:
         amount = money(value)
     except (InvalidOperation, ValueError) as error:
         raise _error(source_name, row, "amount must be a positive USD amount") from error
-    if amount <= 0:
+    if not amount.is_finite() or amount <= 0:
         raise _error(source_name, row, "amount must be positive")
     return amount
 
