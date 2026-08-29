@@ -109,6 +109,7 @@ def test_retained_artifacts_include_reproducibility_metadata(tmp_path: Path) -> 
         "unverified_agent_predictions.json",
         "removed_unsafe_recurrence_predictions.json",
         "final_predictions.json",
+        "final_trajectories.json",
         "per_case_results.json",
         "metrics.json",
         "comparison.md",
@@ -123,6 +124,20 @@ def test_retained_artifacts_include_reproducibility_metadata(tmp_path: Path) -> 
         assert artifact["case_fingerprints"]
         assert artifact["model_cost_usd"] == "0.00"
         assert artifact.get("elapsed_ms") is not None or artifact.get("elapsed_ms_by_mode")
+
+    trajectories = json.loads((tmp_path / "final_trajectories.json").read_text(encoding="utf-8"))
+    challenge_events = trajectories["trajectories"]["challenge_alias_price_essential"]
+    rent_rejection = next(
+        event
+        for event in challenge_events
+        if event["tool_name"] == "verify_recommendation"
+        and event["event_type"] == "tool_result"
+        and event["tool_input"]["recommendation"]["recommendation_id"] == "subscription-rent"
+    )
+    assert rent_rejection["tool_result"]["accepted"] is False
+    assert any("essential" in reason for reason in rent_rejection["tool_result"]["reasons"])
+    serialized_trajectories = json.dumps(trajectories).lower()
+    assert not any(secret_key in serialized_trajectories for secret_key in ("api_key", "token", "authorization", "secret"))
 
 
 def test_normalization_only_changes_only_the_merchant_grouping() -> None:

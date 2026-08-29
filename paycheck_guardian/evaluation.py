@@ -20,6 +20,7 @@ from .agent import draft_offline_recommendations, run_offline_agent
 from .models import (
     Confidence,
     DomainModel,
+    AgentRun,
     EvaluationCase,
     GroundTruthOpportunity,
     RecommendationKind,
@@ -73,6 +74,7 @@ class ModeResult:
 class EvaluationSummary:
     modes: dict[str, ModeResult]
     metrics: dict[str, dict[str, object]]
+    final_runs: dict[str, AgentRun]
 
 
 def _round(value: Decimal) -> Decimal:
@@ -217,9 +219,8 @@ def _draft_predictions(case: EvaluationCase) -> list[PredictedOpportunity]:
     ]
 
 
-def _final_predictions(case: EvaluationCase) -> list[PredictedOpportunity]:
-    run = run_offline_agent(case.transactions, _ANALYSIS_DATE, _NEXT_PAYCHECK, f"evaluation-{case.case_id}")
-    transactions = {row.transaction_id: row for row in case.transactions}
+def _predictions_from_final_run(run: AgentRun) -> list[PredictedOpportunity]:
+    transactions = {row.transaction_id: row for row in run.transactions}
     return [
         _prediction(
             recommendation.kind,
@@ -320,7 +321,6 @@ def evaluate_cases(cases: list[EvaluationCase]) -> EvaluationSummary:
         "normalization_only": _normalization_only_predictions,
         "unverified_agent": _draft_predictions,
         "removed_unsafe_recurrence": _draft_predictions,
-        "final": _final_predictions,
     }
     results: dict[str, ModeResult] = {}
     for mode, runner in modes.items():
@@ -336,9 +336,31 @@ def evaluate_cases(cases: list[EvaluationCase]) -> EvaluationSummary:
             case_scores=scores,
             elapsed_ms=round((time.perf_counter() - started) * 1000),
         )
+    final_started = time.perf_counter()
+    final_runs = {
+        case.case_id: run_offline_agent(
+            case.transactions, _ANALYSIS_DATE, _NEXT_PAYCHECK, f"evaluation-{case.case_id}"
+        )
+        for case in cases
+    }
+    final_predictions = {
+        case.case_id: _predictions_from_final_run(final_runs[case.case_id])
+        for case in cases
+    }
+    final_scores = {
+        case.case_id: match_predictions(final_predictions[case.case_id], case.ground_truth)
+        for case in cases
+    }
+    results["final"] = ModeResult(
+        mode="final",
+        predictions=final_predictions,
+        case_scores=final_scores,
+        elapsed_ms=round((time.perf_counter() - final_started) * 1000),
+    )
     return EvaluationSummary(
         modes=results,
         metrics={mode: _aggregate(result.case_scores.values()) for mode, result in results.items()},
+        final_runs=final_runs,
     )
 
 
@@ -381,6 +403,25 @@ def write_artifacts(cases: list[EvaluationCase], summary: EvaluationSummary, des
             ) + "\n",
             encoding="utf-8",
         )
+    final_result = summary.modes["final"]
+    (destination / "final_trajectories.json").write_text(
+        json.dumps(
+            _jsonable(
+                {
+                    **metadata,
+                    "mode": "final",
+                    "elapsed_ms": final_result.elapsed_ms,
+                    "trajectories": {
+                        case_id: [event.model_dump(mode="json") for event in run.trajectory]
+                        for case_id, run in summary.final_runs.items()
+                    },
+                }
+            ),
+            indent=2,
+            sort_keys=True,
+        ) + "\n",
+        encoding="utf-8",
+    )
     per_case = {
         case.case_id: {
             mode: summary.modes[mode].case_scores[case.case_id]

@@ -1,0 +1,4891 @@
+{
+  "case_fingerprints": {
+    "ambiguous_recurrence": "d45de5286877ec6699966fc35227fc7e795142fe2efacb6d492a060c4cdd48a5",
+    "annual_subscription": "26ca03bea1a302d6535353c0dec6d496556246f0c1a28f6a57c08f565197da91",
+    "challenge_alias_price_essential": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+    "duplicate_charge": "560370345d7dee4ebfd5b19270512274fd90a947aa3b5729c30176abdcd85471",
+    "essential_insurance": "294b6ff48848af0e3466a13f15281d0f58649df027f545a22bc0de2a87d9f2d5",
+    "essential_rent": "bcd3c5b9cc531741abe67a02eba4dc2440df3b6765f425518bf0746f6ee2f0cc",
+    "food_delivery_pattern": "726fa53770853cd4c46aa92159e47ecba1dc58ae858ecf8d278a8c136e9d676d",
+    "merchant_aliases": "fcf07121fcbeb71a41497e6cc2d1173c53de4caff9de05ffec9323744ed64ff6",
+    "mixed_opportunities": "0de8f8dc8205d021d6940c37fc9e157fecf34a71c5deeb48aec1038d9b81908f",
+    "monthly_streaming": "cd1da0e1f52c21916c40a7ba92ce812a8faf0c483cfd823014b74cfe208de28f",
+    "subscription_price_drift": "febe0b2aeece175925818601da3c7ad781b098473e3cdd1a49b303c76d6ec336",
+    "trial_conversion": "ccb599c740277ee8bd63d87c85e625a9406c33d7ec0ac51b9294684a312fb400"
+  },
+  "elapsed_ms": 3,
+  "elapsed_ms_by_mode": {
+    "baseline": 0,
+    "final": 3,
+    "normalization_only": 0,
+    "removed_unsafe_recurrence": 1,
+    "unverified_agent": 1
+  },
+  "execution_mode": "offline",
+  "mode": "final",
+  "model_cost_usd": "0.00",
+  "package_version": "0.1.0",
+  "platform": "macOS-15.7.9-arm64-arm-64bit",
+  "python_version": "3.11.15",
+  "trajectories": {
+    "ambiguous_recurrence": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 4
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "7.99",
+              "category": "streaming",
+              "date": "2026-06-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/ambiguous_recurrence.csv:ar-h1",
+              "source_type": "bank_csv",
+              "transaction_id": "ar-h1"
+            },
+            {
+              "amount_usd": "7.99",
+              "category": "streaming",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/ambiguous_recurrence.csv:ar-h2",
+              "source_type": "bank_csv",
+              "transaction_id": "ar-h2"
+            },
+            {
+              "amount_usd": "8.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Corner Store",
+              "merchant_raw": "CORNER STORE",
+              "source_reference": "evaluation/ambiguous_recurrence.csv:ar-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ar-x1"
+            },
+            {
+              "amount_usd": "6.00",
+              "category": "other",
+              "date": "2026-07-05",
+              "is_synthetic": true,
+              "merchant_normalized": "Train Ticket",
+              "merchant_raw": "TRAIN TICKET",
+              "source_reference": "evaluation/ambiguous_recurrence.csv:ar-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ar-x2"
+            }
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidates": [
+            {
+              "cancellable": true,
+              "category": "streaming",
+              "evidence_ids": [
+                "ar-h1",
+                "ar-h2"
+              ],
+              "interval_days": 30,
+              "merchant": "Hulu",
+              "monthly_amount": "7.99"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "7.99",
+              "category": "streaming",
+              "date": "2026-06-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/ambiguous_recurrence.csv:ar-h1",
+              "source_type": "bank_csv",
+              "transaction_id": "ar-h1"
+            },
+            {
+              "amount_usd": "7.99",
+              "category": "streaming",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/ambiguous_recurrence.csv:ar-h2",
+              "source_type": "bank_csv",
+              "transaction_id": "ar-h2"
+            },
+            {
+              "amount_usd": "8.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Corner Store",
+              "merchant_raw": "CORNER STORE",
+              "source_reference": "evaluation/ambiguous_recurrence.csv:ar-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ar-x1"
+            },
+            {
+              "amount_usd": "6.00",
+              "category": "other",
+              "date": "2026-07-05",
+              "is_synthetic": true,
+              "merchant_normalized": "Train Ticket",
+              "merchant_raw": "TRAIN TICKET",
+              "source_reference": "evaluation/ambiguous_recurrence.csv:ar-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ar-x2"
+            }
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "7.99",
+              "category": "streaming",
+              "date": "2026-06-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/ambiguous_recurrence.csv:ar-h1",
+              "source_type": "bank_csv",
+              "transaction_id": "ar-h1"
+            },
+            {
+              "amount_usd": "7.99",
+              "category": "streaming",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/ambiguous_recurrence.csv:ar-h2",
+              "source_type": "bank_csv",
+              "transaction_id": "ar-h2"
+            },
+            {
+              "amount_usd": "8.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Corner Store",
+              "merchant_raw": "CORNER STORE",
+              "source_reference": "evaluation/ambiguous_recurrence.csv:ar-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ar-x1"
+            },
+            {
+              "amount_usd": "6.00",
+              "category": "other",
+              "date": "2026-07-05",
+              "is_synthetic": true,
+              "merchant_normalized": "Train Ticket",
+              "merchant_raw": "TRAIN TICKET",
+              "source_reference": "evaluation/ambiguous_recurrence.csv:ar-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ar-x2"
+            }
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+            "confidence": "low",
+            "evidence_transaction_ids": [
+              "ar-h1",
+              "ar-h2"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "7.99",
+            "next_paycheck_savings_usd": "3.68",
+            "rationale": "Hulu appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-hulu",
+            "status": "proposed",
+            "title": "Review Hulu subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+            "confidence": "low",
+            "evidence_transaction_ids": [
+              "ar-h1",
+              "ar-h2"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "7.99",
+            "next_paycheck_savings_usd": "3.68",
+            "rationale": "Hulu appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-hulu",
+            "status": "proposed",
+            "title": "Review Hulu subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reasons": [],
+          "recommendation": {
+            "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+            "confidence": "low",
+            "evidence_transaction_ids": [
+              "ar-h1",
+              "ar-h2"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "7.99",
+            "next_paycheck_savings_usd": "3.68",
+            "rationale": "Hulu appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-hulu",
+            "status": "proposed",
+            "title": "Review Hulu subscription"
+          }
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "annual_subscription": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 4
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "139.99",
+              "category": "subscription",
+              "date": "2025-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Amazon Prime",
+              "merchant_raw": "AMAZON PRIME",
+              "source_reference": "evaluation/annual_subscription.csv:as-p1",
+              "source_type": "bank_csv",
+              "transaction_id": "as-p1"
+            },
+            {
+              "amount_usd": "139.99",
+              "category": "subscription",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Amazon Prime",
+              "merchant_raw": "AMAZON PRIME",
+              "source_reference": "evaluation/annual_subscription.csv:as-p2",
+              "source_type": "bank_csv",
+              "transaction_id": "as-p2"
+            },
+            {
+              "amount_usd": "12.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Pharmacy",
+              "merchant_raw": "PHARMACY",
+              "source_reference": "evaluation/annual_subscription.csv:as-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "as-x1"
+            },
+            {
+              "amount_usd": "31.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Garden Store",
+              "merchant_raw": "GARDEN STORE",
+              "source_reference": "evaluation/annual_subscription.csv:as-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "as-x2"
+            }
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidates": [
+            {
+              "cancellable": true,
+              "category": "subscription",
+              "evidence_ids": [
+                "as-p1",
+                "as-p2"
+              ],
+              "interval_days": 365,
+              "merchant": "Amazon Prime",
+              "monthly_amount": "11.67"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "139.99",
+              "category": "subscription",
+              "date": "2025-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Amazon Prime",
+              "merchant_raw": "AMAZON PRIME",
+              "source_reference": "evaluation/annual_subscription.csv:as-p1",
+              "source_type": "bank_csv",
+              "transaction_id": "as-p1"
+            },
+            {
+              "amount_usd": "139.99",
+              "category": "subscription",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Amazon Prime",
+              "merchant_raw": "AMAZON PRIME",
+              "source_reference": "evaluation/annual_subscription.csv:as-p2",
+              "source_type": "bank_csv",
+              "transaction_id": "as-p2"
+            },
+            {
+              "amount_usd": "12.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Pharmacy",
+              "merchant_raw": "PHARMACY",
+              "source_reference": "evaluation/annual_subscription.csv:as-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "as-x1"
+            },
+            {
+              "amount_usd": "31.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Garden Store",
+              "merchant_raw": "GARDEN STORE",
+              "source_reference": "evaluation/annual_subscription.csv:as-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "as-x2"
+            }
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "139.99",
+              "category": "subscription",
+              "date": "2025-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Amazon Prime",
+              "merchant_raw": "AMAZON PRIME",
+              "source_reference": "evaluation/annual_subscription.csv:as-p1",
+              "source_type": "bank_csv",
+              "transaction_id": "as-p1"
+            },
+            {
+              "amount_usd": "139.99",
+              "category": "subscription",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Amazon Prime",
+              "merchant_raw": "AMAZON PRIME",
+              "source_reference": "evaluation/annual_subscription.csv:as-p2",
+              "source_type": "bank_csv",
+              "transaction_id": "as-p2"
+            },
+            {
+              "amount_usd": "12.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Pharmacy",
+              "merchant_raw": "PHARMACY",
+              "source_reference": "evaluation/annual_subscription.csv:as-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "as-x1"
+            },
+            {
+              "amount_usd": "31.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Garden Store",
+              "merchant_raw": "GARDEN STORE",
+              "source_reference": "evaluation/annual_subscription.csv:as-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "as-x2"
+            }
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "medium",
+            "evidence_transaction_ids": [
+              "as-p1",
+              "as-p2"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "11.67",
+            "next_paycheck_savings_usd": "5.37",
+            "rationale": "Amazon Prime appears to recur every 365 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-amazon-prime",
+            "status": "proposed",
+            "title": "Review Amazon Prime subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "medium",
+            "evidence_transaction_ids": [
+              "as-p1",
+              "as-p2"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "11.67",
+            "next_paycheck_savings_usd": "5.37",
+            "rationale": "Amazon Prime appears to recur every 365 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-amazon-prime",
+            "status": "proposed",
+            "title": "Review Amazon Prime subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reasons": [],
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "medium",
+            "evidence_transaction_ids": [
+              "as-p1",
+              "as-p2"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "11.67",
+            "next_paycheck_savings_usd": "5.37",
+            "rationale": "Amazon Prime appears to recur every 365 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-amazon-prime",
+            "status": "proposed",
+            "title": "Review Amazon Prime subscription"
+          }
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "challenge_alias_price_essential": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 7
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX.COM",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n1",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-n1"
+            },
+            {
+              "amount_usd": "16.49",
+              "category": "streaming",
+              "date": "2026-05-31",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX ORDER 55",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n2",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-n2"
+            },
+            {
+              "amount_usd": "16.49",
+              "category": "streaming",
+              "date": "2026-06-30",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n3",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-n3"
+            },
+            {
+              "amount_usd": "1500.00",
+              "category": "housing",
+              "date": "2026-06-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Rent",
+              "merchant_raw": "RENT",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-r1",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-r1"
+            },
+            {
+              "amount_usd": "1500.00",
+              "category": "housing",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Rent",
+              "merchant_raw": "RENT",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-r2",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-r2"
+            },
+            {
+              "amount_usd": "11.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Pharmacy",
+              "merchant_raw": "PHARMACY",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-x1"
+            },
+            {
+              "amount_usd": "39.00",
+              "category": "other",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "Gas Station",
+              "merchant_raw": "GAS STATION",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-x2"
+            }
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidates": [
+            {
+              "cancellable": true,
+              "category": "streaming",
+              "evidence_ids": [
+                "ch-n1",
+                "ch-n2",
+                "ch-n3"
+              ],
+              "interval_days": 30,
+              "merchant": "Netflix",
+              "monthly_amount": "16.49"
+            },
+            {
+              "cancellable": false,
+              "category": "housing",
+              "evidence_ids": [
+                "ch-r1",
+                "ch-r2"
+              ],
+              "interval_days": 30,
+              "merchant": "Rent",
+              "monthly_amount": "1500.00"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX.COM",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n1",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-n1"
+            },
+            {
+              "amount_usd": "16.49",
+              "category": "streaming",
+              "date": "2026-05-31",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX ORDER 55",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n2",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-n2"
+            },
+            {
+              "amount_usd": "16.49",
+              "category": "streaming",
+              "date": "2026-06-30",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n3",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-n3"
+            },
+            {
+              "amount_usd": "1500.00",
+              "category": "housing",
+              "date": "2026-06-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Rent",
+              "merchant_raw": "RENT",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-r1",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-r1"
+            },
+            {
+              "amount_usd": "1500.00",
+              "category": "housing",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Rent",
+              "merchant_raw": "RENT",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-r2",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-r2"
+            },
+            {
+              "amount_usd": "11.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Pharmacy",
+              "merchant_raw": "PHARMACY",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-x1"
+            },
+            {
+              "amount_usd": "39.00",
+              "category": "other",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "Gas Station",
+              "merchant_raw": "GAS STATION",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-x2"
+            }
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX.COM",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n1",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-n1"
+            },
+            {
+              "amount_usd": "16.49",
+              "category": "streaming",
+              "date": "2026-05-31",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX ORDER 55",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n2",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-n2"
+            },
+            {
+              "amount_usd": "16.49",
+              "category": "streaming",
+              "date": "2026-06-30",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n3",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-n3"
+            },
+            {
+              "amount_usd": "1500.00",
+              "category": "housing",
+              "date": "2026-06-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Rent",
+              "merchant_raw": "RENT",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-r1",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-r1"
+            },
+            {
+              "amount_usd": "1500.00",
+              "category": "housing",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Rent",
+              "merchant_raw": "RENT",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-r2",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-r2"
+            },
+            {
+              "amount_usd": "11.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Pharmacy",
+              "merchant_raw": "PHARMACY",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-x1"
+            },
+            {
+              "amount_usd": "39.00",
+              "category": "other",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "Gas Station",
+              "merchant_raw": "GAS STATION",
+              "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ch-x2"
+            }
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "ch-n1",
+              "ch-n2",
+              "ch-n3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "16.49",
+            "next_paycheck_savings_usd": "7.59",
+            "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "title": "Review Netflix subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "ch-n1",
+              "ch-n2",
+              "ch-n3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "16.49",
+            "next_paycheck_savings_usd": "7.59",
+            "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "title": "Review Netflix subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reasons": [],
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "ch-n1",
+              "ch-n2",
+              "ch-n3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "16.49",
+            "next_paycheck_savings_usd": "7.59",
+            "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "title": "Review Netflix subscription"
+          }
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+            "confidence": "low",
+            "evidence_transaction_ids": [
+              "ch-r1",
+              "ch-r2"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "1500.00",
+            "next_paycheck_savings_usd": "690.41",
+            "rationale": "Rent appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-rent",
+            "status": "proposed",
+            "title": "Review Rent subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+            "confidence": "low",
+            "evidence_transaction_ids": [
+              "ch-r1",
+              "ch-r2"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "1500.00",
+            "next_paycheck_savings_usd": "690.41",
+            "rationale": "Rent appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-rent",
+            "status": "proposed",
+            "title": "Review Rent subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": false,
+          "reasons": [
+            "essential payment evidence cannot support subscription cancellation advice"
+          ],
+          "recommendation": null
+        },
+        "verification_feedback": [
+          "essential payment evidence cannot support subscription cancellation advice"
+        ]
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "duplicate_charge": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 4
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "29.50",
+              "category": "food_delivery",
+              "date": "2026-07-09",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/duplicate_charge.csv:dc-d1",
+              "source_type": "bank_csv",
+              "transaction_id": "dc-d1"
+            },
+            {
+              "amount_usd": "29.50",
+              "category": "food_delivery",
+              "date": "2026-07-10",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/duplicate_charge.csv:dc-d2",
+              "source_type": "bank_csv",
+              "transaction_id": "dc-d2"
+            },
+            {
+              "amount_usd": "55.00",
+              "category": "other",
+              "date": "2026-07-11",
+              "is_synthetic": true,
+              "merchant_normalized": "Grocery Mart",
+              "merchant_raw": "GROCERY MART",
+              "source_reference": "evaluation/duplicate_charge.csv:dc-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "dc-x1"
+            },
+            {
+              "amount_usd": "18.00",
+              "category": "other",
+              "date": "2026-07-12",
+              "is_synthetic": true,
+              "merchant_normalized": "Museum",
+              "merchant_raw": "MUSEUM",
+              "source_reference": "evaluation/duplicate_charge.csv:dc-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "dc-x2"
+            }
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "29.50",
+              "category": "food_delivery",
+              "date": "2026-07-09",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/duplicate_charge.csv:dc-d1",
+              "source_type": "bank_csv",
+              "transaction_id": "dc-d1"
+            },
+            {
+              "amount_usd": "29.50",
+              "category": "food_delivery",
+              "date": "2026-07-10",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/duplicate_charge.csv:dc-d2",
+              "source_type": "bank_csv",
+              "transaction_id": "dc-d2"
+            },
+            {
+              "amount_usd": "55.00",
+              "category": "other",
+              "date": "2026-07-11",
+              "is_synthetic": true,
+              "merchant_normalized": "Grocery Mart",
+              "merchant_raw": "GROCERY MART",
+              "source_reference": "evaluation/duplicate_charge.csv:dc-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "dc-x1"
+            },
+            {
+              "amount_usd": "18.00",
+              "category": "other",
+              "date": "2026-07-12",
+              "is_synthetic": true,
+              "merchant_normalized": "Museum",
+              "merchant_raw": "MUSEUM",
+              "source_reference": "evaluation/duplicate_charge.csv:dc-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "dc-x2"
+            }
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidates": [
+            {
+              "amount": "29.50",
+              "evidence_ids": [
+                "dc-d1",
+                "dc-d2"
+              ],
+              "merchant": "DoorDash"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "29.50",
+              "category": "food_delivery",
+              "date": "2026-07-09",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/duplicate_charge.csv:dc-d1",
+              "source_type": "bank_csv",
+              "transaction_id": "dc-d1"
+            },
+            {
+              "amount_usd": "29.50",
+              "category": "food_delivery",
+              "date": "2026-07-10",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/duplicate_charge.csv:dc-d2",
+              "source_type": "bank_csv",
+              "transaction_id": "dc-d2"
+            },
+            {
+              "amount_usd": "55.00",
+              "category": "other",
+              "date": "2026-07-11",
+              "is_synthetic": true,
+              "merchant_normalized": "Grocery Mart",
+              "merchant_raw": "GROCERY MART",
+              "source_reference": "evaluation/duplicate_charge.csv:dc-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "dc-x1"
+            },
+            {
+              "amount_usd": "18.00",
+              "category": "other",
+              "date": "2026-07-12",
+              "is_synthetic": true,
+              "merchant_normalized": "Museum",
+              "merchant_raw": "MUSEUM",
+              "source_reference": "evaluation/duplicate_charge.csv:dc-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "dc-x2"
+            }
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are an estimate pending merchant confirmation.",
+            "confidence": "medium",
+            "evidence_transaction_ids": [
+              "dc-d1",
+              "dc-d2"
+            ],
+            "kind": "duplicate",
+            "monthly_savings_usd": "29.50",
+            "next_paycheck_savings_usd": "13.58",
+            "rationale": "Two matching charges occurred within two days; confirm one was not duplicated.",
+            "recommendation_id": "duplicate-doordash-dc-d1-dc-d2",
+            "status": "proposed",
+            "title": "Review possible duplicate DoorDash charge"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are an estimate pending merchant confirmation.",
+            "confidence": "medium",
+            "evidence_transaction_ids": [
+              "dc-d1",
+              "dc-d2"
+            ],
+            "kind": "duplicate",
+            "monthly_savings_usd": "29.50",
+            "next_paycheck_savings_usd": "13.58",
+            "rationale": "Two matching charges occurred within two days; confirm one was not duplicated.",
+            "recommendation_id": "duplicate-doordash-dc-d1-dc-d2",
+            "status": "proposed",
+            "title": "Review possible duplicate DoorDash charge"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reasons": [],
+          "recommendation": {
+            "caveat": "Savings are an estimate pending merchant confirmation.",
+            "confidence": "medium",
+            "evidence_transaction_ids": [
+              "dc-d1",
+              "dc-d2"
+            ],
+            "kind": "duplicate",
+            "monthly_savings_usd": "29.50",
+            "next_paycheck_savings_usd": "13.58",
+            "rationale": "Two matching charges occurred within two days; confirm one was not duplicated.",
+            "recommendation_id": "duplicate-doordash-dc-d1-dc-d2",
+            "status": "proposed",
+            "title": "Review possible duplicate DoorDash charge"
+          }
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "essential_insurance": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 4
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "120.00",
+              "category": "insurance",
+              "date": "2026-06-03",
+              "is_synthetic": true,
+              "merchant_normalized": "State Farm",
+              "merchant_raw": "STATE FARM",
+              "source_reference": "evaluation/essential_insurance.csv:ei-i1",
+              "source_type": "bank_csv",
+              "transaction_id": "ei-i1"
+            },
+            {
+              "amount_usd": "120.00",
+              "category": "insurance",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "State Farm",
+              "merchant_raw": "STATE FARM",
+              "source_reference": "evaluation/essential_insurance.csv:ei-i2",
+              "source_type": "bank_csv",
+              "transaction_id": "ei-i2"
+            },
+            {
+              "amount_usd": "42.00",
+              "category": "other",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "Grocery Mart",
+              "merchant_raw": "GROCERY MART",
+              "source_reference": "evaluation/essential_insurance.csv:ei-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ei-x1"
+            },
+            {
+              "amount_usd": "4.00",
+              "category": "other",
+              "date": "2026-07-05",
+              "is_synthetic": true,
+              "merchant_normalized": "Parking Meter",
+              "merchant_raw": "PARKING METER",
+              "source_reference": "evaluation/essential_insurance.csv:ei-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ei-x2"
+            }
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidates": [
+            {
+              "cancellable": false,
+              "category": "insurance",
+              "evidence_ids": [
+                "ei-i1",
+                "ei-i2"
+              ],
+              "interval_days": 30,
+              "merchant": "State Farm",
+              "monthly_amount": "120.00"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "120.00",
+              "category": "insurance",
+              "date": "2026-06-03",
+              "is_synthetic": true,
+              "merchant_normalized": "State Farm",
+              "merchant_raw": "STATE FARM",
+              "source_reference": "evaluation/essential_insurance.csv:ei-i1",
+              "source_type": "bank_csv",
+              "transaction_id": "ei-i1"
+            },
+            {
+              "amount_usd": "120.00",
+              "category": "insurance",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "State Farm",
+              "merchant_raw": "STATE FARM",
+              "source_reference": "evaluation/essential_insurance.csv:ei-i2",
+              "source_type": "bank_csv",
+              "transaction_id": "ei-i2"
+            },
+            {
+              "amount_usd": "42.00",
+              "category": "other",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "Grocery Mart",
+              "merchant_raw": "GROCERY MART",
+              "source_reference": "evaluation/essential_insurance.csv:ei-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ei-x1"
+            },
+            {
+              "amount_usd": "4.00",
+              "category": "other",
+              "date": "2026-07-05",
+              "is_synthetic": true,
+              "merchant_normalized": "Parking Meter",
+              "merchant_raw": "PARKING METER",
+              "source_reference": "evaluation/essential_insurance.csv:ei-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ei-x2"
+            }
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "120.00",
+              "category": "insurance",
+              "date": "2026-06-03",
+              "is_synthetic": true,
+              "merchant_normalized": "State Farm",
+              "merchant_raw": "STATE FARM",
+              "source_reference": "evaluation/essential_insurance.csv:ei-i1",
+              "source_type": "bank_csv",
+              "transaction_id": "ei-i1"
+            },
+            {
+              "amount_usd": "120.00",
+              "category": "insurance",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "State Farm",
+              "merchant_raw": "STATE FARM",
+              "source_reference": "evaluation/essential_insurance.csv:ei-i2",
+              "source_type": "bank_csv",
+              "transaction_id": "ei-i2"
+            },
+            {
+              "amount_usd": "42.00",
+              "category": "other",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "Grocery Mart",
+              "merchant_raw": "GROCERY MART",
+              "source_reference": "evaluation/essential_insurance.csv:ei-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ei-x1"
+            },
+            {
+              "amount_usd": "4.00",
+              "category": "other",
+              "date": "2026-07-05",
+              "is_synthetic": true,
+              "merchant_normalized": "Parking Meter",
+              "merchant_raw": "PARKING METER",
+              "source_reference": "evaluation/essential_insurance.csv:ei-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ei-x2"
+            }
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+            "confidence": "low",
+            "evidence_transaction_ids": [
+              "ei-i1",
+              "ei-i2"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "120.00",
+            "next_paycheck_savings_usd": "55.23",
+            "rationale": "State Farm appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-state-farm",
+            "status": "proposed",
+            "title": "Review State Farm subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+            "confidence": "low",
+            "evidence_transaction_ids": [
+              "ei-i1",
+              "ei-i2"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "120.00",
+            "next_paycheck_savings_usd": "55.23",
+            "rationale": "State Farm appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-state-farm",
+            "status": "proposed",
+            "title": "Review State Farm subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": false,
+          "reasons": [
+            "essential payment evidence cannot support subscription cancellation advice"
+          ],
+          "recommendation": null
+        },
+        "verification_feedback": [
+          "essential payment evidence cannot support subscription cancellation advice"
+        ]
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 0
+        },
+        "verification_feedback": []
+      }
+    ],
+    "essential_rent": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 4
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "1500.00",
+              "category": "housing",
+              "date": "2026-06-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Rent",
+              "merchant_raw": "RENT",
+              "source_reference": "evaluation/essential_rent.csv:er-r1",
+              "source_type": "bank_csv",
+              "transaction_id": "er-r1"
+            },
+            {
+              "amount_usd": "1500.00",
+              "category": "housing",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Rent",
+              "merchant_raw": "RENT",
+              "source_reference": "evaluation/essential_rent.csv:er-r2",
+              "source_type": "bank_csv",
+              "transaction_id": "er-r2"
+            },
+            {
+              "amount_usd": "60.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Grocery Mart",
+              "merchant_raw": "GROCERY MART",
+              "source_reference": "evaluation/essential_rent.csv:er-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "er-x1"
+            },
+            {
+              "amount_usd": "25.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Bus Pass",
+              "merchant_raw": "BUS PASS",
+              "source_reference": "evaluation/essential_rent.csv:er-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "er-x2"
+            }
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidates": [
+            {
+              "cancellable": false,
+              "category": "housing",
+              "evidence_ids": [
+                "er-r1",
+                "er-r2"
+              ],
+              "interval_days": 30,
+              "merchant": "Rent",
+              "monthly_amount": "1500.00"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "1500.00",
+              "category": "housing",
+              "date": "2026-06-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Rent",
+              "merchant_raw": "RENT",
+              "source_reference": "evaluation/essential_rent.csv:er-r1",
+              "source_type": "bank_csv",
+              "transaction_id": "er-r1"
+            },
+            {
+              "amount_usd": "1500.00",
+              "category": "housing",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Rent",
+              "merchant_raw": "RENT",
+              "source_reference": "evaluation/essential_rent.csv:er-r2",
+              "source_type": "bank_csv",
+              "transaction_id": "er-r2"
+            },
+            {
+              "amount_usd": "60.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Grocery Mart",
+              "merchant_raw": "GROCERY MART",
+              "source_reference": "evaluation/essential_rent.csv:er-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "er-x1"
+            },
+            {
+              "amount_usd": "25.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Bus Pass",
+              "merchant_raw": "BUS PASS",
+              "source_reference": "evaluation/essential_rent.csv:er-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "er-x2"
+            }
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "1500.00",
+              "category": "housing",
+              "date": "2026-06-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Rent",
+              "merchant_raw": "RENT",
+              "source_reference": "evaluation/essential_rent.csv:er-r1",
+              "source_type": "bank_csv",
+              "transaction_id": "er-r1"
+            },
+            {
+              "amount_usd": "1500.00",
+              "category": "housing",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Rent",
+              "merchant_raw": "RENT",
+              "source_reference": "evaluation/essential_rent.csv:er-r2",
+              "source_type": "bank_csv",
+              "transaction_id": "er-r2"
+            },
+            {
+              "amount_usd": "60.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Grocery Mart",
+              "merchant_raw": "GROCERY MART",
+              "source_reference": "evaluation/essential_rent.csv:er-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "er-x1"
+            },
+            {
+              "amount_usd": "25.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Bus Pass",
+              "merchant_raw": "BUS PASS",
+              "source_reference": "evaluation/essential_rent.csv:er-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "er-x2"
+            }
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+            "confidence": "low",
+            "evidence_transaction_ids": [
+              "er-r1",
+              "er-r2"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "1500.00",
+            "next_paycheck_savings_usd": "690.41",
+            "rationale": "Rent appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-rent",
+            "status": "proposed",
+            "title": "Review Rent subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
+            "confidence": "low",
+            "evidence_transaction_ids": [
+              "er-r1",
+              "er-r2"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "1500.00",
+            "next_paycheck_savings_usd": "690.41",
+            "rationale": "Rent appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-rent",
+            "status": "proposed",
+            "title": "Review Rent subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": false,
+          "reasons": [
+            "essential payment evidence cannot support subscription cancellation advice"
+          ],
+          "recommendation": null
+        },
+        "verification_feedback": [
+          "essential payment evidence cannot support subscription cancellation advice"
+        ]
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 0
+        },
+        "verification_feedback": []
+      }
+    ],
+    "food_delivery_pattern": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 5
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "18.00",
+              "category": "food_delivery",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-d1",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-d1"
+            },
+            {
+              "amount_usd": "21.00",
+              "category": "food_delivery",
+              "date": "2026-07-11",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-d2",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-d2"
+            },
+            {
+              "amount_usd": "24.00",
+              "category": "food_delivery",
+              "date": "2026-07-21",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-d3",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-d3"
+            },
+            {
+              "amount_usd": "3.00",
+              "category": "other",
+              "date": "2026-07-22",
+              "is_synthetic": true,
+              "merchant_normalized": "Library",
+              "merchant_raw": "LIBRARY",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-x1"
+            },
+            {
+              "amount_usd": "28.00",
+              "category": "other",
+              "date": "2026-07-25",
+              "is_synthetic": true,
+              "merchant_normalized": "Farmers Market",
+              "merchant_raw": "FARMERS MARKET",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-x2"
+            }
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "18.00",
+              "category": "food_delivery",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-d1",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-d1"
+            },
+            {
+              "amount_usd": "21.00",
+              "category": "food_delivery",
+              "date": "2026-07-11",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-d2",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-d2"
+            },
+            {
+              "amount_usd": "24.00",
+              "category": "food_delivery",
+              "date": "2026-07-21",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-d3",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-d3"
+            },
+            {
+              "amount_usd": "3.00",
+              "category": "other",
+              "date": "2026-07-22",
+              "is_synthetic": true,
+              "merchant_normalized": "Library",
+              "merchant_raw": "LIBRARY",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-x1"
+            },
+            {
+              "amount_usd": "28.00",
+              "category": "other",
+              "date": "2026-07-25",
+              "is_synthetic": true,
+              "merchant_normalized": "Farmers Market",
+              "merchant_raw": "FARMERS MARKET",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-x2"
+            }
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "18.00",
+              "category": "food_delivery",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-d1",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-d1"
+            },
+            {
+              "amount_usd": "21.00",
+              "category": "food_delivery",
+              "date": "2026-07-11",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-d2",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-d2"
+            },
+            {
+              "amount_usd": "24.00",
+              "category": "food_delivery",
+              "date": "2026-07-21",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-d3",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-d3"
+            },
+            {
+              "amount_usd": "3.00",
+              "category": "other",
+              "date": "2026-07-22",
+              "is_synthetic": true,
+              "merchant_normalized": "Library",
+              "merchant_raw": "LIBRARY",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-x1"
+            },
+            {
+              "amount_usd": "28.00",
+              "category": "other",
+              "date": "2026-07-25",
+              "is_synthetic": true,
+              "merchant_normalized": "Farmers Market",
+              "merchant_raw": "FARMERS MARKET",
+              "source_reference": "evaluation/food_delivery_pattern.csv:fd-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "fd-x2"
+            }
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidates": [
+            {
+              "category": "food_delivery",
+              "charge_count": 3,
+              "evidence_ids": [
+                "fd-d1",
+                "fd-d2",
+                "fd-d3"
+              ],
+              "merchant": "DoorDash",
+              "monthly_amount": "63.00"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are an estimate based on the observed 30-day pattern.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "fd-d1",
+              "fd-d2",
+              "fd-d3"
+            ],
+            "kind": "behavioral_pattern",
+            "monthly_savings_usd": "63.00",
+            "next_paycheck_savings_usd": "29.00",
+            "rationale": "3 discretionary food_delivery purchases occurred within 30 days; reduce this pattern only if it fits your priorities.",
+            "recommendation_id": "pattern-doordash-fd-d1-fd-d2-fd-d3",
+            "status": "proposed",
+            "title": "Set a limit for DoorDash"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are an estimate based on the observed 30-day pattern.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "fd-d1",
+              "fd-d2",
+              "fd-d3"
+            ],
+            "kind": "behavioral_pattern",
+            "monthly_savings_usd": "63.00",
+            "next_paycheck_savings_usd": "29.00",
+            "rationale": "3 discretionary food_delivery purchases occurred within 30 days; reduce this pattern only if it fits your priorities.",
+            "recommendation_id": "pattern-doordash-fd-d1-fd-d2-fd-d3",
+            "status": "proposed",
+            "title": "Set a limit for DoorDash"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reasons": [],
+          "recommendation": {
+            "caveat": "Savings are an estimate based on the observed 30-day pattern.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "fd-d1",
+              "fd-d2",
+              "fd-d3"
+            ],
+            "kind": "behavioral_pattern",
+            "monthly_savings_usd": "63.00",
+            "next_paycheck_savings_usd": "29.00",
+            "rationale": "3 discretionary food_delivery purchases occurred within 30 days; reduce this pattern only if it fits your priorities.",
+            "recommendation_id": "pattern-doordash-fd-d1-fd-d2-fd-d3",
+            "status": "proposed",
+            "title": "Set a limit for DoorDash"
+          }
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "merchant_aliases": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 5
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX.COM",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-n1",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-n1"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-06-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX * 800-585",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-n2",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-n2"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX ORDER 23A",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-n3",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-n3"
+            },
+            {
+              "amount_usd": "14.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Hardware Depot",
+              "merchant_raw": "HARDWARE DEPOT",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-x1"
+            },
+            {
+              "amount_usd": "5.00",
+              "category": "other",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "Parking Meter",
+              "merchant_raw": "PARKING METER",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-x2"
+            }
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidates": [
+            {
+              "cancellable": true,
+              "category": "streaming",
+              "evidence_ids": [
+                "ma-n1",
+                "ma-n2",
+                "ma-n3"
+              ],
+              "interval_days": 30,
+              "merchant": "Netflix",
+              "monthly_amount": "15.49"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX.COM",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-n1",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-n1"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-06-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX * 800-585",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-n2",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-n2"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX ORDER 23A",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-n3",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-n3"
+            },
+            {
+              "amount_usd": "14.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Hardware Depot",
+              "merchant_raw": "HARDWARE DEPOT",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-x1"
+            },
+            {
+              "amount_usd": "5.00",
+              "category": "other",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "Parking Meter",
+              "merchant_raw": "PARKING METER",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-x2"
+            }
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX.COM",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-n1",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-n1"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-06-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX * 800-585",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-n2",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-n2"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX ORDER 23A",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-n3",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-n3"
+            },
+            {
+              "amount_usd": "14.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Hardware Depot",
+              "merchant_raw": "HARDWARE DEPOT",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-x1"
+            },
+            {
+              "amount_usd": "5.00",
+              "category": "other",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "Parking Meter",
+              "merchant_raw": "PARKING METER",
+              "source_reference": "evaluation/merchant_aliases.csv:ma-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ma-x2"
+            }
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "ma-n1",
+              "ma-n2",
+              "ma-n3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "15.49",
+            "next_paycheck_savings_usd": "7.13",
+            "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "title": "Review Netflix subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "ma-n1",
+              "ma-n2",
+              "ma-n3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "15.49",
+            "next_paycheck_savings_usd": "7.13",
+            "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "title": "Review Netflix subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reasons": [],
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "ma-n1",
+              "ma-n2",
+              "ma-n3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "15.49",
+            "next_paycheck_savings_usd": "7.13",
+            "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "title": "Review Netflix subscription"
+          }
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "mixed_opportunities": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 10
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-n1",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-n1"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-31",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-n2",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-n2"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-06-30",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-n3",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-n3"
+            },
+            {
+              "amount_usd": "18.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Cinema",
+              "merchant_raw": "CINEMA",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-c1",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-c1"
+            },
+            {
+              "amount_usd": "18.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Cinema",
+              "merchant_raw": "CINEMA",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-c2",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-c2"
+            },
+            {
+              "amount_usd": "16.00",
+              "category": "food_delivery",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-d1",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-d1"
+            },
+            {
+              "amount_usd": "20.00",
+              "category": "food_delivery",
+              "date": "2026-07-14",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-d2",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-d2"
+            },
+            {
+              "amount_usd": "25.00",
+              "category": "food_delivery",
+              "date": "2026-07-24",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-d3",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-d3"
+            },
+            {
+              "amount_usd": "35.00",
+              "category": "other",
+              "date": "2026-07-25",
+              "is_synthetic": true,
+              "merchant_normalized": "Gas Station",
+              "merchant_raw": "GAS STATION",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-x1"
+            },
+            {
+              "amount_usd": "12.00",
+              "category": "other",
+              "date": "2026-07-26",
+              "is_synthetic": true,
+              "merchant_normalized": "Book Nook",
+              "merchant_raw": "BOOK NOOK",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-x2"
+            }
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidates": [
+            {
+              "cancellable": true,
+              "category": "streaming",
+              "evidence_ids": [
+                "mo-n1",
+                "mo-n2",
+                "mo-n3"
+              ],
+              "interval_days": 30,
+              "merchant": "Netflix",
+              "monthly_amount": "15.49"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-n1",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-n1"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-31",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-n2",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-n2"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-06-30",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-n3",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-n3"
+            },
+            {
+              "amount_usd": "18.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Cinema",
+              "merchant_raw": "CINEMA",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-c1",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-c1"
+            },
+            {
+              "amount_usd": "18.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Cinema",
+              "merchant_raw": "CINEMA",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-c2",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-c2"
+            },
+            {
+              "amount_usd": "16.00",
+              "category": "food_delivery",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-d1",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-d1"
+            },
+            {
+              "amount_usd": "20.00",
+              "category": "food_delivery",
+              "date": "2026-07-14",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-d2",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-d2"
+            },
+            {
+              "amount_usd": "25.00",
+              "category": "food_delivery",
+              "date": "2026-07-24",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-d3",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-d3"
+            },
+            {
+              "amount_usd": "35.00",
+              "category": "other",
+              "date": "2026-07-25",
+              "is_synthetic": true,
+              "merchant_normalized": "Gas Station",
+              "merchant_raw": "GAS STATION",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-x1"
+            },
+            {
+              "amount_usd": "12.00",
+              "category": "other",
+              "date": "2026-07-26",
+              "is_synthetic": true,
+              "merchant_normalized": "Book Nook",
+              "merchant_raw": "BOOK NOOK",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-x2"
+            }
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidates": [
+            {
+              "amount": "18.00",
+              "evidence_ids": [
+                "mo-c1",
+                "mo-c2"
+              ],
+              "merchant": "Cinema"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-n1",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-n1"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-31",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-n2",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-n2"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-06-30",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-n3",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-n3"
+            },
+            {
+              "amount_usd": "18.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Cinema",
+              "merchant_raw": "CINEMA",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-c1",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-c1"
+            },
+            {
+              "amount_usd": "18.00",
+              "category": "other",
+              "date": "2026-07-03",
+              "is_synthetic": true,
+              "merchant_normalized": "Cinema",
+              "merchant_raw": "CINEMA",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-c2",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-c2"
+            },
+            {
+              "amount_usd": "16.00",
+              "category": "food_delivery",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-d1",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-d1"
+            },
+            {
+              "amount_usd": "20.00",
+              "category": "food_delivery",
+              "date": "2026-07-14",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-d2",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-d2"
+            },
+            {
+              "amount_usd": "25.00",
+              "category": "food_delivery",
+              "date": "2026-07-24",
+              "is_synthetic": true,
+              "merchant_normalized": "DoorDash",
+              "merchant_raw": "DOORDASH",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-d3",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-d3"
+            },
+            {
+              "amount_usd": "35.00",
+              "category": "other",
+              "date": "2026-07-25",
+              "is_synthetic": true,
+              "merchant_normalized": "Gas Station",
+              "merchant_raw": "GAS STATION",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-x1"
+            },
+            {
+              "amount_usd": "12.00",
+              "category": "other",
+              "date": "2026-07-26",
+              "is_synthetic": true,
+              "merchant_normalized": "Book Nook",
+              "merchant_raw": "BOOK NOOK",
+              "source_reference": "evaluation/mixed_opportunities.csv:mo-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "mo-x2"
+            }
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidates": [
+            {
+              "category": "food_delivery",
+              "charge_count": 3,
+              "evidence_ids": [
+                "mo-d1",
+                "mo-d2",
+                "mo-d3"
+              ],
+              "merchant": "DoorDash",
+              "monthly_amount": "61.00"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "mo-n1",
+              "mo-n2",
+              "mo-n3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "15.49",
+            "next_paycheck_savings_usd": "7.13",
+            "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "title": "Review Netflix subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "mo-n1",
+              "mo-n2",
+              "mo-n3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "15.49",
+            "next_paycheck_savings_usd": "7.13",
+            "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "title": "Review Netflix subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reasons": [],
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "mo-n1",
+              "mo-n2",
+              "mo-n3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "15.49",
+            "next_paycheck_savings_usd": "7.13",
+            "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "title": "Review Netflix subscription"
+          }
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are an estimate pending merchant confirmation.",
+            "confidence": "medium",
+            "evidence_transaction_ids": [
+              "mo-c1",
+              "mo-c2"
+            ],
+            "kind": "duplicate",
+            "monthly_savings_usd": "18.00",
+            "next_paycheck_savings_usd": "8.28",
+            "rationale": "Two matching charges occurred within two days; confirm one was not duplicated.",
+            "recommendation_id": "duplicate-cinema-mo-c1-mo-c2",
+            "status": "proposed",
+            "title": "Review possible duplicate Cinema charge"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are an estimate pending merchant confirmation.",
+            "confidence": "medium",
+            "evidence_transaction_ids": [
+              "mo-c1",
+              "mo-c2"
+            ],
+            "kind": "duplicate",
+            "monthly_savings_usd": "18.00",
+            "next_paycheck_savings_usd": "8.28",
+            "rationale": "Two matching charges occurred within two days; confirm one was not duplicated.",
+            "recommendation_id": "duplicate-cinema-mo-c1-mo-c2",
+            "status": "proposed",
+            "title": "Review possible duplicate Cinema charge"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reasons": [],
+          "recommendation": {
+            "caveat": "Savings are an estimate pending merchant confirmation.",
+            "confidence": "medium",
+            "evidence_transaction_ids": [
+              "mo-c1",
+              "mo-c2"
+            ],
+            "kind": "duplicate",
+            "monthly_savings_usd": "18.00",
+            "next_paycheck_savings_usd": "8.28",
+            "rationale": "Two matching charges occurred within two days; confirm one was not duplicated.",
+            "recommendation_id": "duplicate-cinema-mo-c1-mo-c2",
+            "status": "proposed",
+            "title": "Review possible duplicate Cinema charge"
+          }
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are an estimate based on the observed 30-day pattern.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "mo-d1",
+              "mo-d2",
+              "mo-d3"
+            ],
+            "kind": "behavioral_pattern",
+            "monthly_savings_usd": "61.00",
+            "next_paycheck_savings_usd": "28.08",
+            "rationale": "3 discretionary food_delivery purchases occurred within 30 days; reduce this pattern only if it fits your priorities.",
+            "recommendation_id": "pattern-doordash-mo-d1-mo-d2-mo-d3",
+            "status": "proposed",
+            "title": "Set a limit for DoorDash"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are an estimate based on the observed 30-day pattern.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "mo-d1",
+              "mo-d2",
+              "mo-d3"
+            ],
+            "kind": "behavioral_pattern",
+            "monthly_savings_usd": "61.00",
+            "next_paycheck_savings_usd": "28.08",
+            "rationale": "3 discretionary food_delivery purchases occurred within 30 days; reduce this pattern only if it fits your priorities.",
+            "recommendation_id": "pattern-doordash-mo-d1-mo-d2-mo-d3",
+            "status": "proposed",
+            "title": "Set a limit for DoorDash"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reasons": [],
+          "recommendation": {
+            "caveat": "Savings are an estimate based on the observed 30-day pattern.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "mo-d1",
+              "mo-d2",
+              "mo-d3"
+            ],
+            "kind": "behavioral_pattern",
+            "monthly_savings_usd": "61.00",
+            "next_paycheck_savings_usd": "28.08",
+            "rationale": "3 discretionary food_delivery purchases occurred within 30 days; reduce this pattern only if it fits your priorities.",
+            "recommendation_id": "pattern-doordash-mo-d1-mo-d2-mo-d3",
+            "status": "proposed",
+            "title": "Set a limit for DoorDash"
+          }
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 3
+        },
+        "verification_feedback": []
+      }
+    ],
+    "monthly_streaming": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 5
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-n1",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-n1"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-31",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-n2",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-n2"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-06-30",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-n3",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-n3"
+            },
+            {
+              "amount_usd": "22.10",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Book Nook",
+              "merchant_raw": "BOOK NOOK",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-x1"
+            },
+            {
+              "amount_usd": "38.00",
+              "category": "other",
+              "date": "2026-07-05",
+              "is_synthetic": true,
+              "merchant_normalized": "Gas Station",
+              "merchant_raw": "GAS STATION",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-x2"
+            }
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidates": [
+            {
+              "cancellable": true,
+              "category": "streaming",
+              "evidence_ids": [
+                "ms-n1",
+                "ms-n2",
+                "ms-n3"
+              ],
+              "interval_days": 30,
+              "merchant": "Netflix",
+              "monthly_amount": "15.49"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-n1",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-n1"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-31",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-n2",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-n2"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-06-30",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-n3",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-n3"
+            },
+            {
+              "amount_usd": "22.10",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Book Nook",
+              "merchant_raw": "BOOK NOOK",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-x1"
+            },
+            {
+              "amount_usd": "38.00",
+              "category": "other",
+              "date": "2026-07-05",
+              "is_synthetic": true,
+              "merchant_normalized": "Gas Station",
+              "merchant_raw": "GAS STATION",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-x2"
+            }
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-n1",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-n1"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-05-31",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-n2",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-n2"
+            },
+            {
+              "amount_usd": "15.49",
+              "category": "streaming",
+              "date": "2026-06-30",
+              "is_synthetic": true,
+              "merchant_normalized": "Netflix",
+              "merchant_raw": "NETFLIX",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-n3",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-n3"
+            },
+            {
+              "amount_usd": "22.10",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Book Nook",
+              "merchant_raw": "BOOK NOOK",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-x1"
+            },
+            {
+              "amount_usd": "38.00",
+              "category": "other",
+              "date": "2026-07-05",
+              "is_synthetic": true,
+              "merchant_normalized": "Gas Station",
+              "merchant_raw": "GAS STATION",
+              "source_reference": "evaluation/monthly_streaming.csv:ms-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "ms-x2"
+            }
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "ms-n1",
+              "ms-n2",
+              "ms-n3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "15.49",
+            "next_paycheck_savings_usd": "7.13",
+            "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "title": "Review Netflix subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "ms-n1",
+              "ms-n2",
+              "ms-n3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "15.49",
+            "next_paycheck_savings_usd": "7.13",
+            "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "title": "Review Netflix subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reasons": [],
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "ms-n1",
+              "ms-n2",
+              "ms-n3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "15.49",
+            "next_paycheck_savings_usd": "7.13",
+            "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "title": "Review Netflix subscription"
+          }
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "subscription_price_drift": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 5
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "10.99",
+              "category": "music",
+              "date": "2026-05-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Spotify",
+              "merchant_raw": "SPOTIFY",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-s1",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-s1"
+            },
+            {
+              "amount_usd": "11.99",
+              "category": "music",
+              "date": "2026-06-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Spotify",
+              "merchant_raw": "SPOTIFY",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-s2",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-s2"
+            },
+            {
+              "amount_usd": "11.99",
+              "category": "music",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Spotify",
+              "merchant_raw": "SPOTIFY",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-s3",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-s3"
+            },
+            {
+              "amount_usd": "19.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Pet Shop",
+              "merchant_raw": "PET SHOP",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-x1"
+            },
+            {
+              "amount_usd": "42.00",
+              "category": "other",
+              "date": "2026-07-06",
+              "is_synthetic": true,
+              "merchant_normalized": "Bike Shop",
+              "merchant_raw": "BIKE SHOP",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-x2"
+            }
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidates": [
+            {
+              "cancellable": true,
+              "category": "music",
+              "evidence_ids": [
+                "sd-s1",
+                "sd-s2",
+                "sd-s3"
+              ],
+              "interval_days": 30,
+              "merchant": "Spotify",
+              "monthly_amount": "11.99"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "10.99",
+              "category": "music",
+              "date": "2026-05-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Spotify",
+              "merchant_raw": "SPOTIFY",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-s1",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-s1"
+            },
+            {
+              "amount_usd": "11.99",
+              "category": "music",
+              "date": "2026-06-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Spotify",
+              "merchant_raw": "SPOTIFY",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-s2",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-s2"
+            },
+            {
+              "amount_usd": "11.99",
+              "category": "music",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Spotify",
+              "merchant_raw": "SPOTIFY",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-s3",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-s3"
+            },
+            {
+              "amount_usd": "19.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Pet Shop",
+              "merchant_raw": "PET SHOP",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-x1"
+            },
+            {
+              "amount_usd": "42.00",
+              "category": "other",
+              "date": "2026-07-06",
+              "is_synthetic": true,
+              "merchant_normalized": "Bike Shop",
+              "merchant_raw": "BIKE SHOP",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-x2"
+            }
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "10.99",
+              "category": "music",
+              "date": "2026-05-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Spotify",
+              "merchant_raw": "SPOTIFY",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-s1",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-s1"
+            },
+            {
+              "amount_usd": "11.99",
+              "category": "music",
+              "date": "2026-06-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Spotify",
+              "merchant_raw": "SPOTIFY",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-s2",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-s2"
+            },
+            {
+              "amount_usd": "11.99",
+              "category": "music",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Spotify",
+              "merchant_raw": "SPOTIFY",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-s3",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-s3"
+            },
+            {
+              "amount_usd": "19.00",
+              "category": "other",
+              "date": "2026-07-02",
+              "is_synthetic": true,
+              "merchant_normalized": "Pet Shop",
+              "merchant_raw": "PET SHOP",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-x1"
+            },
+            {
+              "amount_usd": "42.00",
+              "category": "other",
+              "date": "2026-07-06",
+              "is_synthetic": true,
+              "merchant_normalized": "Bike Shop",
+              "merchant_raw": "BIKE SHOP",
+              "source_reference": "evaluation/subscription_price_drift.csv:sd-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "sd-x2"
+            }
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "sd-s1",
+              "sd-s2",
+              "sd-s3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "11.99",
+            "next_paycheck_savings_usd": "5.52",
+            "rationale": "Spotify appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-spotify",
+            "status": "proposed",
+            "title": "Review Spotify subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "sd-s1",
+              "sd-s2",
+              "sd-s3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "11.99",
+            "next_paycheck_savings_usd": "5.52",
+            "rationale": "Spotify appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-spotify",
+            "status": "proposed",
+            "title": "Review Spotify subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reasons": [],
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "sd-s1",
+              "sd-s2",
+              "sd-s3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "11.99",
+            "next_paycheck_savings_usd": "5.52",
+            "rationale": "Spotify appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-spotify",
+            "status": "proposed",
+            "title": "Review Spotify subscription"
+          }
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "trial_conversion": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 5
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "8.99",
+              "category": "streaming",
+              "date": "2026-05-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/trial_conversion.csv:tc-h1",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-h1"
+            },
+            {
+              "amount_usd": "9.99",
+              "category": "streaming",
+              "date": "2026-05-31",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/trial_conversion.csv:tc-h2",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-h2"
+            },
+            {
+              "amount_usd": "9.99",
+              "category": "streaming",
+              "date": "2026-06-30",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/trial_conversion.csv:tc-h3",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-h3"
+            },
+            {
+              "amount_usd": "7.00",
+              "category": "other",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Bakery",
+              "merchant_raw": "BAKERY",
+              "source_reference": "evaluation/trial_conversion.csv:tc-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-x1"
+            },
+            {
+              "amount_usd": "44.00",
+              "category": "other",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "Fuel Stop",
+              "merchant_raw": "FUEL STOP",
+              "source_reference": "evaluation/trial_conversion.csv:tc-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-x2"
+            }
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidates": [
+            {
+              "cancellable": true,
+              "category": "streaming",
+              "evidence_ids": [
+                "tc-h1",
+                "tc-h2",
+                "tc-h3"
+              ],
+              "interval_days": 30,
+              "merchant": "Hulu",
+              "monthly_amount": "9.99"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "8.99",
+              "category": "streaming",
+              "date": "2026-05-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/trial_conversion.csv:tc-h1",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-h1"
+            },
+            {
+              "amount_usd": "9.99",
+              "category": "streaming",
+              "date": "2026-05-31",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/trial_conversion.csv:tc-h2",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-h2"
+            },
+            {
+              "amount_usd": "9.99",
+              "category": "streaming",
+              "date": "2026-06-30",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/trial_conversion.csv:tc-h3",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-h3"
+            },
+            {
+              "amount_usd": "7.00",
+              "category": "other",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Bakery",
+              "merchant_raw": "BAKERY",
+              "source_reference": "evaluation/trial_conversion.csv:tc-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-x1"
+            },
+            {
+              "amount_usd": "44.00",
+              "category": "other",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "Fuel Stop",
+              "merchant_raw": "FUEL STOP",
+              "source_reference": "evaluation/trial_conversion.csv:tc-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-x2"
+            }
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "transactions": [
+            {
+              "amount_usd": "8.99",
+              "category": "streaming",
+              "date": "2026-05-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/trial_conversion.csv:tc-h1",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-h1"
+            },
+            {
+              "amount_usd": "9.99",
+              "category": "streaming",
+              "date": "2026-05-31",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/trial_conversion.csv:tc-h2",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-h2"
+            },
+            {
+              "amount_usd": "9.99",
+              "category": "streaming",
+              "date": "2026-06-30",
+              "is_synthetic": true,
+              "merchant_normalized": "Hulu",
+              "merchant_raw": "HULU",
+              "source_reference": "evaluation/trial_conversion.csv:tc-h3",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-h3"
+            },
+            {
+              "amount_usd": "7.00",
+              "category": "other",
+              "date": "2026-07-01",
+              "is_synthetic": true,
+              "merchant_normalized": "Bakery",
+              "merchant_raw": "BAKERY",
+              "source_reference": "evaluation/trial_conversion.csv:tc-x1",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-x1"
+            },
+            {
+              "amount_usd": "44.00",
+              "category": "other",
+              "date": "2026-07-04",
+              "is_synthetic": true,
+              "merchant_normalized": "Fuel Stop",
+              "merchant_raw": "FUEL STOP",
+              "source_reference": "evaluation/trial_conversion.csv:tc-x2",
+              "source_type": "bank_csv",
+              "transaction_id": "tc-x2"
+            }
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "tc-h1",
+              "tc-h2",
+              "tc-h3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "9.99",
+            "next_paycheck_savings_usd": "4.60",
+            "rationale": "Hulu appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-hulu",
+            "status": "proposed",
+            "title": "Review Hulu subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "tc-h1",
+              "tc-h2",
+              "tc-h3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "9.99",
+            "next_paycheck_savings_usd": "4.60",
+            "rationale": "Hulu appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-hulu",
+            "status": "proposed",
+            "title": "Review Hulu subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reasons": [],
+          "recommendation": {
+            "caveat": "Savings are estimates based on the observed recurring charges.",
+            "confidence": "high",
+            "evidence_transaction_ids": [
+              "tc-h1",
+              "tc-h2",
+              "tc-h3"
+            ],
+            "kind": "subscription",
+            "monthly_savings_usd": "9.99",
+            "next_paycheck_savings_usd": "4.60",
+            "rationale": "Hulu appears to recur every 30 days; confirm it is still wanted before cancelling.",
+            "recommendation_id": "subscription-hulu",
+            "status": "proposed",
+            "title": "Review Hulu subscription"
+          }
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ]
+  }
+}
