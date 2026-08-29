@@ -1,7 +1,7 @@
 """Strict, serializable contracts shared across the application."""
 
 from datetime import date, datetime
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from enum import StrEnum
 from typing import Annotated
 
@@ -14,7 +14,10 @@ Money = Annotated[Decimal, Field(gt=0, decimal_places=2)]
 
 def money(value: Decimal | str | int) -> Decimal:
     """Round a USD value to cents using financial half-up rounding."""
-    return Decimal(str(value)).quantize(CENT, rounding=ROUND_HALF_UP)
+    try:
+        return Decimal(str(value)).quantize(CENT, rounding=ROUND_HALF_UP)
+    except (InvalidOperation, ValueError) as error:
+        raise ValueError("value must be a valid USD amount") from error
 
 
 class SourceType(StrEnum):

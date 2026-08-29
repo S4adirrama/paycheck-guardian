@@ -53,6 +53,12 @@ def test_transaction_normalizes_direct_money_inputs_to_two_fractional_digits() -
     assert result.amount_usd.as_tuple().exponent == -2
 
 
+@pytest.mark.parametrize("invalid_amount", [None, "not-a-number"])
+def test_transaction_invalid_money_is_a_validation_error(invalid_amount: object) -> None:
+    with pytest.raises(ValidationError):
+        transaction(invalid_amount)  # type: ignore[arg-type]
+
+
 def test_recommendation_and_ground_truth_normalize_direct_money_inputs() -> None:
     recommendation = Recommendation(
         recommendation_id="rec-1",
@@ -79,6 +85,34 @@ def test_recommendation_and_ground_truth_normalize_direct_money_inputs() -> None
             ground_truth.monthly_savings_usd,
         )
     ] == [-2, -2, -2]
+
+
+@pytest.mark.parametrize("field_name", ["monthly_savings_usd", "next_paycheck_savings_usd"])
+def test_recommendation_invalid_money_is_a_validation_error(field_name: str) -> None:
+    values: dict[str, object] = {
+        "recommendation_id": "rec-1",
+        "kind": "subscription",
+        "title": "Cancel Example",
+        "rationale": "Recurring charge",
+        "evidence_transaction_ids": ["t1"],
+        "monthly_savings_usd": "12.00",
+        "next_paycheck_savings_usd": "6.00",
+        "confidence": "high",
+    }
+    values[field_name] = "not-a-number"
+
+    with pytest.raises(ValidationError):
+        Recommendation(**values)
+
+
+def test_ground_truth_invalid_money_is_a_validation_error() -> None:
+    with pytest.raises(ValidationError):
+        GroundTruthOpportunity(
+            kind="subscription",
+            target="Example",
+            required_evidence_ids=["t1"],
+            monthly_savings_usd=None,
+        )
 
 
 def test_recommendation_requires_evidence_transaction_ids() -> None:
