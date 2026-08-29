@@ -59,6 +59,11 @@ class Transaction(DomainModel):
     source_reference: str = Field(min_length=1)
     is_synthetic: bool
 
+    @field_validator("amount_usd", mode="before")
+    @classmethod
+    def normalize_amount_usd(cls, value: Decimal | str | int) -> Decimal:
+        return money(value)
+
 
 class Evidence(DomainModel):
     transaction_id: str = Field(min_length=1)
@@ -76,6 +81,11 @@ class Recommendation(DomainModel):
     confidence: Confidence
     caveat: str | None = None
     status: RecommendationStatus = RecommendationStatus.PROPOSED
+
+    @field_validator("monthly_savings_usd", "next_paycheck_savings_usd", mode="before")
+    @classmethod
+    def normalize_savings_usd(cls, value: Decimal | str | int) -> Decimal:
+        return money(value)
 
     @field_validator("evidence_transaction_ids")
     @classmethod
@@ -115,6 +125,11 @@ class GroundTruthOpportunity(DomainModel):
     required_evidence_ids: list[str] = Field(min_length=1)
     monthly_savings_usd: Money
     caveat_required: bool = False
+
+    @field_validator("monthly_savings_usd", mode="before")
+    @classmethod
+    def normalize_monthly_savings_usd(cls, value: Decimal | str | int) -> Decimal:
+        return money(value)
 
 
 class EvaluationCase(DomainModel):
