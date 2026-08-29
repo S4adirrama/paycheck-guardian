@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools==82.0.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paycheck-guardian"
+version = "0.1.0"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+  "pydantic==2.13.5",
+  "streamlit==1.50.0",
+  "Pillow==11.3.0",
+]
+
+[project.optional-dependencies]
+online = ["openai==2.48.0"]
+dev = ["pytest==8.4.2", "playwright==1.60.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
