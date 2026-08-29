@@ -185,7 +185,7 @@ For personal finance, an agent that can say “I cannot safely recommend this”
 - [Machine-readable metrics](artifacts/evaluation/metrics.json) and [per-case scores](artifacts/evaluation/per_case_results.json)
 - [Representative baseline trajectory](artifacts/trajectories/baseline.json) and [final verified trajectory](artifacts/trajectories/final.json)
 - [Alex synthetic demo report](artifacts/reports/demo_report.md) and [JSON evidence record](artifacts/reports/demo_report.json)
-- [Local video capture instructions](REPRODUCTION.md#capture-a-local-demo-video)
+- [Task 9 video-capture instructions](REPRODUCTION.md#capture-a-local-demo-video) for the intended [H.264 MP4 artifact](artifacts/video/paycheck-guardian-demo.mp4). The MP4 is generated in Task 9 and is intentionally not committed yet.
 
 ## Scope, Data, and License
 
@@ -217,30 +217,64 @@ python -m pip install -e '.[dev]'
 
 On Windows PowerShell, activate with `.venv\\Scripts\\Activate.ps1`.
 
-## Generate deterministic fixtures and evaluate
+## Generate deterministic receipt fixtures
 
 ```sh
-python scripts/generate_receipts.py
-python scripts/run_baseline.py --mode offline
-python scripts/run_solution.py --mode offline
-python scripts/evaluate.py --mode offline
-python scripts/render_submission_docs.py
-python -m pytest
+.venv/bin/python scripts/generate_receipts.py
 ```
 
-The normal evaluation commands write `artifacts/evaluation/`. They produce the retained prediction files, `metrics.json`, `per_case_results.json`, `comparison.md`, and `final_trajectories.json`. The document renderer writes `README.md`, `artifacts/trajectories/baseline.json`, `artifacts/trajectories/final.json`, and the Alex synthetic demo report files.
+Expected result: the deterministic fixture generator creates `data/demo/receipts/receipt-01.png`, `data/demo/receipts/receipt-01.txt`, `data/demo/receipts/receipt-02.png`, `data/demo/receipts/receipt-02.txt`, `data/demo/receipts/receipt-03.png`, and `data/demo/receipts/receipt-03.txt`.
+
+## Run the fair baseline
+
+```sh
+.venv/bin/python scripts/run_baseline.py --mode offline
+```
+
+Expected result: the command prints `evaluated {case_count} cases in offline mode` and writes the canonical offline evaluation set under `artifacts/evaluation/`, including `artifacts/evaluation/baseline_predictions.json`.
+
+## Run the final solution
+
+```sh
+.venv/bin/python scripts/run_solution.py --mode offline
+```
+
+Expected result: the command prints `evaluated {case_count} cases in offline mode` and refreshes the same canonical evaluation set, including `artifacts/evaluation/final_predictions.json` and `artifacts/evaluation/final_trajectories.json`.
+
+## Run the retained evaluation and render submission documents
+
+```sh
+.venv/bin/python scripts/evaluate.py --mode offline
+.venv/bin/python scripts/render_submission_docs.py
+```
+
+Expected result: evaluation prints `evaluated {case_count} cases in offline mode` and writes `artifacts/evaluation/baseline_predictions.json`, `artifacts/evaluation/normalization_only_predictions.json`, `artifacts/evaluation/unverified_agent_predictions.json`, `artifacts/evaluation/removed_unsafe_recurrence_predictions.json`, `artifacts/evaluation/final_predictions.json`, `artifacts/evaluation/final_trajectories.json`, `artifacts/evaluation/metrics.json`, `artifacts/evaluation/per_case_results.json`, and `artifacts/evaluation/comparison.md`. Rendering prints `rendered evidence-backed submission documents and representative artifacts` and writes `README.md`, `REPRODUCTION.md`, `artifacts/trajectories/baseline.json`, `artifacts/trajectories/final.json`, `artifacts/reports/demo_report.md`, and `artifacts/reports/demo_report.json`.
+
+## Run tests
+
+```sh
+.venv/bin/pytest
+```
+
+Expected result: the complete collected suite passes with exit status 0.
 
 ## Run the local app
 
 ```sh
-streamlit run app.py
+.venv/bin/streamlit run app.py --server.headless true --server.port 8501
 ```
 
-Open the local URL printed by Streamlit, choose **Load Alex's synthetic demo**, then choose **Analyze verified savings options**. The download buttons emit the same Markdown/JSON report format retained under `artifacts/reports/`. The cancellation control is only a local simulation and requires acknowledgement.
+Expected result: Streamlit serves the local app at `http://localhost:8501`. Open that URL, choose **Load Alex's synthetic demo**, then choose **Analyze verified savings options**. The download buttons emit the same Markdown/JSON report format retained under `artifacts/reports/`. The cancellation control is only a local simulation and requires acknowledgement.
 
 ## Capture a local demo video
 
-Start the app with `streamlit run app.py`, record the browser while loading the synthetic Alex demo and opening the evidence expanders, then save the recording outside the repository or in an ignored path. Do not show real transaction data, credentials, terminal environment variables, or API configuration in a recording.
+Task 9 supplies the capture script. After that task is complete, run:
+
+```sh
+.venv/bin/python scripts/capture_demo.py
+```
+
+Expected result: `artifacts/video/paycheck-guardian-demo.mp4`, an H.264 1920×1080 MP4 lasting 60–300 seconds. The file is intentionally absent before Task 9; do not substitute a manual recording or fabricate a fake file. Do not show real transaction data, credentials, terminal environment variables, or API configuration in a recording.
 
 ## Expected retained measurements
 
@@ -260,10 +294,10 @@ Do not print, commit, paste into reports, or record the credential. No current e
 ## Troubleshooting and integrity checks
 
 ```sh
-python scripts/render_submission_docs.py
-python -m pytest tests/test_submission.py -v
+.venv/bin/python scripts/render_submission_docs.py
+.venv/bin/pytest tests/test_submission.py -v
 if rg -n '[T]BD|[T]ODO|[P]LACEHOLDER|s[k]-[A-Za-z0-9]' README.md REPRODUCTION.md artifacts; then exit 1; fi
-python -m pytest
+.venv/bin/pytest
 ```
 
 The final scan should emit no matches. All input fixtures and retained evaluation data are synthetic; this prototype does not provide financial advice or execute financial actions.

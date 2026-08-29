@@ -51,7 +51,7 @@ For personal finance, an agent that can say “I cannot safely recommend this”
 - [Machine-readable metrics](artifacts/evaluation/metrics.json) and [per-case scores](artifacts/evaluation/per_case_results.json)
 - [Representative baseline trajectory](artifacts/trajectories/baseline.json) and [final verified trajectory](artifacts/trajectories/final.json)
 - [Alex synthetic demo report](artifacts/reports/demo_report.md) and [JSON evidence record](artifacts/reports/demo_report.json)
-- [Local video capture instructions](REPRODUCTION.md#capture-a-local-demo-video)
+- [Task 9 video-capture instructions](REPRODUCTION.md#capture-a-local-demo-video) for the intended [H.264 MP4 artifact](artifacts/video/paycheck-guardian-demo.mp4). The MP4 is generated in Task 9 and is intentionally not committed yet.
 
 ## Scope, Data, and License
 

@@ -2,12 +2,39 @@
 
 import json
 import importlib.util
+import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SENSITIVE_ENVIRONMENT_KEY = re.compile(r"API_KEY|TOKEN|SECRET|AUTHORIZATION|PASSWORD", re.IGNORECASE)
+
+
+def _public_submission_text() -> str:
+    """Read every tracked public document and JSON/Markdown submission artifact."""
+    public_paths = [
+        ROOT / "README.md",
+        ROOT / "REPRODUCTION.md",
+        ROOT / "artifacts/trajectories/baseline.json",
+        ROOT / "artifacts/trajectories/final.json",
+        ROOT / "artifacts/reports/demo_report.md",
+        ROOT / "artifacts/reports/demo_report.json",
+    ]
+    return "\n".join(path.read_text(encoding="utf-8") for path in public_paths)
+
+
+def _sensitive_environment_keys_in_text(text: str, environment: dict[str, str]) -> list[str]:
+    """Return only sensitive environment key names whose specific values leak into text."""
+    return sorted(
+        key
+        for key, value in environment.items()
+        if SENSITIVE_ENVIRONMENT_KEY.search(key)
+        and len(value.strip()) >= 8
+        and value.strip() in text
+    )
 
 
 def _renderer_module() -> object:
@@ -55,6 +82,48 @@ def test_renderer_derives_case_count_from_retained_fingerprints() -> None:
     assert f"covers {len(metrics['case_fingerprints'])} synthetic cases" in readme
 
 
+def test_reproduction_contract_includes_future_video_and_step_results() -> None:
+    """A reader must be able to run each submission step and know its expected output."""
+    reproduction = (ROOT / "REPRODUCTION.md").read_text(encoding="utf-8")
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+    for expected in [
+        ".venv/bin/python scripts/capture_demo.py",
+        "artifacts/video/paycheck-guardian-demo.mp4",
+        "60–300 seconds",
+        "H.264",
+        "1920×1080",
+        "data/demo/receipts/receipt-01.png",
+        "data/demo/receipts/receipt-03.txt",
+        "artifacts/evaluation/baseline_predictions.json",
+        "artifacts/evaluation/normalization_only_predictions.json",
+        "artifacts/evaluation/unverified_agent_predictions.json",
+        "artifacts/evaluation/removed_unsafe_recurrence_predictions.json",
+        "artifacts/evaluation/final_predictions.json",
+        "artifacts/evaluation/final_trajectories.json",
+        "artifacts/evaluation/metrics.json",
+        "artifacts/evaluation/per_case_results.json",
+        "artifacts/evaluation/comparison.md",
+        "evaluated 12 cases in offline mode",
+        ".venv/bin/streamlit run app.py --server.headless true --server.port 8501",
+        "http://localhost:8501",
+    ]:
+        assert expected in reproduction
+    assert "artifacts/video/paycheck-guardian-demo.mp4" in readme
+
+
+def test_specific_environment_values_are_detected_without_exposing_them(
+    monkeypatch: object,
+) -> None:
+    """A public artifact containing a real secret must report only its environment key."""
+    secret_value = "submission-only-secret-value"
+    monkeypatch.setenv("PAYCHECK_GUARDIAN_SECRET", secret_value)
+
+    leaked_keys = _sensitive_environment_keys_in_text(f"prefix {secret_value} suffix", os.environ)
+
+    assert leaked_keys == ["PAYCHECK_GUARDIAN_SECRET"]
+
+
 def test_trajectories_have_instructions_tools_feedback_and_checkpoint() -> None:
     """The representative final run must make the verified workflow inspectable."""
     events = json.loads((ROOT / "artifacts/trajectories/final.json").read_text(encoding="utf-8"))
@@ -90,19 +159,13 @@ def test_renderer_generates_demo_report_and_representative_challenge_artifacts()
 
 
 def test_submission_artifacts_do_not_contain_credential_markers() -> None:
-    """Public submission material must stay redacted and free of credential-shaped text."""
-    public_paths = [
-        ROOT / "README.md",
-        ROOT / "REPRODUCTION.md",
-        ROOT / "artifacts/trajectories/baseline.json",
-        ROOT / "artifacts/trajectories/final.json",
-        ROOT / "artifacts/reports/demo_report.md",
-        ROOT / "artifacts/reports/demo_report.json",
-    ]
-    text = "\n".join(path.read_text(encoding="utf-8") for path in public_paths).lower()
+    """Public material must exclude fixed markers and values from sensitive environment keys."""
+    public_text = _public_submission_text()
+    text = public_text.lower()
 
     assert "sk-" not in text
     assert "authorization" not in text
     assert "tbd" not in text
     assert "todo" not in text
     assert "placeholder" not in text
+    assert _sensitive_environment_keys_in_text(public_text, os.environ) == []
