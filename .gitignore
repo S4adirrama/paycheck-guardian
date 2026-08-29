@@ -1,0 +1,12 @@
+.venv/
+.verify-venv/
+__pycache__/
+.pytest_cache/
+.streamlit/secrets.toml
+.env
+.DS_Store
+.worktrees/
+.superpowers/
+tmp/
+uploads/
+*.pyc
