@@ -169,3 +169,17 @@ def test_submission_artifacts_do_not_contain_credential_markers() -> None:
     assert "todo" not in text
     assert "placeholder" not in text
     assert _sensitive_environment_keys_in_text(public_text, os.environ) == []
+
+
+def test_video_exists_and_is_under_five_minutes() -> None:
+    """The submitted walkthrough must be a substantial, viewable MP4."""
+    video = ROOT / "artifacts/video/paycheck-guardian-demo.mp4"
+    assert video.stat().st_size > 100_000
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "json", str(video)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    duration = float(json.loads(probe.stdout)["format"]["duration"])
+    assert 60 <= duration <= 300
