@@ -1,4 +1,6 @@
 from datetime import date
+from dataclasses import replace
+from decimal import Decimal
 
 import pytest
 
@@ -60,29 +62,88 @@ def test_agent_uses_tools_and_verifier(demo_transactions: list[Transaction]) -> 
     )
 
 
+def test_trajectory_records_a_redacted_call_and_structured_result_for_each_tool(
+    demo_transactions: list[Transaction],
+) -> None:
+    """A replayable trajectory needs an event before and after every deterministic tool call."""
+    run = run_offline_agent(demo_transactions, date(2026, 8, 1), date(2026, 8, 15), "events")
+
+    for tool_name in (
+        "find_recurring",
+        "find_duplicates",
+        "find_discretionary_patterns",
+        "verify_recommendation",
+    ):
+        events = [event for event in run.trajectory if event.tool_name == tool_name]
+        assert events[0].event_type == "tool_called"
+        assert events[1].event_type == "tool_result"
+        assert events[0].tool_input
+        assert events[1].tool_result
+
+    recurring_result = next(
+        event
+        for event in run.trajectory
+        if event.tool_name == "find_recurring" and event.event_type == "tool_result"
+    )
+    assert recurring_result.tool_result["candidates"][0]["merchant"] == "Netflix"
+
+
 def test_failed_candidate_retries_once_then_is_omitted(
     monkeypatch: pytest.MonkeyPatch, demo_transactions: list[Transaction]
 ) -> None:
-    """An uncorrectable verifier rejection cannot create endless retry attempts."""
+    """Feedback without a concrete correction omits the candidate after its first rejection."""
     from paycheck_guardian import agent
     from paycheck_guardian.verifier import VerificationResult
 
     original_verify = agent.verify_recommendation
-    calls = 0
 
-    def reject_one_candidate(*args: object, **kwargs: object) -> VerificationResult:
-        nonlocal calls
-        calls += 1
-        if calls == 1:
-            return VerificationResult(False, None, ["evidence does not match a deterministic recommendation target"])
+    def reject_subscription(*args: object, **kwargs: object) -> VerificationResult:
+        candidate = args[0]
+        if getattr(candidate, "recommendation_id", None) == "subscription-netflix":
+            return VerificationResult(False, None, ["candidate is not a Recommendation"])
         return original_verify(*args, **kwargs)
 
-    monkeypatch.setattr(agent, "verify_recommendation", reject_one_candidate)
+    monkeypatch.setattr(agent, "verify_recommendation", reject_subscription)
 
     run = run_offline_agent(demo_transactions, date(2026, 8, 1), date(2026, 8, 15), "retry")
 
-    assert max(event.attempt for event in run.trajectory) <= 2
-    assert any(event.event_type == "candidate_rejected" for event in run.trajectory)
+    subscription_events = [
+        event
+        for event in run.trajectory
+        if event.tool_name == "verify_recommendation"
+        and event.tool_input.get("recommendation", {}).get("recommendation_id") == "subscription-netflix"
+    ]
+    assert [event.event_type for event in subscription_events] == ["tool_called", "tool_result"]
+    assert "subscription-netflix" not in {item.recommendation_id for item in run.recommendations}
+    assert not any(event.event_type == "candidate_retry" for event in run.trajectory)
+
+
+def test_fixable_arithmetic_feedback_retries_with_a_corrected_tool_derived_candidate(
+    monkeypatch: pytest.MonkeyPatch, demo_transactions: list[Transaction]
+) -> None:
+    """The sole retry must submit corrected savings, not the original candidate again."""
+    from paycheck_guardian import agent
+
+    original_draft = agent._subscription_draft
+
+    def initially_incorrect_subscription(*args: object, **kwargs: object):
+        draft = original_draft(*args, **kwargs)
+        incorrect = draft.recommendation.model_copy(update={"monthly_savings_usd": Decimal("1.00")})
+        return replace(draft, recommendation=incorrect)
+
+    monkeypatch.setattr(agent, "_subscription_draft", initially_incorrect_subscription)
+
+    run = run_offline_agent(demo_transactions, date(2026, 8, 1), date(2026, 8, 15), "fixed")
+
+    attempts = [
+        event.tool_input["recommendation"]["monthly_savings_usd"]
+        for event in run.trajectory
+        if event.tool_name == "verify_recommendation"
+        and event.event_type == "tool_called"
+        and event.tool_input["recommendation"]["recommendation_id"] == "subscription-netflix"
+    ]
+    assert attempts == ["1.00", "16.49"]
+    assert "subscription-netflix" in {item.recommendation_id for item in run.recommendations}
 
 
 def test_cancellation_requires_approval(run_with_subscription) -> None:
@@ -100,6 +161,9 @@ def test_cancellation_requires_approval(run_with_subscription) -> None:
 
 def test_approved_cancellation_only_records_a_local_simulation(run_with_subscription) -> None:
     """Approval changes only local run state; it cannot invoke an external cancellation."""
+    verifier_events_before = len(
+        [event for event in run_with_subscription.trajectory if event.tool_name == "verify_recommendation"]
+    )
     approved = simulate_cancellation(run_with_subscription, "subscription-netflix", approved=True)
 
     assert approved.simulated_actions == [
@@ -108,6 +172,11 @@ def test_approved_cancellation_only_records_a_local_simulation(run_with_subscrip
     recommendation = next(item for item in approved.recommendations if item.recommendation_id == "subscription-netflix")
     assert recommendation.status == RecommendationStatus.APPROVED_FOR_SIMULATION
     assert any(event.human_checkpoint == "cancellation_approved" for event in approved.trajectory)
+    verifier_events = [
+        event for event in approved.trajectory if event.tool_name == "verify_recommendation"
+    ]
+    assert len(verifier_events) == verifier_events_before + 2
+    assert [event.event_type for event in verifier_events[-2:]] == ["tool_called", "tool_result"]
 
 
 def test_trajectory_recorder_redacts_sensitive_values_recursively() -> None:

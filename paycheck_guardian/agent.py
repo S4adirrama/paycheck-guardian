@@ -1,6 +1,5 @@
 """Offline-only orchestration for verified savings recommendations."""
 
-from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal
@@ -32,7 +31,7 @@ _REPAIRABLE_FEEDBACK = ("monthly savings estimate", "next-paycheck savings estim
 @dataclass(frozen=True)
 class _CandidateDraft:
     recommendation: Recommendation
-    rebuild: Callable[[], Recommendation]
+    tool_truth: Recommendation
 
 
 def _slug(value: str) -> str:
@@ -66,7 +65,8 @@ def _subscription_draft(
             caveat="Savings are estimates based on the observed recurring charges.",
         )
 
-    return _CandidateDraft(build(), build)
+    recommendation = build()
+    return _CandidateDraft(recommendation, recommendation.model_copy(deep=True))
 
 
 def _duplicate_draft(
@@ -87,7 +87,8 @@ def _duplicate_draft(
             caveat="Savings are an estimate pending merchant confirmation.",
         )
 
-    return _CandidateDraft(build(), build)
+    recommendation = build()
+    return _CandidateDraft(recommendation, recommendation.model_copy(deep=True))
 
 
 def _pattern_draft(
@@ -111,17 +112,75 @@ def _pattern_draft(
             caveat="Savings are an estimate based on the observed 30-day pattern.",
         )
 
-    return _CandidateDraft(build(), build)
+    recommendation = build()
+    return _CandidateDraft(recommendation, recommendation.model_copy(deep=True))
 
 
-def _tool_summary(candidates: list[object]) -> dict[str, object]:
-    """Keep trajectory records compact while preserving deterministic tool facts."""
-    return {"candidate_count": len(candidates)}
+def _serialized_transactions(transactions: list[Transaction]) -> dict[str, object]:
+    return {"transactions": [row.model_dump(mode="json") for row in transactions]}
+
+
+def _tool_result(candidates: list[object]) -> dict[str, object]:
+    """Serialize all deterministic findings so a trajectory can be replayed and audited."""
+    serialized: list[dict[str, object]] = []
+    for candidate in candidates:
+        if isinstance(candidate, RecurringCandidate):
+            serialized.append(
+                {
+                    "merchant": candidate.merchant,
+                    "category": candidate.category,
+                    "interval_days": candidate.interval_days,
+                    "monthly_amount": candidate.monthly_amount,
+                    "evidence_ids": candidate.evidence_ids,
+                    "cancellable": candidate.cancellable,
+                }
+            )
+        elif isinstance(candidate, DuplicateCandidate):
+            serialized.append(
+                {
+                    "merchant": candidate.merchant,
+                    "amount": candidate.amount,
+                    "evidence_ids": candidate.evidence_ids,
+                }
+            )
+        elif isinstance(candidate, SpendingPattern):
+            serialized.append(
+                {
+                    "merchant": candidate.merchant,
+                    "category": candidate.category,
+                    "charge_count": candidate.charge_count,
+                    "monthly_amount": candidate.monthly_amount,
+                    "evidence_ids": candidate.evidence_ids,
+                }
+            )
+    return {"candidates": serialized}
 
 
 def _should_retry(result: VerificationResult) -> bool:
     feedback = " ".join(result.reasons).lower()
     return any(fragment in feedback for fragment in _REPAIRABLE_FEEDBACK)
+
+
+def _correct_candidate(
+    draft: _CandidateDraft, candidate: Recommendation, result: VerificationResult
+) -> Recommendation | None:
+    """Return a changed canonical recommendation only when feedback identifies its bad field."""
+    if not _should_retry(result):
+        return None
+    feedback = " ".join(result.reasons).lower()
+    corrected = draft.tool_truth
+    arithmetic_mismatch = (
+        ("monthly savings estimate" in feedback
+         and candidate.monthly_savings_usd != corrected.monthly_savings_usd)
+        or ("next-paycheck savings estimate" in feedback
+            and candidate.next_paycheck_savings_usd != corrected.next_paycheck_savings_usd)
+    )
+    evidence_mismatch = "evidence" in feedback and (
+        candidate.evidence_transaction_ids != corrected.evidence_transaction_ids
+    )
+    if not arithmetic_mismatch and not evidence_mismatch:
+        return None
+    return corrected.model_copy(deep=True)
 
 
 def _verify_draft(
@@ -133,6 +192,13 @@ def _verify_draft(
 ) -> Recommendation | None:
     candidate = draft.recommendation
     for attempt in (1, 2):
+        recorder.record(
+            component="verifier",
+            event_type="tool_called",
+            tool_name="verify_recommendation",
+            tool_input={"recommendation": candidate.model_dump(mode="json")},
+            attempt=attempt,
+        )
         result = verify_recommendation(
             candidate,
             transactions,
@@ -141,10 +207,18 @@ def _verify_draft(
         )
         recorder.record(
             component="verifier",
-            event_type="candidate_verified" if result.accepted else "candidate_rejected",
+            event_type="tool_result",
             tool_name="verify_recommendation",
             tool_input={"recommendation": candidate.model_dump(mode="json")},
-            tool_result={"accepted": result.accepted},
+            tool_result={
+                "accepted": result.accepted,
+                "recommendation": (
+                    result.recommendation.model_dump(mode="json")
+                    if result.recommendation is not None
+                    else None
+                ),
+                "reasons": result.reasons,
+            },
             verification_feedback=result.reasons,
             attempt=attempt,
         )
@@ -152,14 +226,15 @@ def _verify_draft(
             return result.recommendation.model_copy(
                 update={"status": RecommendationStatus.PROPOSED}
             )
-        if attempt == 1 and _should_retry(result):
+        corrected = _correct_candidate(draft, candidate, result) if attempt == 1 else None
+        if corrected is not None:
             recorder.record(
                 component="agent",
                 event_type="candidate_retry",
                 verification_feedback=result.reasons,
                 attempt=2,
             )
-            candidate = draft.rebuild()
+            candidate = corrected
         else:
             return None
     return None
@@ -177,29 +252,44 @@ def run_offline_agent(
         tool_input={"transaction_count": len(transactions)},
     )
 
+    recorder.record(
+        component="analysis",
+        event_type="tool_called",
+        tool_name="find_recurring",
+        tool_input=_serialized_transactions(transactions),
+    )
     recurring = find_recurring(transactions)
     recorder.record(
         component="analysis",
-        event_type="tool_completed",
+        event_type="tool_result",
         tool_name="find_recurring",
-        tool_input={"transaction_count": len(transactions)},
-        tool_result=_tool_summary(recurring),
+        tool_result=_tool_result(recurring),
+    )
+    recorder.record(
+        component="analysis",
+        event_type="tool_called",
+        tool_name="find_duplicates",
+        tool_input=_serialized_transactions(transactions),
     )
     duplicates = find_duplicates(transactions)
     recorder.record(
         component="analysis",
-        event_type="tool_completed",
+        event_type="tool_result",
         tool_name="find_duplicates",
-        tool_input={"transaction_count": len(transactions)},
-        tool_result=_tool_summary(duplicates),
+        tool_result=_tool_result(duplicates),
+    )
+    recorder.record(
+        component="analysis",
+        event_type="tool_called",
+        tool_name="find_discretionary_patterns",
+        tool_input=_serialized_transactions(transactions),
     )
     patterns = find_discretionary_patterns(transactions)
     recorder.record(
         component="analysis",
-        event_type="tool_completed",
+        event_type="tool_result",
         tool_name="find_discretionary_patterns",
-        tool_input={"transaction_count": len(transactions)},
-        tool_result=_tool_summary(patterns),
+        tool_result=_tool_result(patterns),
     )
 
     drafts: list[_CandidateDraft] = []
@@ -270,17 +360,37 @@ def simulate_cancellation(run: AgentRun, recommendation_id: str, approved: bool)
             human_checkpoint="cancellation_declined",
         )
     else:
+        recorder.record(
+            component="verifier",
+            event_type="tool_called",
+            tool_name="verify_recommendation",
+            tool_input={"recommendation": recommendation.model_dump(mode="json")},
+        )
         verification = verify_recommendation(
             recommendation,
             updated.transactions,
             analysis_date=updated.analysis_date,
             next_paycheck=updated.next_paycheck,
         )
+        recorder.record(
+            component="verifier",
+            event_type="tool_result",
+            tool_name="verify_recommendation",
+            tool_result={
+                "accepted": verification.accepted,
+                "recommendation": (
+                    verification.recommendation.model_dump(mode="json")
+                    if verification.recommendation is not None
+                    else None
+                ),
+                "reasons": verification.reasons,
+            },
+            verification_feedback=verification.reasons,
+        )
         if not verification.accepted:
             recorder.record(
                 component="verifier",
                 event_type="simulation_blocked",
-                tool_name="verify_recommendation",
                 verification_feedback=verification.reasons,
                 human_checkpoint="cancellation_blocked",
             )
