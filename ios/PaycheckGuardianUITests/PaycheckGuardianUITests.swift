@@ -52,4 +52,34 @@ final class PaycheckGuardianUITests: XCTestCase {
 
         XCTAssertTrue(app.staticTexts["validation-error"].waitForExistence(timeout: 3))
     }
+
+    func testCaptureHackathonScreens() {
+        let app = launchApp()
+        attachScreen(named: "01-welcome")
+
+        app.buttons["run-demo"].tap()
+        XCTAssertTrue(app.staticTexts["verified-plan-title"].waitForExistence(timeout: 10))
+        attachScreen(named: "02-verified-plan")
+
+        app.buttons["recommendation-evidence-0"].tap()
+        XCTAssertTrue(app.staticTexts["calculation-detail"].waitForExistence(timeout: 3))
+        attachScreen(named: "03-evidence")
+        app.buttons["close-evidence"].tap()
+
+        app.buttons["approve-recommendation-0"].tap()
+        app.buttons["confirm-simulation"].firstMatch.tap()
+        XCTAssertTrue(app.staticTexts["simulation-confirmed"].waitForExistence(timeout: 3))
+        attachScreen(named: "04-simulated-approval")
+
+        app.buttons["show-agent-trace"].tap()
+        XCTAssertTrue(app.staticTexts["agent-trace-title"].waitForExistence(timeout: 3))
+        attachScreen(named: "05-agent-trace")
+    }
+
+    private func attachScreen(named name: String) {
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
+    }
 }
