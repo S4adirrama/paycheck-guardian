@@ -1,1 +1,15 @@
-{}
+{
+  "NETFLIX": {"merchant": "Netflix", "category": "streaming"},
+  "HULU": {"merchant": "Hulu", "category": "streaming"},
+  "SPOTIFY": {"merchant": "Spotify", "category": "music"},
+  "APPLE ICLOUD": {"merchant": "Apple iCloud", "category": "cloud_storage"},
+  "DOORDASH": {"merchant": "DoorDash", "category": "food_delivery"},
+  "UBER EATS": {"merchant": "Uber Eats", "category": "food_delivery"},
+  "AMAZON PRIME": {"merchant": "Amazon Prime", "category": "subscription"},
+  "PLANET FITNESS": {"merchant": "Planet Fitness", "category": "fitness"},
+  "VERIZON": {"merchant": "Verizon", "category": "telecom"},
+  "STATE FARM": {"merchant": "State Farm", "category": "insurance"},
+  "RENT": {"merchant": "Rent", "category": "housing"},
+  "ELECTRICITY": {"merchant": "Electricity", "category": "utilities"},
+  "STUDENT LOAN": {"merchant": "Student Loan", "category": "debt"}
+}
