@@ -88,3 +88,101 @@ public struct Transaction: Codable, Hashable, Identifiable, Sendable {
         }
     }
 }
+
+public struct CandidateRecommendation: Codable, Hashable, Identifiable, Sendable {
+    public let id: String
+    public let kind: RecommendationKind
+    public let target: String
+    public let action: RecommendationAction
+    public let title: String
+    public let rationale: String
+    public let evidenceIDs: [String]
+    public let monthlySavingsUSD: Money
+    public let nextPaycheckSavingsUSD: Money
+    public let confidence: Confidence
+    public let caveat: String?
+
+    public init(
+        id: String,
+        kind: RecommendationKind,
+        target: String,
+        action: RecommendationAction,
+        title: String,
+        rationale: String,
+        evidenceIDs: [String],
+        monthlySavingsUSD: Money,
+        nextPaycheckSavingsUSD: Money,
+        confidence: Confidence,
+        caveat: String?
+    ) throws {
+        for (name, value) in [("Recommendation ID", id), ("Target", target), ("Title", title), ("Rationale", rationale)] {
+            guard !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                throw DomainError.blankField(name)
+            }
+        }
+        guard !evidenceIDs.isEmpty else { throw DomainError.emptyEvidence }
+        guard evidenceIDs.allSatisfy({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }) else {
+            throw DomainError.blankField("Evidence ID")
+        }
+        self.id = id
+        self.kind = kind
+        self.target = target
+        self.action = action
+        self.title = title
+        self.rationale = rationale
+        self.evidenceIDs = evidenceIDs
+        self.monthlySavingsUSD = monthlySavingsUSD
+        self.nextPaycheckSavingsUSD = nextPaycheckSavingsUSD
+        self.confidence = confidence
+        self.caveat = caveat
+    }
+}
+
+public struct VerifiedRecommendation: Codable, Hashable, Identifiable, Sendable {
+    public let id: String
+    public let kind: RecommendationKind
+    public let target: String
+    public let action: RecommendationAction
+    public let title: String
+    public let rationale: String
+    public let evidenceIDs: [String]
+    public let monthlySavingsUSD: Money
+    public let nextPaycheckSavingsUSD: Money
+    public let confidence: Confidence
+    public let caveat: String?
+    public let status: RecommendationStatus
+
+    init(canonical candidate: CandidateRecommendation, status: RecommendationStatus = .proposed) {
+        id = candidate.id
+        kind = candidate.kind
+        target = candidate.target
+        action = candidate.action
+        title = candidate.title
+        rationale = candidate.rationale
+        evidenceIDs = candidate.evidenceIDs
+        monthlySavingsUSD = candidate.monthlySavingsUSD
+        nextPaycheckSavingsUSD = candidate.nextPaycheckSavingsUSD
+        confidence = candidate.confidence
+        caveat = candidate.caveat
+        self.status = status
+    }
+
+    public func withStatus(_ status: RecommendationStatus) -> VerifiedRecommendation {
+        VerifiedRecommendation(copying: self, status: status)
+    }
+
+    private init(copying value: VerifiedRecommendation, status: RecommendationStatus) {
+        id = value.id
+        kind = value.kind
+        target = value.target
+        action = value.action
+        title = value.title
+        rationale = value.rationale
+        evidenceIDs = value.evidenceIDs
+        monthlySavingsUSD = value.monthlySavingsUSD
+        nextPaycheckSavingsUSD = value.nextPaycheckSavingsUSD
+        confidence = value.confidence
+        caveat = value.caveat
+        self.status = status
+    }
+}
