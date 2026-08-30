@@ -383,6 +383,7 @@ def simulate_cancellation(run: AgentRun, recommendation_id: str, approved: bool)
             human_checkpoint="cancellation_not_available",
         )
     elif not approved:
+        recommendation.status = RecommendationStatus.DISMISSED
         recorder.record(
             component="human",
             event_type="simulation_declined",

@@ -103,3 +103,7 @@ if rg -n '[T]BD|[T]ODO|[P]LACEHOLDER|s[k]-[A-Za-z0-9]' README.md REPRODUCTION.md
 ```
 
 The final scan should emit no matches. All input fixtures and retained evaluation data are synthetic; this prototype does not provide financial advice or execute financial actions.
+
+## Submission verification
+
+Fresh offline audit evidence: Python 3.11.15; 89 tests collected; 12 synthetic cases; final F1 1.0000 with 0 unsupported claims; final-mode runtime 3 ms. The H.264 demo video is 280.000 seconds. Audited source commit: `d7d499047c622878a43f39ede0f6ffcdc31947d0`.

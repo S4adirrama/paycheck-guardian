@@ -4,6 +4,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+import pytest
+
 from paycheck_guardian.evaluation import (
     PredictedOpportunity,
     input_fingerprint_for_baseline,
@@ -122,12 +124,55 @@ def test_baseline_and_solution_entry_points_write_only_to_requested_directory(
         assert {path.name for path in output_dir.iterdir()} == REQUIRED_ARTIFACTS
 
 
+@pytest.mark.parametrize(
+    ("script", "expected_mode", "rent_expected"),
+    [
+        ("scripts/run_baseline.py", "baseline", True),
+        ("scripts/run_solution.py", "final", False),
+    ],
+)
+def test_case_entry_points_emit_only_the_requested_case_without_rewriting_artifacts(
+    script: str,
+    expected_mode: str,
+    rent_expected: bool,
+) -> None:
+    """A case smoke run must expose its mode-specific result without replacing retained evidence."""
+    root = Path(__file__).resolve().parents[1]
+    metrics_path = root / "artifacts" / "evaluation" / "metrics.json"
+    retained_metrics = metrics_path.read_bytes()
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            script,
+            "--case",
+            "challenge_alias_price_essential",
+            "--mode",
+            "offline",
+        ],
+        cwd=root,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    payload = json.loads(result.stdout)
+    assert payload["case_id"] == "challenge_alias_price_essential"
+    assert payload["mode"] == expected_mode
+    targets = {item["target"].casefold() for item in payload["predictions"]}
+    assert ("rent" in targets) is rent_expected
+    assert metrics_path.read_bytes() == retained_metrics
+
+
 def test_retained_artifacts_include_reproducibility_metadata(tmp_path: Path) -> None:
     """Dropping mode timings or input fingerprints would prevent a later audit from being replayed."""
     cases = load_cases(Path("data/evaluation/cases.json"))
     write_artifacts(cases, evaluate_cases(cases), tmp_path)
 
     assert {path.name for path in tmp_path.iterdir()} == REQUIRED_ARTIFACTS
+    metrics = json.loads((tmp_path / "metrics.json").read_text(encoding="utf-8"))
+    assert metrics["case_count"] == 12
     for name in REQUIRED_ARTIFACTS - {"comparison.md"}:
         artifact = json.loads((tmp_path / name).read_text(encoding="utf-8"))
         assert artifact["mode"]

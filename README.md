@@ -51,8 +51,12 @@ For personal finance, an agent that can say “I cannot safely recommend this”
 - [Machine-readable metrics](artifacts/evaluation/metrics.json) and [per-case scores](artifacts/evaluation/per_case_results.json)
 - [Representative baseline trajectory](artifacts/trajectories/baseline.json) and [final verified trajectory](artifacts/trajectories/final.json)
 - [Alex synthetic demo report](artifacts/reports/demo_report.md) and [JSON evidence record](artifacts/reports/demo_report.json)
-- [Task 9 video-capture instructions](REPRODUCTION.md#capture-a-local-demo-video) for the intended [H.264 MP4 artifact](artifacts/video/paycheck-guardian-demo.mp4). The MP4 is generated in Task 9 and is intentionally not committed yet.
+- [Video-capture instructions](REPRODUCTION.md#capture-a-local-demo-video) for the submitted [H.264 MP4 artifact](artifacts/video/paycheck-guardian-demo.mp4).
 
 ## Scope, Data, and License
 
 This project was created during the hackathon as a prototype. The demo and evaluation datasets are intentionally synthetic. The repository source, documentation, and synthetic fixtures are available under the [MIT License](LICENSE). See [REPRODUCTION.md](REPRODUCTION.md) for the Python 3.11 setup, offline execution, optional online configuration, and expected artifacts.
+
+## Submission verification
+
+Fresh offline audit evidence: Python 3.11.15; 89 tests collected; 12 synthetic cases; final F1 1.0000 with 0 unsupported claims; final-mode runtime 3 ms. The H.264 demo video is 280.000 seconds. Audited source commit: `d7d499047c622878a43f39ede0f6ffcdc31947d0`.

@@ -155,7 +155,11 @@ def test_cancellation_requires_approval(run_with_subscription) -> None:
     unchanged = simulate_cancellation(run_with_subscription, subscription.recommendation_id, approved=False)
 
     assert unchanged.simulated_actions == []
-    assert unchanged.recommendations[0].status == RecommendationStatus.PROPOSED
+    assert subscription.recommendation_id in {
+        item.recommendation_id
+        for item in unchanged.recommendations
+        if item.status == RecommendationStatus.DISMISSED
+    }
     assert any(event.human_checkpoint == "cancellation_declined" for event in unchanged.trajectory)
 
 

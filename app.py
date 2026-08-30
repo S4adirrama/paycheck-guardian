@@ -113,8 +113,8 @@ def _render_recommendations() -> None:
             st.write(recommendation.rationale)
             st.caption(
                 f"Confidence: {recommendation.confidence.value.title()} · "
-                f"Monthly estimate: ${recommendation.monthly_savings_usd:.2f} · "
-                f"By next paycheck: ${recommendation.next_paycheck_savings_usd:.2f}"
+                f"Monthly estimate: \\${recommendation.monthly_savings_usd:.2f} · "
+                f"By next paycheck: \\${recommendation.next_paycheck_savings_usd:.2f}"
             )
             if recommendation.caveat:
                 st.warning(recommendation.caveat, icon="⚠️")
@@ -176,7 +176,18 @@ def _render_recommendations() -> None:
         key="approve_simulation",
         disabled=not cancellable,
     )
-    if st.button(
+    dismiss_column, simulate_column = st.columns(2)
+    if dismiss_column.button(
+        "Dismiss recommendation",
+        key="dismiss_recommendation",
+        disabled=not selected_id,
+    ):
+        updated = simulate_cancellation(run, selected_id, approved=False)
+        st.session_state["agent_run"] = updated
+        st.session_state["markdown_report"] = render_markdown(updated)
+        st.session_state["report_json"] = json.dumps(serialize_run(updated), indent=2)
+        st.success("Recommendation dismissed for this local review. No action was taken.")
+    if simulate_column.button(
         "Simulate cancellation locally",
         key="simulate_cancellation",
         disabled=not (selected_id and approved),

@@ -8,6 +8,10 @@ the deterministic Alex demo to keep the report in sync with production code.
 from __future__ import annotations
 
 import json
+import os
+import re
+import subprocess
+import sys
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -37,6 +41,60 @@ def _write(path: Path, text: str) -> None:
 
 def _json(path: Path, value: object) -> None:
     _write(path, json.dumps(value, indent=2, sort_keys=True))
+
+
+def _offline_command(command: list[str]) -> str:
+    """Run a local evidence command without passing an online provider credential."""
+    environment = os.environ.copy()
+    environment.pop("OPENAI_API_KEY", None)
+    return subprocess.run(
+        command,
+        cwd=ROOT,
+        env=environment,
+        text=True,
+        capture_output=True,
+        check=True,
+    ).stdout.strip()
+
+
+def _submission_verification(metrics: dict[str, Any]) -> dict[str, object]:
+    """Collect exact submission facts from local commands and retained evidence."""
+    collection = _offline_command([sys.executable, "-m", "pytest", "--collect-only", "-q"])
+    test_count = sum(int(match) for match in re.findall(r":\s+(\d+)$", collection, re.MULTILINE))
+    if test_count == 0:
+        raise RuntimeError("pytest collection did not report a test count")
+    duration = float(
+        _offline_command(
+            [
+                "ffprobe",
+                "-v",
+                "error",
+                "-show_entries",
+                "format=duration",
+                "-of",
+                "default=noprint_wrappers=1:nokey=1",
+                "artifacts/video/paycheck-guardian-demo.mp4",
+            ]
+        )
+    )
+    return {
+        "python_version": sys.version.split()[0],
+        "test_count": test_count,
+        "case_count": metrics["case_count"],
+        "final_f1": metrics["final"]["f1"],
+        "unsupported_claims": metrics["final"]["unsupported_claims"],
+        "final_runtime_ms": metrics["elapsed_ms_by_mode"]["final"],
+        "video_duration_seconds": duration,
+        "source_commit": _offline_command(["git", "rev-parse", "HEAD"]),
+    }
+
+
+def _render_submission_verification(verification: dict[str, object]) -> str:
+    """Render the shared command-backed verification section."""
+    return f"""## Submission verification
+
+Fresh offline audit evidence: Python {verification['python_version']}; {verification['test_count']} tests collected; {verification['case_count']} synthetic cases; final F1 {verification['final_f1']} with {verification['unsupported_claims']} unsupported claims; final-mode runtime {verification['final_runtime_ms']} ms. The H.264 demo video is {verification['video_duration_seconds']:.3f} seconds. Audited source commit: `{verification['source_commit']}`.
+"""
 
 
 def _challenge_trajectories(
@@ -125,13 +183,16 @@ def _challenge_trajectories(
     return baseline_events, final_events
 
 
-def _render_readme(metrics: dict[str, Any]) -> str:
+def _render_readme(metrics: dict[str, Any], verification: dict[str, object] | None = None) -> str:
     baseline = metrics["baseline"]
     normalization = metrics["normalization_only"]
     unverified = metrics["unverified_agent"]
     unsafe = metrics["removed_unsafe_recurrence"]
     final = metrics["final"]
     case_count = len(metrics["case_fingerprints"])
+    verification_section = (
+        _render_submission_verification(verification) if verification is not None else ""
+    )
     return f"""# Paycheck Guardian
 
 Paycheck Guardian is a local-first prototype for people who want a safer way to find potential savings before their next paycheck. It turns transaction evidence into a short, reviewable set of recommendations; it never contacts a bank, merchant, or subscription service.
@@ -185,17 +246,24 @@ For personal finance, an agent that can say “I cannot safely recommend this”
 - [Machine-readable metrics](artifacts/evaluation/metrics.json) and [per-case scores](artifacts/evaluation/per_case_results.json)
 - [Representative baseline trajectory](artifacts/trajectories/baseline.json) and [final verified trajectory](artifacts/trajectories/final.json)
 - [Alex synthetic demo report](artifacts/reports/demo_report.md) and [JSON evidence record](artifacts/reports/demo_report.json)
-- [Task 9 video-capture instructions](REPRODUCTION.md#capture-a-local-demo-video) for the intended [H.264 MP4 artifact](artifacts/video/paycheck-guardian-demo.mp4). The MP4 is generated in Task 9 and is intentionally not committed yet.
+- [Video-capture instructions](REPRODUCTION.md#capture-a-local-demo-video) for the submitted [H.264 MP4 artifact](artifacts/video/paycheck-guardian-demo.mp4).
 
 ## Scope, Data, and License
 
 This project was created during the hackathon as a prototype. The demo and evaluation datasets are intentionally synthetic. The repository source, documentation, and synthetic fixtures are available under the [MIT License](LICENSE). See [REPRODUCTION.md](REPRODUCTION.md) for the Python 3.11 setup, offline execution, optional online configuration, and expected artifacts.
+
+{verification_section}
 """
 
 
-def _render_reproduction(metrics: dict[str, Any]) -> str:
+def _render_reproduction(
+    metrics: dict[str, Any], verification: dict[str, object] | None = None
+) -> str:
     final_ms = metrics["elapsed_ms_by_mode"]["final"]
     case_count = len(metrics["case_fingerprints"])
+    verification_section = (
+        _render_submission_verification(verification) if verification is not None else ""
+    )
     return f"""# Reproducing Paycheck Guardian
 
 These instructions reproduce the local, deterministic submission on Python 3.11. The normal commands write the canonical artifacts in this repository; the evaluation `--output-dir` option exists for isolated automated tests and is intentionally not used below.
@@ -301,6 +369,8 @@ if rg -n '[T]BD|[T]ODO|[P]LACEHOLDER|s[k]-[A-Za-z0-9]' README.md REPRODUCTION.md
 ```
 
 The final scan should emit no matches. All input fixtures and retained evaluation data are synthetic; this prototype does not provide financial advice or execute financial actions.
+
+{verification_section}
 """
 
 
@@ -322,11 +392,12 @@ def main() -> None:
     metrics = _read_json(EVALUATION_DIR / "metrics.json")
     baseline = _read_json(EVALUATION_DIR / "baseline_predictions.json")
     final = _read_json(EVALUATION_DIR / "final_trajectories.json")
+    verification = _submission_verification(metrics)
     baseline_events, final_events = _challenge_trajectories(baseline, final)
     demo_json, demo_markdown = _render_demo_report()
 
-    _write(ROOT / "README.md", _render_readme(metrics))
-    _write(ROOT / "REPRODUCTION.md", _render_reproduction(metrics))
+    _write(ROOT / "README.md", _render_readme(metrics, verification))
+    _write(ROOT / "REPRODUCTION.md", _render_reproduction(metrics, verification))
     _json(TRAJECTORY_DIR / "baseline.json", baseline_events)
     _json(TRAJECTORY_DIR / "final.json", final_events)
     _json(REPORT_DIR / "demo_report.json", demo_json)

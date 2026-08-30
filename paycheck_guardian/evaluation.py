@@ -391,6 +391,7 @@ def write_artifacts(cases: list[EvaluationCase], summary: EvaluationSummary, out
         "mode": "offline",
         "execution_mode": "offline",
         "model_cost_usd": "0.00",
+        "case_count": len(cases),
         "case_fingerprints": fingerprints,
         "elapsed_ms_by_mode": {mode: result.elapsed_ms for mode, result in summary.modes.items()},
     }

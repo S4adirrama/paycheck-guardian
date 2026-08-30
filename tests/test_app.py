@@ -4,6 +4,8 @@ from pathlib import Path
 
 from streamlit.testing.v1 import AppTest
 
+from paycheck_guardian.models import RecommendationStatus
+
 
 def _analyzed_demo() -> AppTest:
     """Load the deterministic demo through the same controls a person uses."""
@@ -61,3 +63,30 @@ def test_downloadable_markdown_report_includes_recommendation_evidence() -> None
     assert len(app.get("download_button")) == 2
     assert "Evidence: " in app.session_state["markdown_report"]
     assert run.recommendations[0].evidence_transaction_ids[0] in app.session_state["markdown_report"]
+
+
+def test_recommendation_currency_captions_render_as_text_not_math() -> None:
+    """Unescaped currency delimiters must not turn the caption between them into math markup."""
+    app = _analyzed_demo()
+
+    recommendation_captions = [
+        item.value for item in app.caption if item.value.startswith("Confidence:")
+    ]
+    assert recommendation_captions
+    assert all(caption.count(r"\$") == 2 for caption in recommendation_captions)
+
+
+def test_recommendation_can_be_dismissed_without_simulation() -> None:
+    """A person must be able to decline a selected suggestion without creating an action."""
+    app = _analyzed_demo()
+    target = app.selectbox(key="cancellation_target").options[1]
+    app.selectbox(key="cancellation_target").select(target).run(timeout=20)
+
+    app.button(key="dismiss_recommendation").click().run(timeout=20)
+
+    run = app.session_state["agent_run"]
+    dismissed = next(item for item in run.recommendations if item.title == target)
+    assert dismissed.status == RecommendationStatus.DISMISSED
+    assert run.simulated_actions == []
+    assert any(event.human_checkpoint == "cancellation_declined" for event in run.trajectory)
+    assert any("dismissed" in item.value.lower() for item in app.success)

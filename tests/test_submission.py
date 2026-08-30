@@ -72,6 +72,28 @@ def test_readme_contains_required_hackathon_sections() -> None:
         assert heading in text
 
 
+def test_project_builds_an_editable_install_from_the_repository() -> None:
+    """Package discovery must include only the application package in a clean install."""
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--dry-run",
+            "--no-deps",
+            "-e",
+            ".",
+        ],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+
+
 def test_documented_metrics_equal_machine_readable_metrics() -> None:
     """README figures must be generated from the retained evaluation result."""
     metrics = json.loads((ROOT / "artifacts/evaluation/metrics.json").read_text(encoding="utf-8"))
@@ -167,6 +189,56 @@ def test_renderer_generates_demo_report_and_representative_challenge_artifacts()
     report = json.loads((ROOT / "artifacts/reports/demo_report.json").read_text(encoding="utf-8"))
     assert report["run_id"] == "alex-demo-run"
     assert all(row["is_synthetic"] for row in report["transactions"])
+
+
+def test_renderer_generates_command_backed_submission_verification() -> None:
+    """Final submission facts must be refreshed from the environment and retained evidence."""
+    result = subprocess.run(
+        [sys.executable, "scripts/render_submission_docs.py"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+
+    metrics = json.loads((ROOT / "artifacts/evaluation/metrics.json").read_text(encoding="utf-8"))
+    commit = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=True,
+    ).stdout.strip()
+    probe = subprocess.run(
+        [
+            "ffprobe",
+            "-v",
+            "error",
+            "-show_entries",
+            "format=duration",
+            "-of",
+            "default=noprint_wrappers=1:nokey=1",
+            "artifacts/video/paycheck-guardian-demo.mp4",
+        ],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=True,
+    )
+    duration = float(probe.stdout.strip())
+
+    for document in ("README.md", "REPRODUCTION.md"):
+        text = (ROOT / document).read_text(encoding="utf-8")
+        assert "## Submission verification" in text
+        assert f"Python {sys.version.split()[0]}" in text
+        assert f"{metrics['case_count']} synthetic cases" in text
+        assert f"final F1 {metrics['final']['f1']}" in text
+        assert f"{metrics['final']['unsupported_claims']} unsupported claims" in text
+        assert f"final-mode runtime {metrics['elapsed_ms_by_mode']['final']} ms" in text
+        assert f"{duration:.3f} seconds" in text
+        assert commit in text
+        assert re.search(r"\b\d+ tests collected\b", text)
 
 
 def test_submission_artifacts_do_not_contain_credential_markers() -> None:

@@ -16,6 +16,9 @@ dependencies = [
 online = ["openai==2.48.0"]
 dev = ["pytest==8.4.2", "playwright==1.60.0"]
 
+[tool.setuptools]
+packages = ["paycheck_guardian"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
