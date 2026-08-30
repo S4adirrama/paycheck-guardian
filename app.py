@@ -1,17 +1,27 @@
 """A local-only Streamlit interface for the deterministic Paycheck Guardian workflow."""
 
-from datetime import date
-from decimal import Decimal
+from datetime import date, timedelta
 import json
-from io import StringIO
 from pathlib import Path
 
 import streamlit as st
 
 from paycheck_guardian.agent import run_offline_agent, simulate_cancellation
-from paycheck_guardian.models import RecommendationKind, Transaction
-from paycheck_guardian.parsers import InputValidationError, parse_bank_csv, parse_receipt_fixture
-from paycheck_guardian.reporting import render_markdown, serialize_run
+from paycheck_guardian.models import (
+    RecommendationAction,
+    RecommendationKind,
+    RecommendationStatus,
+    Transaction,
+)
+from paycheck_guardian.parsers import InputValidationError, parse_bank_csv
+from paycheck_guardian.reporting import (
+    active_recommendations,
+    active_savings_totals,
+    dispositioned_recommendations,
+    render_markdown,
+    serialize_run,
+)
+from paycheck_guardian.uploads import parse_upload_batch
 
 
 APP_ROOT = Path(__file__).resolve().parent
@@ -37,7 +47,14 @@ def _transaction_rows(transactions: list[Transaction]) -> list[dict[str, str]]:
 
 
 def _reset_analysis() -> None:
-    for key in ("agent_run", "markdown_report", "report_json"):
+    for key in (
+        "agent_run",
+        "markdown_report",
+        "report_json",
+        "cancellation_target",
+        "approve_simulation",
+        "decision_notice",
+    ):
         st.session_state.pop(key, None)
 
 
@@ -68,46 +85,28 @@ def _render_retained_baseline_comparison() -> None:
         )
 
 
-def _parse_upload(upload: object) -> tuple[list[Transaction], str]:
-    """Accept only the documented deterministic upload formats."""
-    name = getattr(upload, "name", "uploaded file")
-    suffix = Path(name).suffix.lower()
-    raw = getattr(upload, "getvalue")()
-    if suffix in {".png", ".jpg", ".jpeg"}:
-        raise InputValidationError(
-            f"{name}: receipt images cannot be read here because arbitrary OCR is not available. "
-            "Upload the matching deterministic .txt receipt fixture instead."
-        )
-    try:
-        text = raw.decode("utf-8")
-    except UnicodeDecodeError as error:
-        raise InputValidationError(f"{name}: upload must be UTF-8 text.") from error
-    if suffix == ".csv":
-        return parse_bank_csv(StringIO(text), name), "Uploaded bank CSV"
-    if suffix == ".txt":
-        return parse_receipt_fixture(text, name), "Uploaded receipt text fixture"
-    raise InputValidationError(f"{name}: upload a .csv bank export or deterministic .txt receipt fixture.")
-
-
 def _render_recommendations() -> None:
     run = st.session_state.get("agent_run")
     if run is None:
         return
 
     st.markdown("## Verified savings plan")
-    monthly_total = sum((item.monthly_savings_usd for item in run.recommendations), Decimal("0"))
-    paycheck_total = sum((item.next_paycheck_savings_usd for item in run.recommendations), Decimal("0"))
+    active = active_recommendations(run)
+    monthly_total, paycheck_total = active_savings_totals(run)
     monthly_metric, paycheck_metric = st.columns(2)
     monthly_metric.metric("Monthly savings estimate", f"${monthly_total:.2f}")
     paycheck_metric.metric("By next paycheck", f"${paycheck_total:.2f}")
     st.caption("Estimates are verified against the displayed evidence. Nothing is cancelled or changed.")
 
-    if not run.recommendations:
+    notice = st.session_state.pop("decision_notice", None)
+    if notice:
+        st.success(notice)
+
+    if not active:
         st.info("No verified savings opportunities were found in these transactions.")
-        return
 
     transaction_by_id = {row.transaction_id: row for row in run.transactions}
-    for recommendation in run.recommendations:
+    for recommendation in active:
         with st.container(border=True):
             st.markdown(f"### {recommendation.title}")
             st.write(recommendation.rationale)
@@ -155,12 +154,26 @@ def _render_recommendations() -> None:
                 }
                 for event in run.trajectory
             ],
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
         )
 
+    dispositions = dispositioned_recommendations(run)
+    if dispositions:
+        st.markdown("### Recorded dispositions")
+        for recommendation in dispositions:
+            st.caption(
+                f"{recommendation.title} · {recommendation.status.value.replace('_', ' ').title()}"
+            )
+
     st.markdown("### Local cancellation simulation")
-    cancellable = [item for item in run.recommendations if item.kind == RecommendationKind.SUBSCRIPTION]
+    cancellable = [
+        item
+        for item in active
+        if item.kind == RecommendationKind.SUBSCRIPTION
+        and item.verified_action == RecommendationAction.CANCEL_SUBSCRIPTION
+        and item.status == RecommendationStatus.PROPOSED
+    ]
     selection_options = [""] + [item.title for item in cancellable]
     recommendation_by_title = {item.title: item for item in cancellable}
     selected_title = st.selectbox(
@@ -186,7 +199,10 @@ def _render_recommendations() -> None:
         st.session_state["agent_run"] = updated
         st.session_state["markdown_report"] = render_markdown(updated)
         st.session_state["report_json"] = json.dumps(serialize_run(updated), indent=2)
-        st.success("Recommendation dismissed for this local review. No action was taken.")
+        st.session_state["decision_notice"] = (
+            "Recommendation dismissed for this local review. No action was taken."
+        )
+        st.rerun()
     if simulate_column.button(
         "Simulate cancellation locally",
         key="simulate_cancellation",
@@ -196,7 +212,10 @@ def _render_recommendations() -> None:
         st.session_state["agent_run"] = updated
         st.session_state["markdown_report"] = render_markdown(updated)
         st.session_state["report_json"] = json.dumps(serialize_run(updated), indent=2)
-        st.success("Cancellation simulated locally. No merchant or bank was contacted.")
+        st.session_state["decision_notice"] = (
+            "Cancellation simulated locally. No merchant or bank was contacted."
+        )
+        st.rerun()
 
 
 st.set_page_config(page_title="Paycheck Guardian", page_icon="🛡️", layout="wide")
@@ -208,40 +227,67 @@ st.info(
 )
 
 st.markdown("### 1. Review data")
-st.caption("Use the synthetic demo or upload a UTF-8 bank CSV / deterministic receipt text fixture.")
+st.caption(
+    "Use the synthetic demo or combine local bank CSVs, receipt text fixtures, and supported "
+    "bundled receipt PNGs. Files are merged in memory and duplicate charges are kept once."
+)
 if st.button("Load Alex's synthetic demo", key="load_demo"):
     st.session_state["transactions"] = _load_demo()
     st.session_state["data_source"] = "Alex's synthetic demo"
+    st.session_state["analysis_date"] = DEMO_ANALYSIS_DATE
+    st.session_state["next_paycheck"] = DEMO_NEXT_PAYCHECK
+    st.session_state.pop("uploaded_content_digest", None)
     _reset_analysis()
 
-upload = st.file_uploader(
-    "Upload a bank CSV or receipt text fixture",
+uploads = st.file_uploader(
+    "Upload one or more bank CSVs or supported receipts",
     type=["csv", "txt", "png", "jpg", "jpeg"],
-    help="Images are not OCR'd. Upload the deterministic .txt fixture paired with a receipt image.",
+    accept_multiple_files=True,
+    help=(
+        "Bundled PNG receipt fixtures are verified by content and resolved through paired local "
+        "text. Arbitrary images and JPEGs receive an offline-format error; no OCR service is used."
+    ),
 )
-if upload is not None:
+if uploads:
     try:
-        uploaded_transactions, data_source = _parse_upload(upload)
+        batch = parse_upload_batch(uploads)
     except InputValidationError as error:
         st.error(str(error))
     else:
-        if st.session_state.get("uploaded_file_name") != upload.name:
-            st.session_state["transactions"] = uploaded_transactions
-            st.session_state["data_source"] = data_source
-            st.session_state["uploaded_file_name"] = upload.name
+        if st.session_state.get("uploaded_content_digest") != batch.content_digest:
+            st.session_state["transactions"] = batch.transactions
+            st.session_state["data_source"] = batch.source_label
+            st.session_state["uploaded_content_digest"] = batch.content_digest
+            analysis_default = max(row.date for row in batch.transactions)
+            st.session_state["analysis_date"] = analysis_default
+            st.session_state["next_paycheck"] = analysis_default + timedelta(days=14)
             _reset_analysis()
 
 transactions = st.session_state.get("transactions", [])
 if transactions:
     st.success(f"Parsed {len(transactions)} transactions from {st.session_state['data_source']}.")
-    st.dataframe(_transaction_rows(transactions), use_container_width=True, hide_index=True)
+    st.dataframe(_transaction_rows(transactions), width="stretch", hide_index=True)
     _render_retained_baseline_comparison()
     st.markdown("### 2. Analyze")
-    if st.button("Analyze verified savings options", key="analyze"):
+    analysis_date = st.date_input(
+        "Analysis date",
+        value=st.session_state.get("analysis_date", DEMO_ANALYSIS_DATE),
+        key="analysis_date",
+        help="The date from which next-paycheck estimates are calculated.",
+    )
+    next_paycheck = st.date_input(
+        "Next paycheck date",
+        value=st.session_state.get("next_paycheck", DEMO_NEXT_PAYCHECK),
+        key="next_paycheck",
+    )
+    invalid_window = next_paycheck < analysis_date
+    if invalid_window:
+        st.error("Next paycheck date must be on or after the analysis date.")
+    if st.button("Analyze verified savings options", key="analyze", disabled=invalid_window):
         run = run_offline_agent(
             transactions,
-            analysis_date=DEMO_ANALYSIS_DATE,
-            next_paycheck=DEMO_NEXT_PAYCHECK,
+            analysis_date=analysis_date,
+            next_paycheck=next_paycheck,
             run_id="local-demo-run",
         )
         st.session_state["agent_run"] = run

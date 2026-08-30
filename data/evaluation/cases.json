@@ -48,10 +48,16 @@
         {"transaction_id": "tc-h1", "date": "2026-05-01", "merchant_raw": "HULU", "amount_usd": "8.99"},
         {"transaction_id": "tc-h2", "date": "2026-05-31", "merchant_raw": "HULU", "amount_usd": "9.99"},
         {"transaction_id": "tc-h3", "date": "2026-06-30", "merchant_raw": "HULU", "amount_usd": "9.99"},
+        {"transaction_id": "tc-g1", "date": "2026-05-05", "merchant_raw": "GROCERY MART", "amount_usd": "20.00"},
+        {"transaction_id": "tc-g2", "date": "2026-06-05", "merchant_raw": "GROCERY MART", "amount_usd": "21.00"},
+        {"transaction_id": "tc-g3", "date": "2026-07-05", "merchant_raw": "GROCERY MART", "amount_usd": "75.00"},
         {"transaction_id": "tc-x1", "date": "2026-07-01", "merchant_raw": "BAKERY", "amount_usd": "7.00"},
         {"transaction_id": "tc-x2", "date": "2026-07-04", "merchant_raw": "FUEL STOP", "amount_usd": "44.00"}
       ],
-      "ground_truth": [{"kind": "subscription", "target": "Hulu", "required_evidence_ids": ["tc-h1", "tc-h2", "tc-h3"], "monthly_savings_usd": "9.99"}]
+      "ground_truth": [
+        {"kind": "subscription", "target": "Hulu", "required_evidence_ids": ["tc-h1", "tc-h2", "tc-h3"], "monthly_savings_usd": "9.99"},
+        {"kind": "anomaly", "target": "Grocery Mart", "required_evidence_ids": ["tc-g1", "tc-g2", "tc-g3"], "monthly_savings_usd": "54.50"}
+      ]
     },
     {
       "case_id": "subscription_price_drift",
@@ -100,6 +106,9 @@
       "transactions": [
         {"transaction_id": "ei-i1", "date": "2026-06-03", "merchant_raw": "STATE FARM", "amount_usd": "120.00"},
         {"transaction_id": "ei-i2", "date": "2026-07-03", "merchant_raw": "STATE FARM", "amount_usd": "120.00"},
+        {"transaction_id": "ei-w1", "date": "2026-04-01", "merchant_raw": "CITY WATER", "amount_usd": "48.00"},
+        {"transaction_id": "ei-w2", "date": "2026-05-01", "merchant_raw": "CITY WATER", "amount_usd": "48.00"},
+        {"transaction_id": "ei-w3", "date": "2026-07-20", "merchant_raw": "CITY WATER", "amount_usd": "48.00"},
         {"transaction_id": "ei-x1", "date": "2026-07-04", "merchant_raw": "GROCERY MART", "amount_usd": "42.00"},
         {"transaction_id": "ei-x2", "date": "2026-07-05", "merchant_raw": "PARKING METER", "amount_usd": "4.00"}
       ],

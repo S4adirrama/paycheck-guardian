@@ -52,6 +52,7 @@ def _captions(metrics: dict[str, object]) -> list[dict[str, object]]:
     """Build the narrated sequence directly from the retained metric record."""
     baseline = metrics["baseline"]
     final = metrics["final"]
+    unverified = metrics["unverified_agent"]
     unsafe = metrics["removed_unsafe_recurrence"]
     case_count = len(metrics["case_fingerprints"])
     return [
@@ -83,7 +84,7 @@ def _captions(metrics: dict[str, object]) -> list[dict[str, object]]:
         {
             "frame": "approval-simulation",
             "duration": 28,
-            "caption": "A human checkpoint is explicit: choose a verified subscription, acknowledge the simulation, then simulate locally. No merchant is contacted.",
+            "caption": "A human checkpoint is explicit: choose a verified subscription, acknowledge the simulation, then simulate locally. No merchant is contacted; the human checkpoint is not prediction-scored.",
         },
         {
             "frame": "comparison",
@@ -93,12 +94,12 @@ def _captions(metrics: dict[str, object]) -> list[dict[str, object]]:
         {
             "frame": "changelog",
             "duration": 26,
-            "caption": "The biggest contribution is verification with evidence review and an explicit human checkpoint, rather than automatic financial actions.",
+            "caption": f"Candidate tools drive opportunity F1 ({unverified['f1']} before verification). The verifier reduces unsupported claims from {unverified['unsupported_claims']} to {final['unsupported_claims']}; the human checkpoint is not prediction-scored.",
         },
         {
             "frame": "hot-take",
             "duration": 23,
-            "caption": f"We removed the unsafe recurrence experiment: it reached F1 {unsafe['f1']} but left {unsafe['unsupported_claims']} unsupported claims. Hot take: ask a person before acting on uncertainty.",
+            "caption": f"We removed the unsafe 26–35-day recurrence-only experiment: it reached F1 {unsafe['f1']} but left {unsafe['unsupported_claims']} unsupported claims. Recurrence is not proof of cancellability.",
         },
         {
             "frame": "closing",
@@ -228,7 +229,7 @@ def capture_ui_frames() -> None:
         _capture(page, "verified-plan", "Verified savings plan")
         print("captured verified-plan", flush=True)
 
-        _scroll_to_text(page, "Set a limit for DoorDash")
+        _scroll_to_text(page, "Set a spending limit for DoorDash")
         print("located DoorDash recommendation", flush=True)
         evidence_expander = page.locator("details").filter(has_text="Evidence (3 transactions)").first
         evidence_expander.locator("summary").scroll_into_view_if_needed()

@@ -85,17 +85,45 @@ def test_baseline_and_solution_receive_identical_original_rows() -> None:
     assert input_fingerprint_for_baseline(cases) == input_fingerprint_for_solution(cases)
 
 
-def test_matching_scores_evidence_and_savings_separately() -> None:
-    """A correct target must not receive full evidence or savings credit by coincidence."""
+def test_matching_requires_every_ground_truth_evidence_id() -> None:
+    """A target-only prediction must be both a false positive and a missed opportunity."""
     prediction = correct_prediction().model_copy(
         update={"evidence_ids": ["netflix-1"], "monthly_savings_usd": Decimal("14.00")}
     )
 
     score = match_predictions([prediction], [truth()])
 
-    assert score.true_positives == 1
-    assert score.evidence_coverage == Decimal("0.5000")
-    assert score.mean_savings_error_usd == Decimal("1.4900")
+    assert score.true_positives == 0
+    assert score.false_positives == 1
+    assert score.false_negatives == 1
+    assert score.evidence_coverage == Decimal("0.0000")
+
+
+def test_f1_is_calculated_directly_from_counts_without_rounded_intermediates() -> None:
+    """Rounding precision and recall first must not shift the reported F1 digit."""
+    truths = [
+        GroundTruthOpportunity(
+            kind=RecommendationKind.SUBSCRIPTION,
+            target=f"Target {index}",
+            required_evidence_ids=[f"evidence-{index}"],
+            monthly_savings_usd="10.00",
+        )
+        for index in range(6)
+    ]
+    predictions = [
+        PredictedOpportunity(
+            kind=RecommendationKind.SUBSCRIPTION,
+            target="Target 0",
+            evidence_ids=["evidence-0"],
+            monthly_savings_usd="10.00",
+            confidence=Confidence.HIGH,
+        )
+    ]
+
+    score = match_predictions(predictions, truths)
+
+    assert (score.true_positives, score.false_positives, score.false_negatives) == (1, 0, 5)
+    assert score.f1 == Decimal("0.2857")
 
 
 def test_baseline_and_solution_entry_points_write_only_to_requested_directory(
@@ -224,6 +252,48 @@ def test_unverified_predictions_retain_the_essential_draft_rejected_by_final() -
         (RecommendationKind.SUBSCRIPTION, "Rent")
     ]
     assert final == []
+
+
+def test_removed_unsafe_recurrence_is_distinct_and_recurrence_only() -> None:
+    """The removed experiment cannot duplicate the full unverified candidate-tool workflow."""
+    cases = load_cases(Path("data/evaluation/cases.json"))
+    summary = evaluate_cases(cases)
+
+    unsafe = summary.modes["removed_unsafe_recurrence"].predictions["mixed_opportunities"]
+    unverified = summary.modes["unverified_agent"].predictions["mixed_opportunities"]
+
+    assert [(item.kind, item.target) for item in unsafe] == [
+        (RecommendationKind.SUBSCRIPTION, "Netflix")
+    ]
+    assert {item.kind for item in unverified} >= {
+        RecommendationKind.SUBSCRIPTION,
+        RecommendationKind.DUPLICATE,
+        RecommendationKind.BEHAVIORAL_PATTERN,
+    }
+    assert unsafe != unverified
+
+
+def test_twelve_case_dataset_contains_scored_anomaly_behavior() -> None:
+    """Removing anomaly truth would leave the new deterministic tool unmeasured."""
+    cases = load_cases(Path("data/evaluation/cases.json"))
+
+    anomaly_truths = [
+        truth
+        for case in cases
+        for truth in case.ground_truth
+        if truth.kind == RecommendationKind.ANOMALY
+    ]
+    summary = evaluate_cases(cases)
+    final_anomalies = [
+        prediction
+        for result in summary.modes["final"].predictions.values()
+        for prediction in result
+        if prediction.kind == RecommendationKind.ANOMALY
+    ]
+
+    assert len(cases) == 12
+    assert anomaly_truths
+    assert final_anomalies
 
 
 def test_matching_rejects_required_confidence_or_caveat_mismatch() -> None:

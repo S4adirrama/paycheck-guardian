@@ -9,7 +9,12 @@ from statistics import median
 from .models import Transaction, money
 
 
-ESSENTIAL_CATEGORIES = frozenset({"housing", "utilities", "insurance", "healthcare", "debt"})
+ESSENTIAL_CATEGORIES = frozenset(
+    {"housing", "utilities", "insurance", "healthcare", "debt", "telecom"}
+)
+CANCELLABLE_CATEGORIES = frozenset(
+    {"streaming", "music", "cloud_storage", "subscription", "fitness"}
+)
 DISCRETIONARY_CATEGORIES = frozenset({"food_delivery", "coffee", "entertainment"})
 
 
@@ -36,6 +41,24 @@ class SpendingPattern:
     category: str
     charge_count: int
     monthly_amount: Decimal
+    evidence_ids: list[str]
+
+
+@dataclass(frozen=True)
+class AnomalyCandidate:
+    merchant: str
+    category: str
+    observed_amount: Decimal
+    typical_amount: Decimal
+    monthly_amount: Decimal
+    evidence_ids: list[str]
+
+
+@dataclass(frozen=True)
+class CategorySummary:
+    category: str
+    charge_count: int
+    total_amount: Decimal
     evidence_ids: list[str]
 
 
@@ -94,7 +117,7 @@ def find_recurring(transactions: list[Transaction]) -> list[RecurringCandidate]:
                 interval_days=interval,
                 monthly_amount=_monthly_equivalent(typical_amount, interval),
                 evidence_ids=[row.transaction_id for row in evidence],
-                cancellable=category not in ESSENTIAL_CATEGORIES,
+                cancellable=category in CANCELLABLE_CATEGORIES,
             )
         )
     return candidates
@@ -145,6 +168,53 @@ def find_discretionary_patterns(transactions: list[Transaction]) -> list[Spendin
                 )
                 break
     return patterns
+
+
+def find_anomalies(transactions: list[Transaction]) -> list[AnomalyCandidate]:
+    """Find one material high outlier per merchant against at least two stable observations."""
+    by_merchant: dict[tuple[str, str], list[Transaction]] = defaultdict(list)
+    for row in transactions:
+        by_merchant[(row.merchant_normalized, row.category)].append(row)
+
+    anomalies: list[AnomalyCandidate] = []
+    for (merchant, category), rows in sorted(by_merchant.items()):
+        evidence = _sorted(rows)
+        if len(evidence) < 3:
+            continue
+        largest = max(evidence, key=lambda row: (row.amount_usd, row.date, row.transaction_id))
+        comparison = [row.amount_usd for row in evidence if row is not largest]
+        typical = money(median(comparison))
+        excess = money(largest.amount_usd - typical)
+        if largest.amount_usd < typical * Decimal("2") or excess < Decimal("10.00"):
+            continue
+        anomalies.append(
+            AnomalyCandidate(
+                merchant=merchant,
+                category=category,
+                observed_amount=largest.amount_usd,
+                typical_amount=typical,
+                monthly_amount=excess,
+                evidence_ids=[row.transaction_id for row in evidence],
+            )
+        )
+    return anomalies
+
+
+def summarize_categories(transactions: list[Transaction]) -> list[CategorySummary]:
+    """Return deterministic category totals with complete evidence membership."""
+    by_category: dict[str, list[Transaction]] = defaultdict(list)
+    for row in transactions:
+        by_category[row.category].append(row)
+    return [
+        CategorySummary(
+            category=category,
+            charge_count=len(evidence),
+            total_amount=money(sum((row.amount_usd for row in evidence), Decimal("0"))),
+            evidence_ids=[row.transaction_id for row in evidence],
+        )
+        for category, rows in sorted(by_category.items())
+        if (evidence := _sorted(rows))
+    ]
 
 
 def savings_before_paycheck(

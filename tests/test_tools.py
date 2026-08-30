@@ -136,3 +136,63 @@ def test_discretionary_pattern_requires_three_charges_in_thirty_days() -> None:
     assert [(item.merchant, item.category, item.charge_count) for item in patterns] == [
         ("DoorDash", "food_delivery", 3)
     ]
+
+
+@pytest.mark.parametrize(
+    ("merchant", "category", "expected_cancellable"),
+    [
+        ("Netflix", "streaming", True),
+        ("Verizon", "telecom", False),
+        ("Mystery Utility", "other", False),
+        ("Electricity", "utilities", False),
+    ],
+)
+def test_recurring_cancellation_uses_a_positive_semantic_allowlist(
+    merchant: str, category: str, expected_cancellable: bool
+) -> None:
+    """Recurrence alone must never turn telecom or unknown merchants into cancellations."""
+    rows = [
+        make_transaction("r1", date(2026, 6, 1), merchant, "40.00", category),
+        make_transaction("r2", date(2026, 7, 1), merchant, "40.00", category),
+    ]
+
+    assert find_recurring(rows)[0].cancellable is expected_cancellable
+
+
+def test_anomaly_detects_one_large_charge_against_stable_merchant_history() -> None:
+    """Removing the outlier comparison would miss the evaluation's unusual-spend behavior."""
+    from paycheck_guardian.tools import find_anomalies
+
+    rows = [
+        make_transaction("g1", date(2026, 5, 1), "Grocery Mart", "20.00", "groceries"),
+        make_transaction("g2", date(2026, 6, 1), "Grocery Mart", "21.00", "groceries"),
+        make_transaction("g3", date(2026, 7, 1), "Grocery Mart", "75.00", "groceries"),
+    ]
+
+    anomalies = find_anomalies(rows)
+
+    assert len(anomalies) == 1
+    assert anomalies[0].merchant == "Grocery Mart"
+    assert anomalies[0].monthly_amount == Decimal("54.50")
+    assert anomalies[0].evidence_ids == ["g1", "g2", "g3"]
+
+
+def test_category_summary_totals_each_category_with_evidence() -> None:
+    """Dropping a row from the category tool would make its summary unauditable."""
+    from paycheck_guardian.tools import summarize_categories
+
+    rows = [
+        make_transaction("f1", date(2026, 7, 1), "DoorDash", "20.00", "food_delivery"),
+        make_transaction("f2", date(2026, 7, 2), "Uber Eats", "25.00", "food_delivery"),
+        make_transaction("g1", date(2026, 7, 3), "Grocery Mart", "50.00", "groceries"),
+    ]
+
+    summaries = summarize_categories(rows)
+
+    assert [
+        (item.category, item.charge_count, item.total_amount, item.evidence_ids)
+        for item in summaries
+    ] == [
+        ("food_delivery", 2, Decimal("45.00"), ["f1", "f2"]),
+        ("groceries", 1, Decimal("50.00"), ["g1"]),
+    ]

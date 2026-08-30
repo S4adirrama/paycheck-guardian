@@ -18,6 +18,7 @@ class InputValidationError(ValueError):
 
 _REQUIRED_COLUMNS = {"date", "description", "amount"}
 _ALIASES = load_aliases(Path(__file__).resolve().parents[1] / "data" / "merchant_aliases.json")
+_RECEIPT_FIXTURES = Path(__file__).resolve().parents[1] / "data" / "demo" / "receipts"
 
 
 def _error(source_name: str, row: int, message: str) -> InputValidationError:
@@ -43,12 +44,14 @@ def _parse_amount(value: str, source_name: str, row: int) -> Decimal:
 
 def _transaction(
     *, source_name: str, row: int, transaction_date: date, description: str,
-    amount: Decimal, source_type: SourceType,
+    amount: Decimal, source_type: SourceType, is_synthetic: bool,
 ) -> Transaction:
     merchant_raw = description.strip()
     if not merchant_raw:
         raise _error(source_name, row, "description must not be blank")
     merchant_normalized, category = normalize_merchant(merchant_raw, _ALIASES)
+    if not merchant_normalized:
+        raise _error(source_name, row, "merchant must contain a letter or number")
     hash_input = f"{source_name}|{row}|{transaction_date.isoformat()}|{merchant_raw}|{amount:.2f}"
     return Transaction(
         transaction_id=sha256(hash_input.encode("utf-8")).hexdigest()[:12],
@@ -59,11 +62,13 @@ def _transaction(
         category=category,
         source_type=source_type,
         source_reference=f"{source_name}:{row}",
-        is_synthetic=True,
+        is_synthetic=is_synthetic,
     )
 
 
-def parse_bank_csv(stream: TextIO, source_name: str) -> list[Transaction]:
+def parse_bank_csv(
+    stream: TextIO, source_name: str, *, is_synthetic: bool = True
+) -> list[Transaction]:
     """Parse a UTF-8 bank export that records positive USD spending amounts."""
     reader = csv.DictReader(stream)
     fields = set(reader.fieldnames or [])
@@ -86,12 +91,15 @@ def parse_bank_csv(stream: TextIO, source_name: str) -> list[Transaction]:
                 description=row.get("description") or "",
                 amount=amount,
                 source_type=SourceType.BANK_CSV,
+                is_synthetic=is_synthetic,
             )
         )
     return transactions
 
 
-def parse_receipt_fixture(text: str, source_name: str) -> list[Transaction]:
+def parse_receipt_fixture(
+    text: str, source_name: str, *, is_synthetic: bool = True
+) -> list[Transaction]:
     """Parse a deliberately small, deterministic synthetic receipt text format."""
     values: dict[str, str] = {}
     for line in StringIO(text):
@@ -113,5 +121,30 @@ def parse_receipt_fixture(text: str, source_name: str) -> list[Transaction]:
             description=values["MERCHANT"],
             amount=_parse_amount(amount_value, source_name, 1),
             source_type=SourceType.RECEIPT,
+            is_synthetic=is_synthetic,
         )
     ]
+
+
+def parse_receipt_image(
+    content: bytes, source_name: str, *, is_synthetic: bool = True
+) -> list[Transaction]:
+    """Resolve a byte-identical bundled PNG through its deterministic paired text fixture."""
+    content_digest = sha256(content).hexdigest()
+    supported: dict[str, Path] = {}
+    for image_path in sorted(_RECEIPT_FIXTURES.glob("*.png")):
+        text_path = image_path.with_suffix(".txt")
+        if text_path.is_file():
+            supported[sha256(image_path.read_bytes()).hexdigest()] = text_path
+    paired_text = supported.get(content_digest)
+    if paired_text is None:
+        raise InputValidationError(
+            f"{source_name}: unsupported receipt image; offline parsing accepts only a "
+            "byte-identical bundled PNG with its paired .txt fixture. Upload the paired "
+            "receipt text or a bank CSV instead."
+        )
+    return parse_receipt_fixture(
+        paired_text.read_text(encoding="utf-8"),
+        source_name,
+        is_synthetic=is_synthetic,
+    )

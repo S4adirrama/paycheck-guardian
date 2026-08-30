@@ -203,11 +203,10 @@ def _normalization_only_predictions(case: EvaluationCase) -> list[PredictedOppor
 
 def _draft_predictions(case: EvaluationCase) -> list[PredictedOpportunity]:
     """Expose the same drafts final mode submits to verification, before acceptance filtering."""
-    transactions = {row.transaction_id: row for row in case.transactions}
     return [
         _prediction(
             recommendation.kind,
-            transactions[recommendation.evidence_transaction_ids[0]].merchant_normalized,
+            recommendation.verified_target,
             recommendation.evidence_transaction_ids,
             recommendation.monthly_savings_usd,
             recommendation.confidence,
@@ -220,11 +219,10 @@ def _draft_predictions(case: EvaluationCase) -> list[PredictedOpportunity]:
 
 
 def _predictions_from_final_run(run: AgentRun) -> list[PredictedOpportunity]:
-    transactions = {row.transaction_id: row for row in run.transactions}
     return [
         _prediction(
             recommendation.kind,
-            transactions[recommendation.evidence_transaction_ids[0]].merchant_normalized,
+            recommendation.verified_target,
             recommendation.evidence_transaction_ids,
             recommendation.monthly_savings_usd,
             recommendation.confidence,
@@ -234,10 +232,43 @@ def _predictions_from_final_run(run: AgentRun) -> list[PredictedOpportunity]:
     ]
 
 
+def _unsafe_recurrence_predictions(case: EvaluationCase) -> list[PredictedOpportunity]:
+    """Removed experiment: label any normalized 26-35-day pair as cancellable."""
+    grouped: dict[str, list[Transaction]] = {}
+    for row in case.transactions:
+        grouped.setdefault(row.merchant_normalized, []).append(row)
+    predictions: list[PredictedOpportunity] = []
+    for merchant, rows in sorted(grouped.items()):
+        ordered = sorted(rows, key=lambda item: (item.date, item.transaction_id))
+        matching_pair = next(
+            (
+                (earlier, later)
+                for earlier, later in zip(ordered, ordered[1:])
+                if 26 <= (later.date - earlier.date).days <= 35
+            ),
+            None,
+        )
+        if matching_pair is None:
+            continue
+        earlier, later = matching_pair
+        predictions.append(
+            _prediction(
+                RecommendationKind.SUBSCRIPTION,
+                merchant,
+                [earlier.transaction_id, later.transaction_id],
+                later.amount_usd,
+                Confidence.LOW,
+                "Removed unsafe recurrence-only cancellation claim.",
+            )
+        )
+    return predictions
+
+
 def _is_match(prediction: PredictedOpportunity, truth: GroundTruthOpportunity) -> bool:
     return (
         prediction.kind == truth.kind
         and _target(prediction.target) == _target(truth.target)
+        and set(truth.required_evidence_ids).issubset(prediction.evidence_ids)
         and (truth.expected_confidence is None or prediction.confidence == truth.expected_confidence)
         and (not truth.caveat_required or bool(prediction.caveat and prediction.caveat.strip()))
     )
@@ -262,7 +293,12 @@ def match_predictions(
     false_negatives = len(truth) - true_positives
     precision = _round(Decimal(true_positives) / Decimal(len(predictions))) if predictions else Decimal("0.0000")
     recall = _round(Decimal(true_positives) / Decimal(len(truth))) if truth else Decimal("1.0000")
-    f1 = _round(Decimal(2) * precision * recall / (precision + recall)) if precision + recall else Decimal("0.0000")
+    denominator = (2 * true_positives) + false_positives + false_negatives
+    f1 = (
+        _round(Decimal(2 * true_positives) / Decimal(denominator))
+        if denominator
+        else Decimal("0.0000")
+    )
     if pairs:
         coverage = [
             Decimal(len(set(predictions[prediction_index].evidence_ids) & set(truth[truth_index].required_evidence_ids)))
@@ -299,7 +335,8 @@ def _aggregate(case_scores: Iterable[CaseScore]) -> dict[str, object]:
     fn = sum(score.false_negatives for score in scores)
     precision = _round(Decimal(tp) / Decimal(tp + fp)) if tp + fp else Decimal("0.0000")
     recall = _round(Decimal(tp) / Decimal(tp + fn)) if tp + fn else Decimal("1.0000")
-    f1 = _round(Decimal(2) * precision * recall / (precision + recall)) if precision + recall else Decimal("0.0000")
+    denominator = (2 * tp) + fp + fn
+    f1 = _round(Decimal(2 * tp) / Decimal(denominator)) if denominator else Decimal("0.0000")
     matched = [score for score in scores if score.true_positives]
     return {
         "true_positives": tp,
@@ -320,7 +357,7 @@ def evaluate_cases(cases: list[EvaluationCase]) -> EvaluationSummary:
         "baseline": lambda case: run_baseline(case),
         "normalization_only": _normalization_only_predictions,
         "unverified_agent": _draft_predictions,
-        "removed_unsafe_recurrence": _draft_predictions,
+        "removed_unsafe_recurrence": _unsafe_recurrence_predictions,
     }
     results: dict[str, ModeResult] = {}
     for mode, runner in modes.items():

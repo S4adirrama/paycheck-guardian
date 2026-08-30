@@ -212,8 +212,10 @@ The intended user is a person reviewing their own spending shortly before payday
 ## Architecture & Safety Boundaries
 
 - Deterministic CSV/fixture parsers and merchant normalization keep the offline path reproducible.
-- Evidence-first tools produce candidate transactions and cent-rounded estimates.
-- A verifier checks evidence, arithmetic, confidence, caveats, and essential-payment exclusions before a recommendation is shown.
+- Evidence-first recurrence, duplicate, anomaly, category-summary, and discretionary tools produce candidate transactions and cent-rounded estimates.
+- Cancellation requires a positive semantic allowlist; telecom, utilities, unknown merchants, and other ambiguous recurrence remain non-cancellable.
+- A verifier checks structured target/action fields, evidence, arithmetic, confidence, caveats, and cancellation semantics before canonical display copy is shown.
+- Cross-recommendation evidence ownership prevents one charge from being counted in more than one active savings action.
 - Streamlit runs locally. The only cancellation capability is a clearly labelled local simulation after an acknowledgement; no bank or merchant integration exists.
 
 ## Measured Improvement
@@ -234,9 +236,11 @@ In the retained run, matched final recommendations have evidence coverage {final
 
 1. **Baseline.** Exact raw merchant labels and a 26–35-day recurrence rule reached F1 {baseline['f1']}; it retained {baseline['unsupported_claims']} unsupported claims.
 2. **Normalization.** Canonical merchant grouping alone reached F1 {normalization['f1']}; it still retained {normalization['unsupported_claims']} unsupported claims.
-3. **Verification.** Deterministic candidate generation before filtering reached F1 {unverified['f1']} with {unverified['unsupported_claims']} unsupported claims, making the verifier's contribution auditable.
-4. **Removed experiment.** `removed_unsafe_recurrence` treats every detected 26–35-day charge as cancellable before the final safety gate. Its retained predictions score F1 {unsafe['f1']} with {unsafe['unsupported_claims']} unsupported claims, including essential-payment false positives. It was removed because recurring evidence alone cannot justify cancellation advice for rent, insurance, healthcare, utilities, or debt.
+3. **Candidate tools and verification.** The unverified recurrence, duplicate, anomaly, and discretionary candidates reached F1 {unverified['f1']} with {unverified['unsupported_claims']} unsupported claims. The candidate tools drive opportunity recall and F1; the verifier's measured role is reducing unsupported claims before display.
+4. **Removed experiment.** `removed_unsafe_recurrence` labels any normalized 26–35-day pair as cancellable and uses no duplicate, anomaly, category-summary, discretionary, or verification tool. Its retained predictions score F1 {unsafe['f1']} with {unsafe['unsupported_claims']} unsupported claims, including essential and irregular-payment false positives. It was removed because recurrence alone cannot justify cancellation advice.
 5. **Final.** The verifier rejects unsupported essential-payment advice and retains only evidence-backed recommendations: F1 {final['f1']} and {final['unsupported_claims']} unsupported claims in this synthetic evaluation.
+
+The explicit human checkpoint is a local product-safety control. It is not a prediction and is not included in precision, recall, F1, or unsupported-claim scoring.
 
 ## Main Failure Mode
 
@@ -258,6 +262,22 @@ For personal finance, an agent that can say “I cannot safely recommend this”
 
 This project was created during the hackathon as a prototype. The demo and evaluation datasets are intentionally synthetic. The repository source, documentation, and synthetic fixtures are available under the [MIT License](LICENSE). See [REPRODUCTION.md](REPRODUCTION.md) for the Python 3.11 setup, offline execution, optional online configuration, and expected artifacts.
 
+### Third-party components and licenses
+
+| Layer | Component | Pinned/tested version | License |
+| --- | --- | --- | --- |
+| Runtime | Python | 3.11.15 tested | PSF-2.0 |
+| Runtime | Pydantic | 2.13.5 | MIT |
+| Runtime | Streamlit | 1.50.0 | Apache-2.0 |
+| Runtime | Pillow | 11.3.0 | MIT-CMU |
+| Optional online | OpenAI Python SDK | 2.48.0 | Apache-2.0 |
+| Build/dev | setuptools | 82.0.1 build pin | MIT |
+| Dev/test | pytest | 8.4.2 | MIT |
+| Browser automation | Playwright | 1.60.0 | Apache-2.0 |
+| Browser runtime | Chromium / Chrome for Testing | 148.0.7778.96, Playwright revision 1223 tested | BSD-3-Clause core plus bundled third-party notices |
+| Reproduction | Git | 2.50.1 Apple Git-155 tested | GPL-2.0-only |
+| Media | FFmpeg / ffprobe | 8.0.1 tested Homebrew GPL build | GPL-3.0-or-later for the tested build; license varies with build flags |
+
 {verification_section}
 """
 
@@ -276,17 +296,38 @@ These instructions reproduce the local, deterministic submission on Python 3.11.
 
 ## Requirements
 
-- Python 3.11 (the retained run used Python {metrics['python_version']})
+- Python 3.11 (tested: Python {metrics['python_version']})
+- Git (tested: `git version 2.50.1 (Apple Git-155)`)
+- FFmpeg and ffprobe (tested: 8.0.1, GPL-enabled Homebrew build)
+- Playwright 1.60.0 with Chrome for Testing 148.0.7778.96 / Chromium revision 1223
 - macOS, Linux, or Windows shell with a local browser for Streamlit
 - No database, bank credentials, API request, or external service for the offline path
+
+Install the external tools on macOS with Homebrew:
+
+```sh
+brew install python@3.11 git ffmpeg
+python3.11 --version
+git --version
+ffmpeg -version
+ffprobe -version
+```
+
+On Debian/Ubuntu, install the distribution packages, then confirm that the commands above resolve to Python 3.11, Git, FFmpeg, and ffprobe:
+
+```sh
+sudo apt-get update
+sudo apt-get install -y python3.11 python3.11-venv git ffmpeg
+```
 
 ## Create an environment
 
 ```sh
 python3.11 -m venv .venv
 . .venv/bin/activate
-python -m pip install --upgrade pip
+python -m pip install --upgrade pip==26.0.1
 python -m pip install -e '.[dev]'
+.venv/bin/playwright install chromium
 ```
 
 On Windows PowerShell, activate with `.venv\\Scripts\\Activate.ps1`.
@@ -298,6 +339,8 @@ On Windows PowerShell, activate with `.venv\\Scripts\\Activate.ps1`.
 ```
 
 Expected result: the deterministic fixture generator creates `data/demo/receipts/receipt-01.png`, `data/demo/receipts/receipt-01.txt`, `data/demo/receipts/receipt-02.png`, `data/demo/receipts/receipt-02.txt`, `data/demo/receipts/receipt-03.png`, and `data/demo/receipts/receipt-03.txt`.
+
+The paired `.txt` fixtures are the cross-host deterministic parsing contract. PNG rendering is byte-stable on one host but can vary with the available system font; image uploads are accepted only when their content hash matches a locally bundled PNG and its paired text fixture.
 
 ## Run the fair baseline
 
@@ -335,20 +378,20 @@ Expected result: the complete collected suite passes with exit status 0.
 ## Run the local app
 
 ```sh
-.venv/bin/streamlit run app.py --server.headless true --server.port 8501
+.venv/bin/streamlit run app.py --server.headless true --server.address 127.0.0.1 --server.port 8501
 ```
 
-Expected result: Streamlit serves the local app at `http://localhost:8501`. Open that URL, choose **Load Alex's synthetic demo**, then choose **Analyze verified savings options**. The download buttons emit the same Markdown/JSON report format retained under `artifacts/reports/`. The cancellation control is only a local simulation and requires acknowledgement.
+Expected result: Streamlit serves the local app only on loopback at `http://127.0.0.1:8501`. Open that URL, choose **Load Alex's synthetic demo**, then choose **Analyze verified savings options**. For uploads, select one or more CSV, paired receipt-text, or supported bundled PNG inputs and set the analysis/next-paycheck dates. Inputs are merged and semantic duplicates are kept once. The download buttons emit the same Markdown/JSON report format retained under `artifacts/reports/`. The cancellation control is only a local simulation and requires acknowledgement.
 
 ## Capture a local demo video
 
-Task 9 supplies the capture script. After that task is complete, run:
+The current capture script and submitted MP4 are included. Rebuild them with:
 
 ```sh
 .venv/bin/python scripts/capture_demo.py
 ```
 
-Expected result: `artifacts/video/paycheck-guardian-demo.mp4`, an H.264 1920×1080 MP4 lasting 60–300 seconds. The file is intentionally absent before Task 9; do not substitute a manual recording or fabricate a fake file. Do not show real transaction data, credentials, terminal environment variables, or API configuration in a recording.
+Expected result: the existing `artifacts/video/paycheck-guardian-demo.mp4` is replaced by a freshly captured H.264 1920×1080 MP4 lasting 60–300 seconds. Do not show real transaction data, credentials, terminal environment variables, or API configuration in a recording.
 
 ## Expected retained measurements
 
@@ -401,6 +444,12 @@ def main() -> None:
         required=True,
         help="tested implementation commit to record in generated verification evidence",
     )
+    parser.add_argument(
+        "--output-root",
+        type=Path,
+        default=ROOT,
+        help="destination repository root (default: project root; tests may use a temporary root)",
+    )
     args = parser.parse_args()
     metrics = _read_json(EVALUATION_DIR / "metrics.json")
     baseline = _read_json(EVALUATION_DIR / "baseline_predictions.json")
@@ -408,13 +457,14 @@ def main() -> None:
     verification = _submission_verification(metrics, args.verified_source_commit)
     baseline_events, final_events = _challenge_trajectories(baseline, final)
     demo_json, demo_markdown = _render_demo_report()
+    output_root = args.output_root.resolve()
 
-    _write(ROOT / "README.md", _render_readme(metrics, verification))
-    _write(ROOT / "REPRODUCTION.md", _render_reproduction(metrics, verification))
-    _json(TRAJECTORY_DIR / "baseline.json", baseline_events)
-    _json(TRAJECTORY_DIR / "final.json", final_events)
-    _json(REPORT_DIR / "demo_report.json", demo_json)
-    _write(REPORT_DIR / "demo_report.md", demo_markdown)
+    _write(output_root / "README.md", _render_readme(metrics, verification))
+    _write(output_root / "REPRODUCTION.md", _render_reproduction(metrics, verification))
+    _json(output_root / "artifacts/trajectories/baseline.json", baseline_events)
+    _json(output_root / "artifacts/trajectories/final.json", final_events)
+    _json(output_root / "artifacts/reports/demo_report.json", demo_json)
+    _write(output_root / "artifacts/reports/demo_report.md", demo_markdown)
     print("rendered evidence-backed submission documents and representative artifacts")
 
 

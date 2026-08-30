@@ -45,6 +45,15 @@ class RecommendationStatus(StrEnum):
     DISMISSED = "dismissed"
 
 
+class RecommendationAction(StrEnum):
+    """Closed set of verifier-approved actions; display copy is derived from these values."""
+
+    CANCEL_SUBSCRIPTION = "cancel_subscription"
+    REVIEW_DUPLICATE = "review_duplicate"
+    REDUCE_DISCRETIONARY_SPENDING = "reduce_discretionary_spending"
+    REVIEW_ANOMALY = "review_anomaly"
+
+
 class DomainModel(BaseModel):
     """Base model that rejects misspelled or undocumented fields."""
 
@@ -76,6 +85,8 @@ class Evidence(DomainModel):
 class Recommendation(DomainModel):
     recommendation_id: str = Field(min_length=1)
     kind: RecommendationKind
+    verified_target: str = Field(min_length=1)
+    verified_action: RecommendationAction
     title: str = Field(min_length=1)
     rationale: str = Field(min_length=1)
     evidence_transaction_ids: list[str] = Field(min_length=1)

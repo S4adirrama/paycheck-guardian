@@ -3,23 +3,31 @@
 from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal
+from hashlib import sha256
+import json
+import re
 
 from .models import (
     AgentRun,
     Confidence,
     Recommendation,
+    RecommendationAction,
     RecommendationKind,
     RecommendationStatus,
     Transaction,
 )
 from .tools import (
+    AnomalyCandidate,
+    CategorySummary,
     DuplicateCandidate,
     RecurringCandidate,
     SpendingPattern,
+    find_anomalies,
     find_discretionary_patterns,
     find_duplicates,
     find_recurring,
     savings_before_paycheck,
+    summarize_categories,
 )
 from .trajectory import TrajectoryRecorder
 from .verifier import VerificationResult, verify_recommendation
@@ -61,6 +69,8 @@ def _subscription_draft(
         return Recommendation(
             recommendation_id=f"subscription-{_slug(candidate.merchant)}",
             kind=RecommendationKind.SUBSCRIPTION,
+            verified_target=candidate.merchant,
+            verified_action=RecommendationAction.CANCEL_SUBSCRIPTION,
             title=f"Review {candidate.merchant} subscription",
             rationale=(
                 f"{candidate.merchant} appears to recur every {candidate.interval_days} days; "
@@ -86,6 +96,8 @@ def _duplicate_draft(
         return Recommendation(
             recommendation_id=f"duplicate-{_slug(candidate.merchant)}-{'-'.join(candidate.evidence_ids)}",
             kind=RecommendationKind.DUPLICATE,
+            verified_target=candidate.merchant,
+            verified_action=RecommendationAction.REVIEW_DUPLICATE,
             title=f"Review possible duplicate {candidate.merchant} charge",
             rationale="Two matching charges occurred within two days; confirm one was not duplicated.",
             evidence_transaction_ids=candidate.evidence_ids,
@@ -108,6 +120,8 @@ def _pattern_draft(
         return Recommendation(
             recommendation_id=f"pattern-{_slug(candidate.merchant)}-{'-'.join(candidate.evidence_ids)}",
             kind=RecommendationKind.BEHAVIORAL_PATTERN,
+            verified_target=candidate.merchant,
+            verified_action=RecommendationAction.REDUCE_DISCRETIONARY_SPENDING,
             title=f"Set a limit for {candidate.merchant}",
             rationale=(
                 f"{candidate.charge_count} discretionary {candidate.category} purchases occurred "
@@ -126,50 +140,136 @@ def _pattern_draft(
     return _CandidateDraft(recommendation, recommendation.model_copy(deep=True))
 
 
+def _anomaly_draft(
+    candidate: AnomalyCandidate, analysis_date: date, next_paycheck: date
+) -> _CandidateDraft:
+    def build() -> Recommendation:
+        return Recommendation(
+            recommendation_id=f"anomaly-{_slug(candidate.merchant)}-{'-'.join(candidate.evidence_ids)}",
+            kind=RecommendationKind.ANOMALY,
+            verified_target=candidate.merchant,
+            verified_action=RecommendationAction.REVIEW_ANOMALY,
+            title=f"Review unusual {candidate.merchant} charge",
+            rationale="One charge is materially above the merchant's other observed charges.",
+            evidence_transaction_ids=candidate.evidence_ids,
+            monthly_savings_usd=candidate.monthly_amount,
+            next_paycheck_savings_usd=_next_paycheck_savings(
+                candidate.monthly_amount, analysis_date, next_paycheck
+            ),
+            confidence=Confidence.MEDIUM,
+            caveat="Confirm whether the unusual charge was expected before treating it as savings.",
+        )
+
+    recommendation = build()
+    return _CandidateDraft(recommendation, recommendation.model_copy(deep=True))
+
+
 def _serialized_transactions(transactions: list[Transaction]) -> dict[str, object]:
-    return {"transactions": [row.model_dump(mode="json") for row in transactions]}
+    private_payload = [row.model_dump(mode="json") for row in transactions]
+    fingerprint = sha256(
+        json.dumps(private_payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    category_counts: dict[str, int] = {}
+    for row in transactions:
+        category_counts[row.category] = category_counts.get(row.category, 0) + 1
+    return {
+        "transaction_fingerprint": fingerprint,
+        "transaction_count": len(transactions),
+        "transaction_ids": [row.transaction_id for row in transactions],
+        "category_counts": dict(sorted(category_counts.items())),
+        "synthetic_count": sum(row.is_synthetic for row in transactions),
+    }
+
+
+def _fingerprint(value: object) -> str:
+    return sha256(
+        json.dumps(value, sort_keys=True, separators=(",", ":"), default=str).encode("utf-8")
+    ).hexdigest()
 
 
 def _tool_result(candidates: list[object]) -> dict[str, object]:
-    """Serialize all deterministic findings so a trajectory can be replayed and audited."""
+    """Summarize deterministic findings without retaining raw merchant or amount fields."""
     serialized: list[dict[str, object]] = []
     for candidate in candidates:
         if isinstance(candidate, RecurringCandidate):
             serialized.append(
                 {
-                    "merchant": candidate.merchant,
+                    "candidate_fingerprint": _fingerprint(candidate.__dict__),
                     "category": candidate.category,
                     "interval_days": candidate.interval_days,
-                    "monthly_amount": candidate.monthly_amount,
                     "evidence_ids": candidate.evidence_ids,
+                    "evidence_count": len(candidate.evidence_ids),
                     "cancellable": candidate.cancellable,
+                    "summary": "recurring cadence candidate",
                 }
             )
         elif isinstance(candidate, DuplicateCandidate):
             serialized.append(
                 {
-                    "merchant": candidate.merchant,
-                    "amount": candidate.amount,
+                    "candidate_fingerprint": _fingerprint(candidate.__dict__),
                     "evidence_ids": candidate.evidence_ids,
+                    "evidence_count": len(candidate.evidence_ids),
+                    "summary": "near-date matching charge candidate",
                 }
             )
         elif isinstance(candidate, SpendingPattern):
             serialized.append(
                 {
-                    "merchant": candidate.merchant,
+                    "candidate_fingerprint": _fingerprint(candidate.__dict__),
                     "category": candidate.category,
                     "charge_count": candidate.charge_count,
-                    "monthly_amount": candidate.monthly_amount,
                     "evidence_ids": candidate.evidence_ids,
+                    "evidence_count": len(candidate.evidence_ids),
+                    "summary": "discretionary frequency candidate",
                 }
             )
-    return {"candidates": serialized}
+        elif isinstance(candidate, AnomalyCandidate):
+            serialized.append(
+                {
+                    "candidate_fingerprint": _fingerprint(candidate.__dict__),
+                    "category": candidate.category,
+                    "evidence_ids": candidate.evidence_ids,
+                    "evidence_count": len(candidate.evidence_ids),
+                    "summary": "material high-outlier candidate",
+                }
+            )
+        elif isinstance(candidate, CategorySummary):
+            serialized.append(
+                {
+                    "candidate_fingerprint": _fingerprint(candidate.__dict__),
+                    "category": candidate.category,
+                    "charge_count": candidate.charge_count,
+                    "evidence_ids": candidate.evidence_ids,
+                    "evidence_count": len(candidate.evidence_ids),
+                    "summary": "category spending summary",
+                }
+            )
+    return {"candidate_count": len(serialized), "candidates": serialized}
+
+
+def _trace_recommendation(recommendation: Recommendation) -> dict[str, object]:
+    private_payload = recommendation.model_dump(mode="json")
+    return {
+        "recommendation_id": recommendation.recommendation_id,
+        "kind": recommendation.kind.value,
+        "verified_action": recommendation.verified_action.value,
+        "target_fingerprint": _fingerprint(recommendation.verified_target),
+        "recommendation_fingerprint": _fingerprint(private_payload),
+        "evidence_ids": recommendation.evidence_transaction_ids,
+        "evidence_count": len(recommendation.evidence_transaction_ids),
+        "status": recommendation.status.value,
+    }
+
+
+def _sanitized_feedback(reasons: list[str]) -> list[str]:
+    return [re.sub(r"\$\d+(?:\.\d+)?", "[amount redacted]", reason) for reason in reasons]
 
 
 def _drafts_from_candidates(
     recurring: list[RecurringCandidate],
     duplicates: list[DuplicateCandidate],
     patterns: list[SpendingPattern],
+    anomalies: list[AnomalyCandidate],
     analysis_date: date,
     next_paycheck: date,
 ) -> list[_CandidateDraft]:
@@ -177,6 +277,7 @@ def _drafts_from_candidates(
     drafts = [_subscription_draft(candidate, analysis_date, next_paycheck) for candidate in recurring]
     drafts.extend(_duplicate_draft(candidate, analysis_date, next_paycheck) for candidate in duplicates)
     drafts.extend(_pattern_draft(candidate, analysis_date, next_paycheck) for candidate in patterns)
+    drafts.extend(_anomaly_draft(candidate, analysis_date, next_paycheck) for candidate in anomalies)
     return drafts
 
 
@@ -190,6 +291,7 @@ def draft_offline_recommendations(
             find_recurring(transactions),
             find_duplicates(transactions),
             find_discretionary_patterns(transactions),
+            find_anomalies(transactions),
             analysis_date,
             next_paycheck,
         )
@@ -236,7 +338,7 @@ def _verify_draft(
             component="verifier",
             event_type="tool_called",
             tool_name="verify_recommendation",
-            tool_input={"recommendation": candidate.model_dump(mode="json")},
+            tool_input={"recommendation": _trace_recommendation(candidate)},
             attempt=attempt,
         )
         result = verify_recommendation(
@@ -245,21 +347,19 @@ def _verify_draft(
             analysis_date=analysis_date,
             next_paycheck=next_paycheck,
         )
+        safe_feedback = _sanitized_feedback(result.reasons)
         recorder.record(
             component="verifier",
             event_type="tool_result",
             tool_name="verify_recommendation",
-            tool_input={"recommendation": candidate.model_dump(mode="json")},
+            tool_input={"recommendation": _trace_recommendation(candidate)},
             tool_result={
                 "accepted": result.accepted,
-                "recommendation": (
-                    result.recommendation.model_dump(mode="json")
-                    if result.recommendation is not None
-                    else None
-                ),
-                "reasons": result.reasons,
+                "reason_count": len(safe_feedback),
+                "reasons": safe_feedback,
+                "summary": "accepted verified candidate" if result.accepted else "rejected candidate",
             },
-            verification_feedback=result.reasons,
+            verification_feedback=safe_feedback,
             attempt=attempt,
         )
         if result.accepted and result.recommendation is not None:
@@ -271,7 +371,7 @@ def _verify_draft(
             recorder.record(
                 component="agent",
                 event_type="candidate_retry",
-                verification_feedback=result.reasons,
+                verification_feedback=safe_feedback,
                 attempt=2,
             )
             candidate = corrected
@@ -332,7 +432,36 @@ def run_offline_agent(
         tool_result=_tool_result(patterns),
     )
 
-    drafts = _drafts_from_candidates(recurring, duplicates, patterns, analysis_date, next_paycheck)
+    recorder.record(
+        component="analysis",
+        event_type="tool_called",
+        tool_name="find_anomalies",
+        tool_input=_serialized_transactions(transactions),
+    )
+    anomalies = find_anomalies(transactions)
+    recorder.record(
+        component="analysis",
+        event_type="tool_result",
+        tool_name="find_anomalies",
+        tool_result=_tool_result(anomalies),
+    )
+    recorder.record(
+        component="analysis",
+        event_type="tool_called",
+        tool_name="summarize_categories",
+        tool_input=_serialized_transactions(transactions),
+    )
+    category_summaries = summarize_categories(transactions)
+    recorder.record(
+        component="analysis",
+        event_type="tool_result",
+        tool_name="summarize_categories",
+        tool_result=_tool_result(category_summaries),
+    )
+
+    drafts = _drafts_from_candidates(
+        recurring, duplicates, patterns, anomalies, analysis_date, next_paycheck
+    )
 
     verified = [
         recommendation
@@ -344,10 +473,20 @@ def run_offline_agent(
         )
         is not None
     ]
-    ranked = sorted(
+    ranked_candidates = sorted(
         verified,
         key=lambda recommendation: (-recommendation.monthly_savings_usd, recommendation.recommendation_id),
-    )[:3]
+    )
+    ranked: list[Recommendation] = []
+    claimed_evidence: set[str] = set()
+    for recommendation in ranked_candidates:
+        evidence = set(recommendation.evidence_transaction_ids)
+        if evidence & claimed_evidence:
+            continue
+        ranked.append(recommendation)
+        claimed_evidence.update(evidence)
+        if len(ranked) == 3:
+            break
     recorder.record(
         component="agent",
         event_type="run_completed",
@@ -376,25 +515,44 @@ def simulate_cancellation(run: AgentRun, recommendation_id: str, approved: bool)
         ),
         None,
     )
-    if recommendation is None or recommendation.kind != RecommendationKind.SUBSCRIPTION:
+    action_exists = any(
+        action.get("recommendation_id") == recommendation_id
+        and action.get("action") == "simulate_cancellation"
+        for action in updated.simulated_actions
+    )
+    if (
+        recommendation is None
+        or recommendation.kind != RecommendationKind.SUBSCRIPTION
+        or recommendation.verified_action != RecommendationAction.CANCEL_SUBSCRIPTION
+        or recommendation.status == RecommendationStatus.DISMISSED
+    ):
         recorder.record(
             component="human",
             event_type="simulation_not_available",
             human_checkpoint="cancellation_not_available",
         )
     elif not approved:
+        if recommendation.status == RecommendationStatus.DISMISSED:
+            updated.trajectory = recorder.events
+            return updated
         recommendation.status = RecommendationStatus.DISMISSED
         recorder.record(
             component="human",
             event_type="simulation_declined",
             human_checkpoint="cancellation_declined",
         )
+    elif action_exists or recommendation.status == RecommendationStatus.APPROVED_FOR_SIMULATION:
+        recorder.record(
+            component="human",
+            event_type="simulation_already_approved",
+            human_checkpoint="cancellation_already_approved",
+        )
     else:
         recorder.record(
             component="verifier",
             event_type="tool_called",
             tool_name="verify_recommendation",
-            tool_input={"recommendation": recommendation.model_dump(mode="json")},
+            tool_input={"recommendation": _trace_recommendation(recommendation)},
         )
         verification = verify_recommendation(
             recommendation,
@@ -402,33 +560,32 @@ def simulate_cancellation(run: AgentRun, recommendation_id: str, approved: bool)
             analysis_date=updated.analysis_date,
             next_paycheck=updated.next_paycheck,
         )
+        safe_feedback = _sanitized_feedback(verification.reasons)
         recorder.record(
             component="verifier",
             event_type="tool_result",
             tool_name="verify_recommendation",
             tool_result={
                 "accepted": verification.accepted,
-                "recommendation": (
-                    verification.recommendation.model_dump(mode="json")
-                    if verification.recommendation is not None
-                    else None
-                ),
-                "reasons": verification.reasons,
+                "reason_count": len(safe_feedback),
+                "reasons": safe_feedback,
+                "summary": "accepted verified candidate" if verification.accepted else "rejected candidate",
             },
-            verification_feedback=verification.reasons,
+            verification_feedback=safe_feedback,
         )
         if not verification.accepted:
             recorder.record(
                 component="verifier",
                 event_type="simulation_blocked",
-                verification_feedback=verification.reasons,
+                verification_feedback=safe_feedback,
                 human_checkpoint="cancellation_blocked",
             )
         else:
             recommendation.status = RecommendationStatus.APPROVED_FOR_SIMULATION
-            updated.simulated_actions.append(
-                {"recommendation_id": recommendation_id, "action": "simulate_cancellation"}
-            )
+            if not action_exists:
+                updated.simulated_actions.append(
+                    {"recommendation_id": recommendation_id, "action": "simulate_cancellation"}
+                )
             recorder.record(
                 component="human",
                 event_type="simulation_approved",

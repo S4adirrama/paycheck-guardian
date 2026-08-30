@@ -63,6 +63,8 @@ def test_recommendation_and_ground_truth_normalize_direct_money_inputs() -> None
     recommendation = Recommendation(
         recommendation_id="rec-1",
         kind="subscription",
+        verified_target="Example",
+        verified_action="cancel_subscription",
         title="Cancel Example",
         rationale="Recurring charge",
         evidence_transaction_ids=["t1"],
@@ -92,6 +94,8 @@ def test_recommendation_invalid_money_is_a_validation_error(field_name: str) -> 
     values: dict[str, object] = {
         "recommendation_id": "rec-1",
         "kind": "subscription",
+        "verified_target": "Example",
+        "verified_action": "cancel_subscription",
         "title": "Cancel Example",
         "rationale": "Recurring charge",
         "evidence_transaction_ids": ["t1"],
@@ -120,6 +124,8 @@ def test_recommendation_requires_evidence_transaction_ids() -> None:
         Recommendation(
             recommendation_id="rec-1",
             kind="subscription",
+            verified_target="Example",
+            verified_action="cancel_subscription",
             title="Cancel Example",
             rationale="Recurring charge",
             evidence_transaction_ids=[],
@@ -127,6 +133,31 @@ def test_recommendation_requires_evidence_transaction_ids() -> None:
             next_paycheck_savings_usd="6.00",
             confidence="high",
         )
+
+
+def test_recommendation_requires_structured_verified_target_and_action() -> None:
+    """Removing either structured field would let free-form copy define a financial action."""
+    base = {
+        "recommendation_id": "rec-1",
+        "kind": "subscription",
+        "verified_target": "Netflix",
+        "verified_action": "cancel_subscription",
+        "title": "Untrusted draft copy",
+        "rationale": "Untrusted draft rationale",
+        "evidence_transaction_ids": ["t1"],
+        "monthly_savings_usd": "12.00",
+        "next_paycheck_savings_usd": "6.00",
+        "confidence": "high",
+    }
+
+    recommendation = Recommendation(**base)
+
+    assert recommendation.verified_target == "Netflix"
+    assert recommendation.verified_action.value == "cancel_subscription"
+    for missing in ("verified_target", "verified_action"):
+        values = {key: value for key, value in base.items() if key != missing}
+        with pytest.raises(ValidationError):
+            Recommendation(**values)
 
 
 def test_evaluation_case_requires_transactions() -> None:

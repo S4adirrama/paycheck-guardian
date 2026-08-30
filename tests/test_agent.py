@@ -54,6 +54,8 @@ def test_agent_uses_tools_and_verifier(demo_transactions: list[Transaction]) -> 
         "find_recurring",
         "find_duplicates",
         "find_discretionary_patterns",
+        "find_anomalies",
+        "summarize_categories",
         "verify_recommendation",
     }
     assert any(
@@ -72,6 +74,8 @@ def test_trajectory_records_a_redacted_call_and_structured_result_for_each_tool(
         "find_recurring",
         "find_duplicates",
         "find_discretionary_patterns",
+        "find_anomalies",
+        "summarize_categories",
         "verify_recommendation",
     ):
         events = [event for event in run.trajectory if event.tool_name == tool_name]
@@ -85,7 +89,10 @@ def test_trajectory_records_a_redacted_call_and_structured_result_for_each_tool(
         for event in run.trajectory
         if event.tool_name == "find_recurring" and event.event_type == "tool_result"
     )
-    assert recurring_result.tool_result["candidates"][0]["merchant"] == "Netflix"
+    assert recurring_result.tool_result["candidate_count"] >= 1
+    assert recurring_result.tool_result["candidates"][0]["evidence_ids"]
+    assert "merchant" not in recurring_result.tool_result["candidates"][0]
+    assert "monthly_amount" not in recurring_result.tool_result["candidates"][0]
 
 
 def test_failed_candidate_retries_once_then_is_omitted(
@@ -136,13 +143,22 @@ def test_fixable_arithmetic_feedback_retries_with_a_corrected_tool_derived_candi
     run = run_offline_agent(demo_transactions, date(2026, 8, 1), date(2026, 8, 15), "fixed")
 
     attempts = [
-        event.tool_input["recommendation"]["monthly_savings_usd"]
+        event.tool_input["recommendation"]["recommendation_fingerprint"]
         for event in run.trajectory
         if event.tool_name == "verify_recommendation"
         and event.event_type == "tool_called"
         and event.tool_input["recommendation"]["recommendation_id"] == "subscription-netflix"
     ]
-    assert attempts == ["1.00", "16.49"]
+    results = [
+        event.tool_result["accepted"]
+        for event in run.trajectory
+        if event.tool_name == "verify_recommendation"
+        and event.event_type == "tool_result"
+        and event.tool_input["recommendation"]["recommendation_id"] == "subscription-netflix"
+    ]
+    assert len(attempts) == 2
+    assert attempts[0] != attempts[1]
+    assert results == [False, True]
     assert "subscription-netflix" in {item.recommendation_id for item in run.recommendations}
 
 
@@ -181,6 +197,17 @@ def test_approved_cancellation_only_records_a_local_simulation(run_with_subscrip
     ]
     assert len(verifier_events) == verifier_events_before + 2
     assert [event.event_type for event in verifier_events[-2:]] == ["tool_called", "tool_result"]
+
+
+def test_repeat_approval_is_idempotent(run_with_subscription) -> None:
+    """Retrying a local approval must retain exactly one simulated action."""
+    once = simulate_cancellation(run_with_subscription, "subscription-netflix", approved=True)
+
+    twice = simulate_cancellation(once, "subscription-netflix", approved=True)
+
+    assert twice.simulated_actions == [
+        {"recommendation_id": "subscription-netflix", "action": "simulate_cancellation"}
+    ]
 
 
 def test_trajectory_recorder_redacts_sensitive_values_recursively() -> None:
@@ -232,3 +259,94 @@ def test_verifier_receives_and_rejects_essential_recurring_draft() -> None:
     assert run.recommendations == []
     assert rent_results and rent_results[0]["accepted"] is False
     assert any("essential" in reason for reason in rent_results[0]["reasons"])
+
+
+@pytest.mark.parametrize(
+    ("merchant", "category"),
+    [("Verizon", "telecom"), ("Mystery Utility", "other")],
+)
+def test_agent_omits_non_allowlisted_recurring_cancellation(
+    merchant: str, category: str
+) -> None:
+    """The final plan must not expose telecom or unknown recurrence as cancellable."""
+    rows = [
+        make_transaction("r1", date(2026, 6, 1), merchant, "40.00", category),
+        make_transaction("r2", date(2026, 7, 1), merchant, "40.00", category),
+    ]
+
+    run = run_offline_agent(rows, date(2026, 8, 1), date(2026, 8, 15), "unsafe")
+
+    assert run.recommendations == []
+    rejection = next(
+        event
+        for event in run.trajectory
+        if event.tool_name == "verify_recommendation" and event.event_type == "tool_result"
+    )
+    assert rejection.tool_result["accepted"] is False
+
+
+def test_overlapping_doordash_evidence_is_not_counted_as_multiple_savings_actions() -> None:
+    """One set of DoorDash charges cannot fund both duplicate and pattern totals."""
+    rows = [
+        make_transaction("d1", date(2026, 7, 1), "DoorDash", "20.00", "food_delivery"),
+        make_transaction("d2", date(2026, 7, 2), "DoorDash", "20.00", "food_delivery"),
+        make_transaction("d3", date(2026, 7, 3), "DoorDash", "20.00", "food_delivery"),
+    ]
+
+    run = run_offline_agent(rows, date(2026, 8, 1), date(2026, 8, 15), "overlap")
+
+    assert [(item.kind.value, item.monthly_savings_usd) for item in run.recommendations] == [
+        ("behavioral_pattern", Decimal("60.00"))
+    ]
+    claimed_ids = [
+        evidence_id
+        for recommendation in run.recommendations
+        for evidence_id in recommendation.evidence_transaction_ids
+    ]
+    assert len(claimed_ids) == len(set(claimed_ids))
+    assert sum((item.monthly_savings_usd for item in run.recommendations), Decimal("0")) <= sum(
+        (row.amount_usd for row in rows), Decimal("0")
+    )
+
+
+def test_real_like_input_values_are_absent_from_trajectory() -> None:
+    """Tool auditing may retain fingerprints and IDs, never raw uploaded financial fields."""
+    rows = [
+        Transaction(
+            transaction_id="private-1",
+            date=date(2026, 6, 1),
+            merchant_raw="Dr Personal Merchant 9911",
+            merchant_normalized="Dr Personal Merchant",
+            amount_usd="43.21",
+            category="streaming",
+            source_type=SourceType.BANK_CSV,
+            source_reference="real-payroll-export.csv:2",
+            is_synthetic=False,
+        ),
+        Transaction(
+            transaction_id="private-2",
+            date=date(2026, 7, 1),
+            merchant_raw="Dr Personal Merchant 9911",
+            merchant_normalized="Dr Personal Merchant",
+            amount_usd="43.21",
+            category="streaming",
+            source_type=SourceType.BANK_CSV,
+            source_reference="real-payroll-export.csv:3",
+            is_synthetic=False,
+        ),
+    ]
+
+    run = run_offline_agent(rows, date(2026, 8, 1), date(2026, 8, 15), "private")
+    serialized = " ".join(str(event.model_dump(mode="json")) for event in run.trajectory)
+
+    for private_value in (
+        "Dr Personal Merchant",
+        "Dr Personal Merchant 9911",
+        "real-payroll-export.csv",
+        "2026-06-01",
+        "2026-07-01",
+        "43.21",
+    ):
+        assert private_value not in serialized
+    assert "transaction_fingerprint" in serialized
+    assert "private-1" in serialized

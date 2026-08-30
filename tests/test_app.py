@@ -1,5 +1,7 @@
 """End-to-end checks for the local Streamlit experience."""
 
+from datetime import date
+import json
 from pathlib import Path
 
 from streamlit.testing.v1 import AppTest
@@ -25,10 +27,16 @@ def _loaded_demo() -> AppTest:
 def test_loaded_demo_exposes_retained_baseline_comparison() -> None:
     """The video baseline stage needs a real visible in-app comparison state."""
     app = _loaded_demo()
+    metrics = json.loads(
+        (Path(__file__).resolve().parents[1] / "artifacts/evaluation/metrics.json").read_text()
+    )
 
     assert not app.exception
     assert any("Retained baseline comparison" in item.value for item in app.markdown)
-    assert any(metric.label == "Baseline F1" and metric.value == "0.5000" for metric in app.metric)
+    assert any(
+        metric.label == "Baseline F1" and metric.value == metrics["baseline"]["f1"]
+        for metric in app.metric
+    )
 
 
 def test_demo_reaches_verified_savings_plan() -> None:
@@ -38,6 +46,21 @@ def test_demo_reaches_verified_savings_plan() -> None:
     assert not app.exception
     assert any("Verified savings plan" in item.value for item in app.markdown)
     assert len(app.metric) >= 2
+
+
+def test_analysis_and_next_paycheck_dates_are_user_controlled() -> None:
+    """Replacing upload dates with fixed demo constants would make real analysis misleading."""
+    app = _loaded_demo()
+
+    assert app.date_input(key="analysis_date").value == date(2026, 8, 1)
+    assert app.date_input(key="next_paycheck").value == date(2026, 8, 15)
+    app.date_input(key="analysis_date").set_value(date(2026, 8, 2)).run(timeout=20)
+    app.date_input(key="next_paycheck").set_value(date(2026, 8, 20)).run(timeout=20)
+    app.button(key="analyze").click().run(timeout=20)
+
+    run = app.session_state["agent_run"]
+    assert run.analysis_date == date(2026, 8, 2)
+    assert run.next_paycheck == date(2026, 8, 20)
 
 
 def test_cancellation_simulation_requires_explicit_human_approval() -> None:
@@ -90,3 +113,13 @@ def test_recommendation_can_be_dismissed_without_simulation() -> None:
     assert run.simulated_actions == []
     assert any(event.human_checkpoint == "cancellation_declined" for event in run.trajectory)
     assert any("dismissed" in item.value.lower() for item in app.success)
+    assert target not in app.selectbox(key="cancellation_target").options
+    assert target not in app.session_state["markdown_report"].split("## Recorded dispositions")[0]
+    assert any("Recorded dispositions" in item.value for item in app.markdown)
+    expected_total = sum(
+        item.monthly_savings_usd
+        for item in run.recommendations
+        if item.status != RecommendationStatus.DISMISSED
+    )
+    monthly_metric = next(item for item in app.metric if item.label == "Monthly savings estimate")
+    assert monthly_metric.value == f"${expected_total:.2f}"

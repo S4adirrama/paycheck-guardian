@@ -4,9 +4,16 @@ from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal
 
-from .models import Confidence, Recommendation, RecommendationKind, Transaction
+from .models import (
+    Confidence,
+    Recommendation,
+    RecommendationAction,
+    RecommendationKind,
+    Transaction,
+)
 from .tools import (
     ESSENTIAL_CATEGORIES,
+    find_anomalies,
     find_discretionary_patterns,
     find_duplicates,
     find_recurring,
@@ -31,29 +38,82 @@ class VerificationResult:
     reasons: list[str]
 
 
-def _expected_monthly_amounts(
+def _deterministic_matches(
     recommendation: Recommendation, transactions: list[Transaction]
-) -> list[Decimal]:
+) -> list[tuple[str, RecommendationAction, Decimal, bool]]:
     evidence_ids = set(recommendation.evidence_transaction_ids)
     if recommendation.kind == RecommendationKind.SUBSCRIPTION:
         return [
-            candidate.monthly_amount
+            (
+                candidate.merchant,
+                RecommendationAction.CANCEL_SUBSCRIPTION,
+                candidate.monthly_amount,
+                candidate.cancellable,
+            )
             for candidate in find_recurring(transactions)
             if set(candidate.evidence_ids) == evidence_ids
         ]
     if recommendation.kind == RecommendationKind.DUPLICATE:
         return [
-            candidate.amount
+            (
+                candidate.merchant,
+                RecommendationAction.REVIEW_DUPLICATE,
+                candidate.amount,
+                True,
+            )
             for candidate in find_duplicates(transactions)
             if set(candidate.evidence_ids) == evidence_ids
         ]
     if recommendation.kind == RecommendationKind.BEHAVIORAL_PATTERN:
         return [
-            candidate.monthly_amount
+            (
+                candidate.merchant,
+                RecommendationAction.REDUCE_DISCRETIONARY_SPENDING,
+                candidate.monthly_amount,
+                True,
+            )
             for candidate in find_discretionary_patterns(transactions)
             if set(candidate.evidence_ids) == evidence_ids
         ]
+    if recommendation.kind == RecommendationKind.ANOMALY:
+        return [
+            (
+                candidate.merchant,
+                RecommendationAction.REVIEW_ANOMALY,
+                candidate.monthly_amount,
+                True,
+            )
+            for candidate in find_anomalies(transactions)
+            if set(candidate.evidence_ids) == evidence_ids
+        ]
     return []
+
+
+def _canonical_copy(recommendation: Recommendation) -> Recommendation:
+    target = recommendation.verified_target
+    copy = {
+        RecommendationAction.CANCEL_SUBSCRIPTION: (
+            f"Review cancelling {target}",
+            f"Verified recurring evidence supports reviewing whether {target} is still wanted; "
+            "confirm before any local cancellation simulation.",
+        ),
+        RecommendationAction.REVIEW_DUPLICATE: (
+            f"Review possible duplicate {target} charge",
+            "Two matching charges occurred within two days; confirm one was not duplicated.",
+        ),
+        RecommendationAction.REDUCE_DISCRETIONARY_SPENDING: (
+            f"Set a spending limit for {target}",
+            f"Repeated discretionary purchases at {target} form a verified pattern; reduce it "
+            "only if that fits your priorities.",
+        ),
+        RecommendationAction.REVIEW_ANOMALY: (
+            f"Review unusual {target} charge",
+            f"A {target} charge is materially above the merchant's other observed charges; "
+            "confirm whether it was expected.",
+        ),
+    }
+    title, rationale = copy[recommendation.verified_action]
+    return recommendation.model_copy(update={"title": title, "rationale": rationale})
 
 
 def _ambiguous_recurrence(
@@ -123,10 +183,24 @@ def verify_recommendation(
             "essential payment evidence cannot support subscription cancellation advice"
         )
 
-    expected_amounts = _expected_monthly_amounts(candidate, transactions)
-    if not expected_amounts:
+    matches = _deterministic_matches(candidate, transactions)
+    if not matches:
         reasons.append("evidence does not match a deterministic recommendation target")
-    elif not any(
+    else:
+        targets = {target.casefold() for target, _, _, _ in matches}
+        if candidate.verified_target.casefold() not in targets:
+            reasons.append("verified target does not match the deterministic evidence target")
+        actions = {action for _, action, _, _ in matches}
+        if candidate.verified_action not in actions:
+            reasons.append("verified action does not match the deterministic recommendation type")
+        if (
+            candidate.kind == RecommendationKind.SUBSCRIPTION
+            and not any(cancellable for _, _, _, cancellable in matches)
+        ):
+            reasons.append("cancellation target is outside the positive semantic allowlist")
+
+    expected_amounts = [expected for _, _, expected, _ in matches]
+    if expected_amounts and not any(
         abs(candidate.monthly_savings_usd - expected) <= CENT_TOLERANCE
         for expected in expected_amounts
     ):
@@ -159,4 +233,4 @@ def verify_recommendation(
 
     if reasons:
         return VerificationResult(False, None, reasons)
-    return VerificationResult(True, candidate, [])
+    return VerificationResult(True, _canonical_copy(candidate), [])
