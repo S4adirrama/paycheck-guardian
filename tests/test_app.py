@@ -13,6 +13,22 @@ def _analyzed_demo() -> AppTest:
     return app
 
 
+def _loaded_demo() -> AppTest:
+    """Load the synthetic data without running the verified workflow yet."""
+    app = AppTest.from_file(Path(__file__).resolve().parents[1] / "app.py").run(timeout=20)
+    app.button(key="load_demo").click().run(timeout=20)
+    return app
+
+
+def test_loaded_demo_exposes_retained_baseline_comparison() -> None:
+    """The video baseline stage needs a real visible in-app comparison state."""
+    app = _loaded_demo()
+
+    assert not app.exception
+    assert any("Retained baseline comparison" in item.value for item in app.markdown)
+    assert any(metric.label == "Baseline F1" and metric.value == "0.5000" for metric in app.metric)
+
+
 def test_demo_reaches_verified_savings_plan() -> None:
     """Removing the demo-to-analysis flow would leave people without a reviewed plan."""
     app = _analyzed_demo()

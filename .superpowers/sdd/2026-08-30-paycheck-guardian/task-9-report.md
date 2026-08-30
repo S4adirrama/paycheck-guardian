@@ -22,7 +22,7 @@
     {"codec_name": "h264", "codec_type": "video", "width": 1920, "height": 1080, "pix_fmt": "yuv420p"},
     {"codec_name": "aac", "codec_type": "audio"}
   ],
-  "format": {"duration": "280.000000", "size": "4283317"}
+  "format": {"duration": "280.000000", "size": "4509796"}
 }
 ```
 
@@ -57,3 +57,28 @@ Inspected decoded final-video frames at 0 seconds, 140 seconds, and 270 seconds:
 
 - The submitted MP4 intentionally has polished captions with a silent AAC track; narration can be replaced later without changing the evidence-backed sequence.
 - Full-stream ffmpeg decode was used for the start-to-finish playback-equivalent validation in this headless environment; representative visual frames were inspected at full resolution.
+
+## Fix Round 1
+
+### Privacy and reproducibility
+
+- Removed the generated concat manifest from version control and added the narrow ignore rule `artifacts/video/frames/concat.txt`.
+- The capture script now writes only relative `captioned/...` paths to its temporary concat manifest.
+- The public-artifact scan now includes video Markdown and text files. It returns the generic finding `absolute author path`, never a matched value, for Unix home, worktree, or Windows user-path markers.
+- RED: the new video-text scan found the committed manifest's author path. GREEN: the regenerated manifest contains relative entries only; the focused privacy tests and a quiet `rg -q` scan passed without printing file content.
+
+### Capture-state corrections
+
+- Added a retained, metrics-backed baseline comparison expander to the actual Streamlit UI. It displays baseline F1 `0.5000`, verified workflow F1 `1.0000`, and final unsupported claims `0` for the 12 synthetic cases.
+- The baseline, input, verified-plan, evidence, approval, comparison, changelog, hot-take, and closing screenshots now wait for state-specific visible UI locators before capture.
+- The baseline frame and demo-input frame are no longer identical. The baseline frame visibly shows the comparison metrics; the verified-plan frame shows the heading, estimates, and recommendation cards.
+- The simulation capture waits for the explicit green local-only confirmation and preserves the checkbox, simulation button, and confirmation above a dedicated upper caption band.
+
+### Fresh verification
+
+- Dedicated video test: passed.
+- AppTest suite: `4 passed`.
+- Full pytest suite: exit code `0`.
+- FFprobe: H.264, yuv420p, 1920×1080, AAC, `280.000000` seconds, `4509796` bytes.
+- Full H.264 and AAC ffmpeg decode: completed without errors.
+- Representative full-resolution visual inspection: baseline comparison, demo input, verified plan, expanded evidence, approval simulation, and decoded start/middle/closing frames. No clipped captions, browser error, placeholder, credential, real personal data, or author path was observed.

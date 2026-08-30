@@ -20,7 +20,7 @@ from urllib.error import URLError
 from urllib.request import urlopen
 
 from PIL import Image, ImageDraw, ImageFont
-from playwright.sync_api import Page, sync_playwright
+from playwright.sync_api import Locator, Page, sync_playwright
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -169,13 +169,31 @@ def _settle(page: Page) -> None:
     page.locator("[data-testid='stAppViewContainer']").wait_for(state="visible")
 
 
-def _capture(page: Page, name: str) -> None:
+def _capture(
+    page: Page,
+    name: str,
+    required_text: str | None = None,
+    required_locator: Locator | None = None,
+) -> None:
+    """Assert the expected Streamlit state is visible before taking a frame."""
+    assert (required_text is None) != (required_locator is None)
+    locator = required_locator or page.get_by_text(required_text or "", exact=False).first
+    locator.wait_for(state="visible")
     path = FRAMES_DIR / f"{name}.png"
     page.screenshot(path=str(path))
 
 
 def _scroll_to_text(page: Page, text: str) -> None:
     page.get_by_text(text, exact=False).first.scroll_into_view_if_needed()
+    _settle(page)
+
+
+def _place_text_near_top(page: Page, text: str) -> None:
+    """Position a visible heading so its associated card is in the frame too."""
+    locator = page.get_by_text(text, exact=False).first
+    locator.evaluate(
+        "element => element.scrollIntoView({block: 'start', inline: 'nearest', behavior: 'instant'})"
+    )
     _settle(page)
 
 
@@ -189,24 +207,38 @@ def capture_ui_frames() -> None:
         page = browser.new_page(viewport=VIEWPORT, device_scale_factor=1)
         page.goto(f"http://127.0.0.1:{PORT}", wait_until="networkidle")
         _settle(page)
-        _capture(page, "problem-card")
+        _capture(page, "problem-card", "Privacy and demo notice")
         print("captured problem-card", flush=True)
 
         page.get_by_role("button", name="Load Alex's synthetic demo").click()
         _settle(page)
-        _capture(page, "baseline-result")
-        _capture(page, "demo-input")
+        baseline_expander = page.get_by_text("Retained baseline comparison", exact=True).first
+        baseline_expander.click()
+        _settle(page)
+        _place_text_near_top(page, "Baseline F1")
+        _capture(page, "baseline-result", "Baseline F1")
+        baseline_expander.click()
+        _settle(page)
+        _capture(page, "demo-input", "Parsed 8 transactions")
         print("captured demo-input", flush=True)
 
         page.get_by_role("button", name="Analyze verified savings options").click()
         _settle(page)
-        _capture(page, "verified-plan")
+        _place_text_near_top(page, "Verified savings plan")
+        _capture(page, "verified-plan", "Verified savings plan")
         print("captured verified-plan", flush=True)
 
-        _scroll_to_text(page, "Evidence (3 transactions)")
-        page.get_by_text("Evidence (3 transactions)", exact=False).first.click()
+        _scroll_to_text(page, "Set a limit for DoorDash")
+        print("located DoorDash recommendation", flush=True)
+        evidence_expander = page.locator("details").filter(has_text="Evidence (3 transactions)").first
+        evidence_expander.locator("summary").scroll_into_view_if_needed()
+        evidence_expander.locator("summary").click()
         _settle(page)
-        _capture(page, "evidence")
+        _capture(
+            page,
+            "evidence",
+            required_locator=evidence_expander.get_by_text("ccbf9f1b47c7", exact=False).first,
+        )
         print("captured evidence", flush=True)
 
         _scroll_to_text(page, "Local cancellation simulation")
@@ -220,22 +252,29 @@ def capture_ui_frames() -> None:
         acknowledgement.click()
         page.get_by_role("button", name="Simulate cancellation locally").click()
         _settle(page)
-        _capture(page, "approval-simulation")
+        confirmation = page.get_by_text("Cancellation simulated locally", exact=False).first
+        confirmation.evaluate(
+            "element => element.scrollIntoView({block: 'center', inline: 'nearest', behavior: 'instant'})"
+        )
+        _settle(page)
+        acknowledgement.wait_for(state="visible")
+        _capture(page, "approval-simulation", required_locator=confirmation)
         print("captured approval-simulation", flush=True)
 
-        _scroll_to_text(page, "How the agent reached this result")
-        page.get_by_text("How the agent reached this result", exact=False).click()
+        baseline_expander = page.get_by_text("Retained baseline comparison", exact=True).first
+        baseline_expander.scroll_into_view_if_needed()
+        baseline_expander.click()
         _settle(page)
-        _capture(page, "comparison")
+        _capture(page, "comparison", "Verified workflow F1")
         print("captured comparison", flush=True)
 
         _scroll_to_text(page, "Verified savings plan")
-        _capture(page, "changelog")
+        _capture(page, "changelog", "Verified savings plan")
         print("captured changelog", flush=True)
 
         _scroll_to_text(page, "Privacy and demo notice")
-        _capture(page, "hot-take")
-        _capture(page, "closing")
+        _capture(page, "hot-take", "Privacy and demo notice")
+        _capture(page, "closing", "Privacy and demo notice")
         print("captured hot-take and closing", flush=True)
         browser.close()
 
@@ -245,16 +284,19 @@ def _caption_frame(source: Path, destination: Path, caption: str) -> None:
     image = Image.open(source).convert("RGB")
     draw = ImageDraw.Draw(image, "RGBA")
     width, height = image.size
-    draw.rectangle((0, height - 260, width, height), fill=(5, 14, 31, 222))
-    draw.rounded_rectangle((55, 40, 900, 98), radius=18, fill=(18, 69, 89, 224))
-    draw.text((80, 55), "PAYCHECK GUARDIAN  •  OFFLINE SYNTHETIC DEMO", font=_font(27, bold=True), fill=(236, 253, 245, 255))
+    checkpoint_frame = source.stem == "approval-simulation"
+    caption_top = 135 if checkpoint_frame else height - 260
+    caption_bottom = 390 if checkpoint_frame else height
+    draw.rectangle((0, caption_top, width, caption_bottom), fill=(5, 14, 31, 222))
+    draw.rounded_rectangle((55, 10, 900, 66), radius=18, fill=(18, 69, 89, 224))
+    draw.text((80, 24), "PAYCHECK GUARDIAN  •  OFFLINE SYNTHETIC DEMO", font=_font(27, bold=True), fill=(236, 253, 245, 255))
     caption_font = _font(42)
     lines = wrap(caption, width=76)
-    y = height - 210
+    y = caption_top + 50
     for line in lines:
         draw.text((75, y), line, font=caption_font, fill=(255, 255, 255, 255))
         y += 53
-    draw.text((75, height - 42), "Local-only prototype · estimates require review · no bank or merchant contact", font=_font(24), fill=(188, 211, 235, 255))
+    draw.text((75, caption_bottom - 42), "Local-only prototype · estimates require review · no bank or merchant contact", font=_font(24), fill=(188, 211, 235, 255))
     image.save(destination, quality=95)
 
 
@@ -272,8 +314,8 @@ def build_video(sequence: list[dict[str, object]]) -> Path:
         # image-demuxer rate. Compensate at each transition so the written
         # storyboard timestamps match the encoded MP4.
         encoded_hold = int(item["duration"]) - (0 if index == len(sequence) else 1)
-        entries.extend((f"file '{target}'", f"duration {encoded_hold}"))
-    entries.append(f"file '{captioned_dir / '10-closing.png'}'")
+        entries.extend((f"file '{target.relative_to(FRAMES_DIR).as_posix()}'", f"duration {encoded_hold}"))
+    entries.append("file 'captioned/10-closing.png'")
     concat.write_text("\n".join(entries) + "\n", encoding="utf-8")
     output = VIDEO_DIR / "paycheck-guardian-demo.mp4"
     subprocess.run(

@@ -11,6 +11,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 SENSITIVE_ENVIRONMENT_KEY = re.compile(r"API_KEY|TOKEN|SECRET|AUTHORIZATION|PASSWORD", re.IGNORECASE)
+AUTHOR_PATH_MARKER = re.compile(r"(?im)(?:^|[\"'])/(?:Users|home)/|\.worktrees/|[A-Z]:\\\\Users\\\\")
 
 
 def _public_submission_text() -> str:
@@ -23,7 +24,17 @@ def _public_submission_text() -> str:
         ROOT / "artifacts/reports/demo_report.md",
         ROOT / "artifacts/reports/demo_report.json",
     ]
-    return "\n".join(path.read_text(encoding="utf-8") for path in public_paths)
+    video_text_paths = [
+        path
+        for pattern in ("*.md", "*.txt")
+        for path in (ROOT / "artifacts" / "video").rglob(pattern)
+    ]
+    return "\n".join(path.read_text(encoding="utf-8") for path in [*public_paths, *video_text_paths])
+
+
+def _author_path_markers_in_text(text: str) -> list[str]:
+    """Report only a generic finding, never an author's path, in privacy failures."""
+    return ["absolute author path"] if AUTHOR_PATH_MARKER.search(text) else []
 
 
 def _sensitive_environment_keys_in_text(text: str, environment: dict[str, str]) -> list[str]:
@@ -169,6 +180,7 @@ def test_submission_artifacts_do_not_contain_credential_markers() -> None:
     assert "todo" not in text
     assert "placeholder" not in text
     assert _sensitive_environment_keys_in_text(public_text, os.environ) == []
+    assert _author_path_markers_in_text(public_text) == []
 
 
 def test_video_exists_and_is_under_five_minutes() -> None:
@@ -183,3 +195,14 @@ def test_video_exists_and_is_under_five_minutes() -> None:
     )
     duration = float(json.loads(probe.stdout)["format"]["duration"])
     assert 60 <= duration <= 300
+
+
+def test_video_text_has_no_author_absolute_path_markers() -> None:
+    """Portable video material must not disclose an author's local path."""
+    video_text = "\n".join(
+        path.read_text(encoding="utf-8")
+        for pattern in ("*.md", "*.txt")
+        for path in (ROOT / "artifacts" / "video").rglob(pattern)
+    )
+
+    assert _author_path_markers_in_text(video_text) == []

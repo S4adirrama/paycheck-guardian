@@ -16,6 +16,7 @@ from paycheck_guardian.reporting import render_markdown, serialize_run
 
 APP_ROOT = Path(__file__).resolve().parent
 DEMO_CSV = APP_ROOT / "data" / "demo" / "transactions.csv"
+METRICS_JSON = APP_ROOT / "artifacts" / "evaluation" / "metrics.json"
 DEMO_ANALYSIS_DATE = date(2026, 8, 1)
 DEMO_NEXT_PAYCHECK = date(2026, 8, 15)
 
@@ -43,6 +44,28 @@ def _reset_analysis() -> None:
 def _load_demo() -> list[Transaction]:
     with DEMO_CSV.open(encoding="utf-8", newline="") as source:
         return parse_bank_csv(source, DEMO_CSV.name)
+
+
+def _retained_metrics() -> dict[str, object]:
+    """Read the offline evaluation record used for the in-app comparison."""
+    return json.loads(METRICS_JSON.read_text(encoding="utf-8"))
+
+
+def _render_retained_baseline_comparison() -> None:
+    """Show the measured baseline before a person runs the local workflow."""
+    metrics = _retained_metrics()
+    baseline = metrics["baseline"]
+    final = metrics["final"]
+    with st.expander("Retained baseline comparison"):
+        st.markdown("### Retained baseline comparison")
+        baseline_column, final_column, claims_column = st.columns(3)
+        baseline_column.metric("Baseline F1", str(baseline["f1"]))
+        final_column.metric("Verified workflow F1", str(final["f1"]))
+        claims_column.metric("Final unsupported claims", str(final["unsupported_claims"]))
+        st.caption(
+            f"Offline evaluation on {len(metrics['case_fingerprints'])} synthetic cases. "
+            "The baseline is a retained measurement, not a live financial recommendation."
+        )
 
 
 def _parse_upload(upload: object) -> tuple[list[Transaction], str]:
@@ -201,6 +224,7 @@ transactions = st.session_state.get("transactions", [])
 if transactions:
     st.success(f"Parsed {len(transactions)} transactions from {st.session_state['data_source']}.")
     st.dataframe(_transaction_rows(transactions), use_container_width=True, hide_index=True)
+    _render_retained_baseline_comparison()
     st.markdown("### 2. Analyze")
     if st.button("Analyze verified savings options", key="analyze"):
         run = run_offline_agent(
