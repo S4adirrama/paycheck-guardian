@@ -17,84 +17,22 @@
     "source_event_index": 1,
     "timestamp": "1970-01-01T00:00:00.000001Z",
     "tool_input": {
-      "transactions": [
-        {
-          "amount_usd": "15.49",
-          "category": "streaming",
-          "date": "2026-05-01",
-          "is_synthetic": true,
-          "merchant_normalized": "Netflix",
-          "merchant_raw": "NETFLIX.COM",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n1",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-n1"
-        },
-        {
-          "amount_usd": "16.49",
-          "category": "streaming",
-          "date": "2026-05-31",
-          "is_synthetic": true,
-          "merchant_normalized": "Netflix",
-          "merchant_raw": "NETFLIX ORDER 55",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n2",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-n2"
-        },
-        {
-          "amount_usd": "16.49",
-          "category": "streaming",
-          "date": "2026-06-30",
-          "is_synthetic": true,
-          "merchant_normalized": "Netflix",
-          "merchant_raw": "NETFLIX",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n3",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-n3"
-        },
-        {
-          "amount_usd": "1500.00",
-          "category": "housing",
-          "date": "2026-06-01",
-          "is_synthetic": true,
-          "merchant_normalized": "Rent",
-          "merchant_raw": "RENT",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-r1",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-r1"
-        },
-        {
-          "amount_usd": "1500.00",
-          "category": "housing",
-          "date": "2026-07-01",
-          "is_synthetic": true,
-          "merchant_normalized": "Rent",
-          "merchant_raw": "RENT",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-r2",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-r2"
-        },
-        {
-          "amount_usd": "11.00",
-          "category": "other",
-          "date": "2026-07-03",
-          "is_synthetic": true,
-          "merchant_normalized": "Pharmacy",
-          "merchant_raw": "PHARMACY",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-x1",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-x1"
-        },
-        {
-          "amount_usd": "39.00",
-          "category": "other",
-          "date": "2026-07-04",
-          "is_synthetic": true,
-          "merchant_normalized": "Gas Station",
-          "merchant_raw": "GAS STATION",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-x2",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-x2"
-        }
+      "category_counts": {
+        "housing": 2,
+        "other": 2,
+        "streaming": 3
+      },
+      "synthetic_count": 7,
+      "transaction_count": 7,
+      "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+      "transaction_ids": [
+        "ch-n1",
+        "ch-n2",
+        "ch-n3",
+        "ch-r1",
+        "ch-r2",
+        "ch-x1",
+        "ch-x2"
       ]
     },
     "tool_name": "find_recurring"
@@ -107,29 +45,32 @@
     "timestamp": "1970-01-01T00:00:00.000002Z",
     "tool_name": "find_recurring",
     "tool_result": {
+      "candidate_count": 2,
       "candidates": [
         {
           "cancellable": true,
+          "candidate_fingerprint": "e9631945fe91f6688ad7bb08a970130a74101dd9a4318945c0ac9af3d9ce9220",
           "category": "streaming",
+          "evidence_count": 3,
           "evidence_ids": [
             "ch-n1",
             "ch-n2",
             "ch-n3"
           ],
           "interval_days": 30,
-          "merchant": "Netflix",
-          "monthly_amount": "16.49"
+          "summary": "recurring cadence candidate"
         },
         {
           "cancellable": false,
+          "candidate_fingerprint": "3ea97788b7f8ae042b98cba09bdcce6d20cc9ae0008500e9da359e89e9afba58",
           "category": "housing",
+          "evidence_count": 2,
           "evidence_ids": [
             "ch-r1",
             "ch-r2"
           ],
           "interval_days": 30,
-          "merchant": "Rent",
-          "monthly_amount": "1500.00"
+          "summary": "recurring cadence candidate"
         }
       ]
     }
@@ -141,84 +82,22 @@
     "source_event_index": 3,
     "timestamp": "1970-01-01T00:00:00.000003Z",
     "tool_input": {
-      "transactions": [
-        {
-          "amount_usd": "15.49",
-          "category": "streaming",
-          "date": "2026-05-01",
-          "is_synthetic": true,
-          "merchant_normalized": "Netflix",
-          "merchant_raw": "NETFLIX.COM",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n1",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-n1"
-        },
-        {
-          "amount_usd": "16.49",
-          "category": "streaming",
-          "date": "2026-05-31",
-          "is_synthetic": true,
-          "merchant_normalized": "Netflix",
-          "merchant_raw": "NETFLIX ORDER 55",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n2",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-n2"
-        },
-        {
-          "amount_usd": "16.49",
-          "category": "streaming",
-          "date": "2026-06-30",
-          "is_synthetic": true,
-          "merchant_normalized": "Netflix",
-          "merchant_raw": "NETFLIX",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n3",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-n3"
-        },
-        {
-          "amount_usd": "1500.00",
-          "category": "housing",
-          "date": "2026-06-01",
-          "is_synthetic": true,
-          "merchant_normalized": "Rent",
-          "merchant_raw": "RENT",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-r1",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-r1"
-        },
-        {
-          "amount_usd": "1500.00",
-          "category": "housing",
-          "date": "2026-07-01",
-          "is_synthetic": true,
-          "merchant_normalized": "Rent",
-          "merchant_raw": "RENT",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-r2",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-r2"
-        },
-        {
-          "amount_usd": "11.00",
-          "category": "other",
-          "date": "2026-07-03",
-          "is_synthetic": true,
-          "merchant_normalized": "Pharmacy",
-          "merchant_raw": "PHARMACY",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-x1",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-x1"
-        },
-        {
-          "amount_usd": "39.00",
-          "category": "other",
-          "date": "2026-07-04",
-          "is_synthetic": true,
-          "merchant_normalized": "Gas Station",
-          "merchant_raw": "GAS STATION",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-x2",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-x2"
-        }
+      "category_counts": {
+        "housing": 2,
+        "other": 2,
+        "streaming": 3
+      },
+      "synthetic_count": 7,
+      "transaction_count": 7,
+      "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+      "transaction_ids": [
+        "ch-n1",
+        "ch-n2",
+        "ch-n3",
+        "ch-r1",
+        "ch-r2",
+        "ch-x1",
+        "ch-x2"
       ]
     },
     "tool_name": "find_duplicates"
@@ -231,6 +110,7 @@
     "timestamp": "1970-01-01T00:00:00.000004Z",
     "tool_name": "find_duplicates",
     "tool_result": {
+      "candidate_count": 0,
       "candidates": []
     }
   },
@@ -241,84 +121,22 @@
     "source_event_index": 5,
     "timestamp": "1970-01-01T00:00:00.000005Z",
     "tool_input": {
-      "transactions": [
-        {
-          "amount_usd": "15.49",
-          "category": "streaming",
-          "date": "2026-05-01",
-          "is_synthetic": true,
-          "merchant_normalized": "Netflix",
-          "merchant_raw": "NETFLIX.COM",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n1",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-n1"
-        },
-        {
-          "amount_usd": "16.49",
-          "category": "streaming",
-          "date": "2026-05-31",
-          "is_synthetic": true,
-          "merchant_normalized": "Netflix",
-          "merchant_raw": "NETFLIX ORDER 55",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n2",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-n2"
-        },
-        {
-          "amount_usd": "16.49",
-          "category": "streaming",
-          "date": "2026-06-30",
-          "is_synthetic": true,
-          "merchant_normalized": "Netflix",
-          "merchant_raw": "NETFLIX",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-n3",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-n3"
-        },
-        {
-          "amount_usd": "1500.00",
-          "category": "housing",
-          "date": "2026-06-01",
-          "is_synthetic": true,
-          "merchant_normalized": "Rent",
-          "merchant_raw": "RENT",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-r1",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-r1"
-        },
-        {
-          "amount_usd": "1500.00",
-          "category": "housing",
-          "date": "2026-07-01",
-          "is_synthetic": true,
-          "merchant_normalized": "Rent",
-          "merchant_raw": "RENT",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-r2",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-r2"
-        },
-        {
-          "amount_usd": "11.00",
-          "category": "other",
-          "date": "2026-07-03",
-          "is_synthetic": true,
-          "merchant_normalized": "Pharmacy",
-          "merchant_raw": "PHARMACY",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-x1",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-x1"
-        },
-        {
-          "amount_usd": "39.00",
-          "category": "other",
-          "date": "2026-07-04",
-          "is_synthetic": true,
-          "merchant_normalized": "Gas Station",
-          "merchant_raw": "GAS STATION",
-          "source_reference": "evaluation/challenge_alias_price_essential.csv:ch-x2",
-          "source_type": "bank_csv",
-          "transaction_id": "ch-x2"
-        }
+      "category_counts": {
+        "housing": 2,
+        "other": 2,
+        "streaming": 3
+      },
+      "synthetic_count": 7,
+      "transaction_count": 7,
+      "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+      "transaction_ids": [
+        "ch-n1",
+        "ch-n2",
+        "ch-n3",
+        "ch-r1",
+        "ch-r2",
+        "ch-x1",
+        "ch-x2"
       ]
     },
     "tool_name": "find_discretionary_patterns"
@@ -331,31 +149,143 @@
     "timestamp": "1970-01-01T00:00:00.000006Z",
     "tool_name": "find_discretionary_patterns",
     "tool_result": {
+      "candidate_count": 0,
       "candidates": []
+    }
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_call",
+    "source_event_index": 7,
+    "timestamp": "1970-01-01T00:00:00.000007Z",
+    "tool_input": {
+      "category_counts": {
+        "housing": 2,
+        "other": 2,
+        "streaming": 3
+      },
+      "synthetic_count": 7,
+      "transaction_count": 7,
+      "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+      "transaction_ids": [
+        "ch-n1",
+        "ch-n2",
+        "ch-n3",
+        "ch-r1",
+        "ch-r2",
+        "ch-x1",
+        "ch-x2"
+      ]
+    },
+    "tool_name": "find_anomalies"
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_result",
+    "source_event_index": 8,
+    "timestamp": "1970-01-01T00:00:00.000008Z",
+    "tool_name": "find_anomalies",
+    "tool_result": {
+      "candidate_count": 0,
+      "candidates": []
+    }
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_call",
+    "source_event_index": 9,
+    "timestamp": "1970-01-01T00:00:00.000009Z",
+    "tool_input": {
+      "category_counts": {
+        "housing": 2,
+        "other": 2,
+        "streaming": 3
+      },
+      "synthetic_count": 7,
+      "transaction_count": 7,
+      "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+      "transaction_ids": [
+        "ch-n1",
+        "ch-n2",
+        "ch-n3",
+        "ch-r1",
+        "ch-r2",
+        "ch-x1",
+        "ch-x2"
+      ]
+    },
+    "tool_name": "summarize_categories"
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_result",
+    "source_event_index": 10,
+    "timestamp": "1970-01-01T00:00:00.000010Z",
+    "tool_name": "summarize_categories",
+    "tool_result": {
+      "candidate_count": 3,
+      "candidates": [
+        {
+          "candidate_fingerprint": "9cf6d849b59b4c7c13b332d44ee3c4881d1b3446cc3fe0121aaddd22fe0755ec",
+          "category": "housing",
+          "charge_count": 2,
+          "evidence_count": 2,
+          "evidence_ids": [
+            "ch-r1",
+            "ch-r2"
+          ],
+          "summary": "category spending summary"
+        },
+        {
+          "candidate_fingerprint": "a1e897b41d03bda3230e6b47aaf40f6c01ecbefebe9ae25141f309c1fb7b7517",
+          "category": "other",
+          "charge_count": 2,
+          "evidence_count": 2,
+          "evidence_ids": [
+            "ch-x1",
+            "ch-x2"
+          ],
+          "summary": "category spending summary"
+        },
+        {
+          "candidate_fingerprint": "8a02454dde7781079c90677ba3b34556fc38267d0a4ad785dfbe72ef9429ab53",
+          "category": "streaming",
+          "charge_count": 3,
+          "evidence_count": 3,
+          "evidence_ids": [
+            "ch-n1",
+            "ch-n2",
+            "ch-n3"
+          ],
+          "summary": "category spending summary"
+        }
+      ]
     }
   },
   {
     "attempt": 1,
     "component": "verifier",
     "event_type": "tool_call",
-    "source_event_index": 7,
-    "timestamp": "1970-01-01T00:00:00.000007Z",
+    "source_event_index": 11,
+    "timestamp": "1970-01-01T00:00:00.000011Z",
     "tool_input": {
       "recommendation": {
-        "caveat": "Savings are estimates based on the observed recurring charges.",
-        "confidence": "high",
-        "evidence_transaction_ids": [
+        "evidence_count": 3,
+        "evidence_ids": [
           "ch-n1",
           "ch-n2",
           "ch-n3"
         ],
         "kind": "subscription",
-        "monthly_savings_usd": "16.49",
-        "next_paycheck_savings_usd": "7.59",
-        "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+        "recommendation_fingerprint": "57eeb097a29ff2ee902cc639c9293db88f786b6462e140b1e7aa33755ff45eb2",
         "recommendation_id": "subscription-netflix",
         "status": "proposed",
-        "title": "Review Netflix subscription"
+        "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+        "verified_action": "cancel_subscription"
       }
     },
     "tool_name": "verify_recommendation"
@@ -365,69 +295,51 @@
     "component": "verifier",
     "event_type": "verification",
     "feedback": [],
-    "source_event_index": 8,
-    "timestamp": "1970-01-01T00:00:00.000008Z",
+    "source_event_index": 12,
+    "timestamp": "1970-01-01T00:00:00.000012Z",
     "tool_input": {
       "recommendation": {
-        "caveat": "Savings are estimates based on the observed recurring charges.",
-        "confidence": "high",
-        "evidence_transaction_ids": [
+        "evidence_count": 3,
+        "evidence_ids": [
           "ch-n1",
           "ch-n2",
           "ch-n3"
         ],
         "kind": "subscription",
-        "monthly_savings_usd": "16.49",
-        "next_paycheck_savings_usd": "7.59",
-        "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
+        "recommendation_fingerprint": "57eeb097a29ff2ee902cc639c9293db88f786b6462e140b1e7aa33755ff45eb2",
         "recommendation_id": "subscription-netflix",
         "status": "proposed",
-        "title": "Review Netflix subscription"
+        "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+        "verified_action": "cancel_subscription"
       }
     },
     "tool_name": "verify_recommendation",
     "tool_result": {
       "accepted": true,
+      "reason_count": 0,
       "reasons": [],
-      "recommendation": {
-        "caveat": "Savings are estimates based on the observed recurring charges.",
-        "confidence": "high",
-        "evidence_transaction_ids": [
-          "ch-n1",
-          "ch-n2",
-          "ch-n3"
-        ],
-        "kind": "subscription",
-        "monthly_savings_usd": "16.49",
-        "next_paycheck_savings_usd": "7.59",
-        "rationale": "Netflix appears to recur every 30 days; confirm it is still wanted before cancelling.",
-        "recommendation_id": "subscription-netflix",
-        "status": "proposed",
-        "title": "Review Netflix subscription"
-      }
+      "summary": "accepted verified candidate"
     }
   },
   {
     "attempt": 1,
     "component": "verifier",
     "event_type": "tool_call",
-    "source_event_index": 9,
-    "timestamp": "1970-01-01T00:00:00.000009Z",
+    "source_event_index": 13,
+    "timestamp": "1970-01-01T00:00:00.000013Z",
     "tool_input": {
       "recommendation": {
-        "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
-        "confidence": "low",
-        "evidence_transaction_ids": [
+        "evidence_count": 2,
+        "evidence_ids": [
           "ch-r1",
           "ch-r2"
         ],
         "kind": "subscription",
-        "monthly_savings_usd": "1500.00",
-        "next_paycheck_savings_usd": "690.41",
-        "rationale": "Rent appears to recur every 30 days; confirm it is still wanted before cancelling.",
+        "recommendation_fingerprint": "351b78c518f3670c8e0107bcee7109eec4bdeb65d44a357af207b71fb7e83a6d",
         "recommendation_id": "subscription-rent",
         "status": "proposed",
-        "title": "Review Rent subscription"
+        "target_fingerprint": "cef981d2ca50cf9b235cf449f8a24149cc9a31ca6be71484b6017b679dfcfaab",
+        "verified_action": "cancel_subscription"
       }
     },
     "tool_name": "verify_recommendation"
@@ -437,34 +349,35 @@
     "component": "verifier",
     "event_type": "verification",
     "feedback": [
-      "essential payment evidence cannot support subscription cancellation advice"
+      "essential payment evidence cannot support subscription cancellation advice",
+      "cancellation target is outside the positive semantic allowlist"
     ],
-    "source_event_index": 10,
-    "timestamp": "1970-01-01T00:00:00.000010Z",
+    "source_event_index": 14,
+    "timestamp": "1970-01-01T00:00:00.000014Z",
     "tool_input": {
       "recommendation": {
-        "caveat": "Only two monthly charges were observed; confirm this possible subscription before cancelling.",
-        "confidence": "low",
-        "evidence_transaction_ids": [
+        "evidence_count": 2,
+        "evidence_ids": [
           "ch-r1",
           "ch-r2"
         ],
         "kind": "subscription",
-        "monthly_savings_usd": "1500.00",
-        "next_paycheck_savings_usd": "690.41",
-        "rationale": "Rent appears to recur every 30 days; confirm it is still wanted before cancelling.",
+        "recommendation_fingerprint": "351b78c518f3670c8e0107bcee7109eec4bdeb65d44a357af207b71fb7e83a6d",
         "recommendation_id": "subscription-rent",
         "status": "proposed",
-        "title": "Review Rent subscription"
+        "target_fingerprint": "cef981d2ca50cf9b235cf449f8a24149cc9a31ca6be71484b6017b679dfcfaab",
+        "verified_action": "cancel_subscription"
       }
     },
     "tool_name": "verify_recommendation",
     "tool_result": {
       "accepted": false,
+      "reason_count": 2,
       "reasons": [
-        "essential payment evidence cannot support subscription cancellation advice"
+        "essential payment evidence cannot support subscription cancellation advice",
+        "cancellation target is outside the positive semantic allowlist"
       ],
-      "recommendation": null
+      "summary": "rejected candidate"
     }
   },
   {
@@ -478,8 +391,8 @@
     "checkpoint": "recommendations_ready_for_human_review",
     "component": "agent",
     "event_type": "human_checkpoint",
-    "source_event_index": 11,
-    "timestamp": "1970-01-01T00:00:00.000011Z",
+    "source_event_index": 15,
+    "timestamp": "1970-01-01T00:00:00.000015Z",
     "tool_result": {
       "verified_recommendation_count": 1
     }

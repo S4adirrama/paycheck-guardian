@@ -5,19 +5,19 @@
     "annual_subscription": "26ca03bea1a302d6535353c0dec6d496556246f0c1a28f6a57c08f565197da91",
     "challenge_alias_price_essential": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
     "duplicate_charge": "560370345d7dee4ebfd5b19270512274fd90a947aa3b5729c30176abdcd85471",
-    "essential_insurance": "294b6ff48848af0e3466a13f15281d0f58649df027f545a22bc0de2a87d9f2d5",
+    "essential_insurance": "758a5291c39b6b7a1d6f58135facbd0c35560ff249ac0dc85319d31e8619ff90",
     "essential_rent": "bcd3c5b9cc531741abe67a02eba4dc2440df3b6765f425518bf0746f6ee2f0cc",
     "food_delivery_pattern": "726fa53770853cd4c46aa92159e47ecba1dc58ae858ecf8d278a8c136e9d676d",
     "merchant_aliases": "fcf07121fcbeb71a41497e6cc2d1173c53de4caff9de05ffec9323744ed64ff6",
     "mixed_opportunities": "0de8f8dc8205d021d6940c37fc9e157fecf34a71c5deeb48aec1038d9b81908f",
     "monthly_streaming": "cd1da0e1f52c21916c40a7ba92ce812a8faf0c483cfd823014b74cfe208de28f",
     "subscription_price_drift": "febe0b2aeece175925818601da3c7ad781b098473e3cdd1a49b303c76d6ec336",
-    "trial_conversion": "ccb599c740277ee8bd63d87c85e625a9406c33d7ec0ac51b9294684a312fb400"
+    "trial_conversion": "be3c2ff7531cdc0024d25c14dec012c9f183a11e93b7fbeddc2dd36ea0cadb6d"
   },
-  "elapsed_ms": 3,
+  "elapsed_ms": 4,
   "elapsed_ms_by_mode": {
     "baseline": 0,
-    "final": 3,
+    "final": 4,
     "normalization_only": 0,
     "removed_unsafe_recurrence": 0,
     "unverified_agent": 1
@@ -177,6 +177,18 @@
       }
     ],
     "trial_conversion": [
+      {
+        "caveat": "Confirm whether the unusual charge was expected before treating it as savings.",
+        "confidence": "medium",
+        "evidence_ids": [
+          "tc-g1",
+          "tc-g2",
+          "tc-g3"
+        ],
+        "kind": "anomaly",
+        "monthly_savings_usd": "54.50",
+        "target": "Grocery Mart"
+      },
       {
         "caveat": "Savings are estimates based on the observed recurring charges.",
         "confidence": "high",
