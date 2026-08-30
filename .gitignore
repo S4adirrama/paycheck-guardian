@@ -11,4 +11,7 @@ tmp/
 uploads/
 *.pyc
 *.egg-info/
+**/.build/
+DerivedData/
+*.xcresult/
 artifacts/video/frames/concat.txt
