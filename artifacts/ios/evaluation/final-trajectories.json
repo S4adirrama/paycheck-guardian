@@ -1,0 +1,2329 @@
+{
+  "case_count" : 12,
+  "execution_mode" : "offline",
+  "language" : "Swift",
+  "model_cost_usd" : "0.00",
+  "package_version" : "0.1.0",
+  "trajectories" : {
+    "ambiguous_recurrence" : [
+      {
+        "component" : "agent",
+        "id" : "9b4d3611a74f29f3",
+        "payload" : {
+          "instruction" : "Find evidence-backed savings before the next paycheck; never act externally.",
+          "synthetic_count" : 4,
+          "transaction_count" : 4
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 1,
+        "type" : "run_started"
+      },
+      {
+        "component" : "analysis",
+        "id" : "a92dad5a32aefe97",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 2,
+        "toolName" : "find_recurring",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "c279175613353c3d",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 3,
+        "toolName" : "find_recurring",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "b8262b00c924977b",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 4,
+        "toolName" : "find_duplicates",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "f3648fe408a6ab7b",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 5,
+        "toolName" : "find_duplicates",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "ade8e9d84588d642",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 6,
+        "toolName" : "find_anomalies",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "66bb875aecdbba17",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 7,
+        "toolName" : "find_anomalies",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "d08a8ccead1e4a26",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 8,
+        "toolName" : "summarize_categories",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "69745fdc4a052663",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 2
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 9,
+        "toolName" : "summarize_categories",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "e463b0ecb818befb",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 10,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "4c73660f1ff0894f",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 11,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "b7c527e467881100",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 12,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "077989fa7de50682",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 13,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "0dd884eb78fa729b",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "9da238fc118ab548",
+          "status" : "accepted"
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 14,
+        "type" : "verification"
+      },
+      {
+        "component" : "agent",
+        "id" : "e77b462cb4d14fe2",
+        "payload" : {
+          "recommendation_count" : 1
+        },
+        "runID" : "f2db1687068cefdc",
+        "sequence" : 15,
+        "type" : "run_completed"
+      }
+    ],
+    "annual_subscription" : [
+      {
+        "component" : "agent",
+        "id" : "7d52426651bd360f",
+        "payload" : {
+          "instruction" : "Find evidence-backed savings before the next paycheck; never act externally.",
+          "synthetic_count" : 4,
+          "transaction_count" : 4
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 1,
+        "type" : "run_started"
+      },
+      {
+        "component" : "analysis",
+        "id" : "b09d14a95e2d3439",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 2,
+        "toolName" : "find_recurring",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "0a6655f88e97381a",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 3,
+        "toolName" : "find_recurring",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "0801584c48f2fcd1",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 4,
+        "toolName" : "find_duplicates",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "393981aeec21bff7",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 5,
+        "toolName" : "find_duplicates",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "bcff4181697ddb61",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 6,
+        "toolName" : "find_anomalies",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "1b5ff3695e45cfb6",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 7,
+        "toolName" : "find_anomalies",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "8aa0abd1f146ae57",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 8,
+        "toolName" : "summarize_categories",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "68c62fcd95f0aa09",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 2
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 9,
+        "toolName" : "summarize_categories",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "034ca124d67aa8c2",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 10,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "3ec2da27c3369f35",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 11,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "ca3778fa572649da",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 12,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "27069e2128dd2226",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 13,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "3bc213d0363d4ba4",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "d69a50617a002618",
+          "status" : "accepted"
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 14,
+        "type" : "verification"
+      },
+      {
+        "component" : "agent",
+        "id" : "022dd4b141963659",
+        "payload" : {
+          "recommendation_count" : 1
+        },
+        "runID" : "5dfab428f2036f1c",
+        "sequence" : 15,
+        "type" : "run_completed"
+      }
+    ],
+    "challenge_alias_price_essential" : [
+      {
+        "component" : "agent",
+        "id" : "ea1a06fc9af164a8",
+        "payload" : {
+          "instruction" : "Find evidence-backed savings before the next paycheck; never act externally.",
+          "synthetic_count" : 7,
+          "transaction_count" : 7
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 1,
+        "type" : "run_started"
+      },
+      {
+        "component" : "analysis",
+        "id" : "49fad24fc2baff68",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 2,
+        "toolName" : "find_recurring",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "eb51313da18e662f",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 2
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 3,
+        "toolName" : "find_recurring",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "b9dab5f1798dccd9",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 4,
+        "toolName" : "find_duplicates",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "717d724cedcffef0",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 5,
+        "toolName" : "find_duplicates",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "3b088ccd088199a4",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 6,
+        "toolName" : "find_anomalies",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "f4366865a417cc04",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 7,
+        "toolName" : "find_anomalies",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "e743080a471954d8",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 8,
+        "toolName" : "summarize_categories",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "37b533d555f3d533",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 3
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 9,
+        "toolName" : "summarize_categories",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "9dd0046d71b51507",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 10,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "f817b0897e7e3c6e",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 11,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "eaf9fae83e87d9a9",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 12,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "667912ab72c51afe",
+        "payload" : {
+          "accepted" : false,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 13,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "cc3d98fea6358e1c",
+        "payload" : {
+          "reason_count" : 1,
+          "recommendation_id" : "1f67d8a7c833a5ca",
+          "status" : "rejected"
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 14,
+        "type" : "verification"
+      },
+      {
+        "component" : "verifier",
+        "id" : "7263160d40296f56",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 15,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "732e4df48af7f0f5",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 16,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "96c1de425a4df539",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "bd599aea0b08ff1f",
+          "status" : "accepted"
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 17,
+        "type" : "verification"
+      },
+      {
+        "component" : "agent",
+        "id" : "dbc9761afd3d0530",
+        "payload" : {
+          "recommendation_count" : 1
+        },
+        "runID" : "149eb35e2b9498cf",
+        "sequence" : 18,
+        "type" : "run_completed"
+      }
+    ],
+    "duplicate_charge" : [
+      {
+        "component" : "agent",
+        "id" : "0add3f69a0159011",
+        "payload" : {
+          "instruction" : "Find evidence-backed savings before the next paycheck; never act externally.",
+          "synthetic_count" : 4,
+          "transaction_count" : 4
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 1,
+        "type" : "run_started"
+      },
+      {
+        "component" : "analysis",
+        "id" : "1b82ed79ab1efc37",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 2,
+        "toolName" : "find_recurring",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "6144be51fed3e6be",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 3,
+        "toolName" : "find_recurring",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "da535f5f918cdbc6",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 4,
+        "toolName" : "find_duplicates",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "a377e6f129edceb3",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 5,
+        "toolName" : "find_duplicates",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "5bed320144314545",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 6,
+        "toolName" : "find_anomalies",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "b455a24c2846c5fe",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 7,
+        "toolName" : "find_anomalies",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "6e0728d19a129866",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 8,
+        "toolName" : "summarize_categories",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "9e3343f60a67247c",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 2
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 9,
+        "toolName" : "summarize_categories",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "29fb82191d688a4f",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 10,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "b5da03cfa3e982ce",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 11,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "a0ab8f252cdcba2f",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 12,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "140aff273dee1e08",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 13,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "15ffa7e0c2368d85",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "ea6490ec3ac215ac",
+          "status" : "accepted"
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 14,
+        "type" : "verification"
+      },
+      {
+        "component" : "agent",
+        "id" : "0215262f77d47d58",
+        "payload" : {
+          "recommendation_count" : 1
+        },
+        "runID" : "83f8cabacb4b5011",
+        "sequence" : 15,
+        "type" : "run_completed"
+      }
+    ],
+    "essential_insurance" : [
+      {
+        "component" : "agent",
+        "id" : "78346150cd011109",
+        "payload" : {
+          "instruction" : "Find evidence-backed savings before the next paycheck; never act externally.",
+          "synthetic_count" : 7,
+          "transaction_count" : 7
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 1,
+        "type" : "run_started"
+      },
+      {
+        "component" : "analysis",
+        "id" : "0532e4f9fa74371e",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 2,
+        "toolName" : "find_recurring",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "560d8572d8aa85aa",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 3,
+        "toolName" : "find_recurring",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "22ed7781a2f4ce3d",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 4,
+        "toolName" : "find_duplicates",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "3f1b051aa7899d78",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 5,
+        "toolName" : "find_duplicates",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "7e34eb70f66676bd",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 6,
+        "toolName" : "find_anomalies",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "4bcf64af414f3452",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 7,
+        "toolName" : "find_anomalies",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "3861a70579359030",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 8,
+        "toolName" : "summarize_categories",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "7388aa3165733160",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 2
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 9,
+        "toolName" : "summarize_categories",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "f3e54a6965b6ac6d",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 10,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "9c9733022d4c9d39",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 11,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "88a6abe1b75e1939",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 7
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 12,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "3ecd2a36bc14222b",
+        "payload" : {
+          "accepted" : false,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 13,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "855e37249feebb89",
+        "payload" : {
+          "reason_count" : 1,
+          "recommendation_id" : "63060afd36c73cd0",
+          "status" : "rejected"
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 14,
+        "type" : "verification"
+      },
+      {
+        "component" : "agent",
+        "id" : "2ed3d0cb70e93e35",
+        "payload" : {
+          "recommendation_count" : 0
+        },
+        "runID" : "c02f949211cbf189",
+        "sequence" : 15,
+        "type" : "run_completed"
+      }
+    ],
+    "essential_rent" : [
+      {
+        "component" : "agent",
+        "id" : "0a007371d3e0cf31",
+        "payload" : {
+          "instruction" : "Find evidence-backed savings before the next paycheck; never act externally.",
+          "synthetic_count" : 4,
+          "transaction_count" : 4
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 1,
+        "type" : "run_started"
+      },
+      {
+        "component" : "analysis",
+        "id" : "1cd73c48f2937583",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 2,
+        "toolName" : "find_recurring",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "a59c0ae0dfe8a375",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 3,
+        "toolName" : "find_recurring",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "b1f1f273be6556cc",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 4,
+        "toolName" : "find_duplicates",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "5062931c8dd0f23b",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 5,
+        "toolName" : "find_duplicates",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "cd89e6230a16bbf0",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 6,
+        "toolName" : "find_anomalies",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "54162955b356052c",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 7,
+        "toolName" : "find_anomalies",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "de38c0e66a65858f",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 8,
+        "toolName" : "summarize_categories",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "a1eb99b5404828bf",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 2
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 9,
+        "toolName" : "summarize_categories",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "be2c57a46cd48304",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 10,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "69a26853f000f12b",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 11,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "3877319e558a1a81",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 4
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 12,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "9d67c8232cf6f712",
+        "payload" : {
+          "accepted" : false,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 13,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "786458be79f4eb53",
+        "payload" : {
+          "reason_count" : 1,
+          "recommendation_id" : "558ac125ef8e2d74",
+          "status" : "rejected"
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 14,
+        "type" : "verification"
+      },
+      {
+        "component" : "agent",
+        "id" : "e091fa65efb77a26",
+        "payload" : {
+          "recommendation_count" : 0
+        },
+        "runID" : "4a587de2ff6cb15a",
+        "sequence" : 15,
+        "type" : "run_completed"
+      }
+    ],
+    "food_delivery_pattern" : [
+      {
+        "component" : "agent",
+        "id" : "124ebf51f6ac5b24",
+        "payload" : {
+          "instruction" : "Find evidence-backed savings before the next paycheck; never act externally.",
+          "synthetic_count" : 5,
+          "transaction_count" : 5
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 1,
+        "type" : "run_started"
+      },
+      {
+        "component" : "analysis",
+        "id" : "2728092cb3a9e23d",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 2,
+        "toolName" : "find_recurring",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "fd2ac7b7756bbea1",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 3,
+        "toolName" : "find_recurring",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "d06fff199c0c97ee",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 4,
+        "toolName" : "find_duplicates",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "d88c32618539e5e2",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 5,
+        "toolName" : "find_duplicates",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "c0852a621e669e86",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 6,
+        "toolName" : "find_anomalies",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "058284559c5b3459",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 7,
+        "toolName" : "find_anomalies",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "eb20d9ca08ad623a",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 8,
+        "toolName" : "summarize_categories",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "8312608f184ca633",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 2
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 9,
+        "toolName" : "summarize_categories",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "e6459f6980bcd562",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 10,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "7e15c6523fc81b81",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 11,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "b5686ee4f187f59c",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 12,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "58b0a54814673de1",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 13,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "2df0d0a214df5ad2",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "b990b0705f7688d5",
+          "status" : "accepted"
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 14,
+        "type" : "verification"
+      },
+      {
+        "component" : "agent",
+        "id" : "909445f0f4120cad",
+        "payload" : {
+          "recommendation_count" : 1
+        },
+        "runID" : "80aa0b385c488c29",
+        "sequence" : 15,
+        "type" : "run_completed"
+      }
+    ],
+    "merchant_aliases" : [
+      {
+        "component" : "agent",
+        "id" : "41e6877926c9d82c",
+        "payload" : {
+          "instruction" : "Find evidence-backed savings before the next paycheck; never act externally.",
+          "synthetic_count" : 5,
+          "transaction_count" : 5
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 1,
+        "type" : "run_started"
+      },
+      {
+        "component" : "analysis",
+        "id" : "732459dae771c818",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 2,
+        "toolName" : "find_recurring",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "12def7e8c8c5704b",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 3,
+        "toolName" : "find_recurring",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "7aa3b7629d1a71fd",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 4,
+        "toolName" : "find_duplicates",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "336211b0ffa89590",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 5,
+        "toolName" : "find_duplicates",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "1224749dd2e420ab",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 6,
+        "toolName" : "find_anomalies",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "f30bcbb003a5fea2",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 7,
+        "toolName" : "find_anomalies",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "f8ae6baff0508c3b",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 8,
+        "toolName" : "summarize_categories",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "cffcf27fbd93f2c2",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 2
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 9,
+        "toolName" : "summarize_categories",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "e722d0f0eae2bc72",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 10,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "26daa2a214c5509d",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 11,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "bd9145957c4b2a41",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 12,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "870dae95b621b139",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 13,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "9241879b10d7ac07",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "25eb0b8ce05ddfb5",
+          "status" : "accepted"
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 14,
+        "type" : "verification"
+      },
+      {
+        "component" : "agent",
+        "id" : "a6b2a490c7d08993",
+        "payload" : {
+          "recommendation_count" : 1
+        },
+        "runID" : "e7d60e72637014f7",
+        "sequence" : 15,
+        "type" : "run_completed"
+      }
+    ],
+    "mixed_opportunities" : [
+      {
+        "component" : "agent",
+        "id" : "28224f39db00c70c",
+        "payload" : {
+          "instruction" : "Find evidence-backed savings before the next paycheck; never act externally.",
+          "synthetic_count" : 10,
+          "transaction_count" : 10
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 1,
+        "type" : "run_started"
+      },
+      {
+        "component" : "analysis",
+        "id" : "478b283d90ff1312",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 10
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 2,
+        "toolName" : "find_recurring",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "3798b56be1b52342",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 3,
+        "toolName" : "find_recurring",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "9d4f952b8f0a2929",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 10
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 4,
+        "toolName" : "find_duplicates",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "a35c69dd4a6490b8",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 5,
+        "toolName" : "find_duplicates",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "c14dda15ba9fa981",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 10
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 6,
+        "toolName" : "find_anomalies",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "37d9b4628fbecc53",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 7,
+        "toolName" : "find_anomalies",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "103d469b1a8a9922",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 10
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 8,
+        "toolName" : "summarize_categories",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "bfa13e733e61feba",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 3
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 9,
+        "toolName" : "summarize_categories",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "67319567430440f9",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 10
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 10,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "1d1ef46f739bafdf",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 11,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "91e118c2d2fde381",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 10
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 12,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "65caa2ba2eba0556",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 13,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "3a299ceed1415010",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "353403dab8791cfd",
+          "status" : "accepted"
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 14,
+        "type" : "verification"
+      },
+      {
+        "component" : "verifier",
+        "id" : "13663a22e501f47b",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 10
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 15,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "383a0237cd3bb808",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 16,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "56b8e803726a85c9",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "1360af012b981853",
+          "status" : "accepted"
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 17,
+        "type" : "verification"
+      },
+      {
+        "component" : "verifier",
+        "id" : "3e572627b47b1ebf",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 10
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 18,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "a29c4ee1bde3aea8",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 19,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "3d0f7ba0e6719db0",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "bfdef275e03020f2",
+          "status" : "accepted"
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 20,
+        "type" : "verification"
+      },
+      {
+        "component" : "agent",
+        "id" : "aa589a02603bf580",
+        "payload" : {
+          "recommendation_count" : 3
+        },
+        "runID" : "afa95ad609361b45",
+        "sequence" : 21,
+        "type" : "run_completed"
+      }
+    ],
+    "monthly_streaming" : [
+      {
+        "component" : "agent",
+        "id" : "bfe02ad89c738035",
+        "payload" : {
+          "instruction" : "Find evidence-backed savings before the next paycheck; never act externally.",
+          "synthetic_count" : 5,
+          "transaction_count" : 5
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 1,
+        "type" : "run_started"
+      },
+      {
+        "component" : "analysis",
+        "id" : "8fdff832ce9e9eaf",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 2,
+        "toolName" : "find_recurring",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "9f0511ad1835163f",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 3,
+        "toolName" : "find_recurring",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "6d444a84eac86de0",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 4,
+        "toolName" : "find_duplicates",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "72cb9713a89810ee",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 5,
+        "toolName" : "find_duplicates",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "95e4159c564b4503",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 6,
+        "toolName" : "find_anomalies",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "f6373770cb79db9f",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 7,
+        "toolName" : "find_anomalies",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "41c84fbf4416f17c",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 8,
+        "toolName" : "summarize_categories",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "e170032ffada8e61",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 2
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 9,
+        "toolName" : "summarize_categories",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "ed79bf08690e9aee",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 10,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "0617ef218de6cffe",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 11,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "6322c24b14ac7020",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 12,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "17e47b06d5d2a4a4",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 13,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "cc29589ce39bc61b",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "2375c47cdc427a94",
+          "status" : "accepted"
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 14,
+        "type" : "verification"
+      },
+      {
+        "component" : "agent",
+        "id" : "0a89631e0330de0c",
+        "payload" : {
+          "recommendation_count" : 1
+        },
+        "runID" : "4fff4dab2e468d1d",
+        "sequence" : 15,
+        "type" : "run_completed"
+      }
+    ],
+    "subscription_price_drift" : [
+      {
+        "component" : "agent",
+        "id" : "33c93ef4781a5606",
+        "payload" : {
+          "instruction" : "Find evidence-backed savings before the next paycheck; never act externally.",
+          "synthetic_count" : 5,
+          "transaction_count" : 5
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 1,
+        "type" : "run_started"
+      },
+      {
+        "component" : "analysis",
+        "id" : "65b70beb0c0be817",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 2,
+        "toolName" : "find_recurring",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "71db03974b618e12",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 3,
+        "toolName" : "find_recurring",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "b21dc098e984c898",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 4,
+        "toolName" : "find_duplicates",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "8a97d7badbecf6a3",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 5,
+        "toolName" : "find_duplicates",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "38f019c67a5078b1",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 6,
+        "toolName" : "find_anomalies",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "a52a07b3dcf44c67",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 7,
+        "toolName" : "find_anomalies",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "71a2a6bd8726d477",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 8,
+        "toolName" : "summarize_categories",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "5d299b6d193b960a",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 2
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 9,
+        "toolName" : "summarize_categories",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "11fd2848549b7104",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 10,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "6bc6accb2071f7de",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 11,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "bae1935b72674e21",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 5
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 12,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "5e169f1b4fe42b2e",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 13,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "7e9e3f116ee37b7e",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "6d372d7ac699fe48",
+          "status" : "accepted"
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 14,
+        "type" : "verification"
+      },
+      {
+        "component" : "agent",
+        "id" : "5f1a431fed4095c2",
+        "payload" : {
+          "recommendation_count" : 1
+        },
+        "runID" : "6a2796f0d246f1ba",
+        "sequence" : 15,
+        "type" : "run_completed"
+      }
+    ],
+    "trial_conversion" : [
+      {
+        "component" : "agent",
+        "id" : "33926c8eb7d4f75b",
+        "payload" : {
+          "instruction" : "Find evidence-backed savings before the next paycheck; never act externally.",
+          "synthetic_count" : 8,
+          "transaction_count" : 8
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 1,
+        "type" : "run_started"
+      },
+      {
+        "component" : "analysis",
+        "id" : "62372bd653e28a68",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 8
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 2,
+        "toolName" : "find_recurring",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "4d0e891759d1b7c8",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 3,
+        "toolName" : "find_recurring",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "2382c81543d09fe0",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 8
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 4,
+        "toolName" : "find_duplicates",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "7e11192c2daa35b8",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 5,
+        "toolName" : "find_duplicates",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "5e5b70208c2463f2",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 8
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 6,
+        "toolName" : "find_anomalies",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "08705c32b06a6276",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 7,
+        "toolName" : "find_anomalies",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "7d299225b994b011",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 8
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 8,
+        "toolName" : "summarize_categories",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "08805e5d19665099",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 2
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 9,
+        "toolName" : "summarize_categories",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "analysis",
+        "id" : "ec57100fc91f511c",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 8
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 10,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "analysis",
+        "id" : "ac58799175dd3ac1",
+        "payload" : {
+          "attempt" : 1,
+          "candidate_count" : 0
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 11,
+        "toolName" : "find_discretionary_patterns",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "f1137a1e5fac2440",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 8
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 12,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "e5fce1def38af1fc",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 13,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "03a7c7b6e24dae3b",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "6fa284c3816c945c",
+          "status" : "accepted"
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 14,
+        "type" : "verification"
+      },
+      {
+        "component" : "verifier",
+        "id" : "9bd8e6b0a29e6e6c",
+        "payload" : {
+          "attempt" : 1,
+          "transaction_count" : 8
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 15,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_called"
+      },
+      {
+        "component" : "verifier",
+        "id" : "603cc1ce00dbcee3",
+        "payload" : {
+          "accepted" : true,
+          "attempt" : 1,
+          "candidate_count" : 1
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 16,
+        "toolName" : "recommendation_verifier",
+        "type" : "tool_result"
+      },
+      {
+        "component" : "verifier",
+        "id" : "924c14990c7ecbbd",
+        "payload" : {
+          "reason_count" : 0,
+          "recommendation_id" : "225af6094022692f",
+          "status" : "accepted"
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 17,
+        "type" : "verification"
+      },
+      {
+        "component" : "agent",
+        "id" : "22a985d94b2e9b3d",
+        "payload" : {
+          "recommendation_count" : 2
+        },
+        "runID" : "b0ded14d77f197c5",
+        "sequence" : 18,
+        "type" : "run_completed"
+      }
+    ]
+  }
+}

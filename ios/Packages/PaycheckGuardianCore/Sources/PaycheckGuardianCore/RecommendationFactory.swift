@@ -2,7 +2,7 @@ import Foundation
 
 public enum RecommendationFactory {
     public static func drafts(from facts: AnalysisFacts, window: AnalysisWindow) -> [CandidateRecommendation] {
-        let subscriptions = facts.recurring.filter(\.cancellable).map { candidate in
+        let subscriptions = facts.recurring.map { candidate in
             let lowConfidence = candidate.evidenceIDs.count == 2 && candidate.intervalDays == 30
             return draft(
                 kind: .subscription,
