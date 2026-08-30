@@ -59,4 +59,4 @@ This project was created during the hackathon as a prototype. The demo and evalu
 
 ## Submission verification
 
-Fresh offline audit evidence: Python 3.11.15; 89 tests collected; 12 synthetic cases; final F1 1.0000 with 0 unsupported claims; final-mode runtime 3 ms. The H.264 demo video is 280.000 seconds. Audited source commit: `d7d499047c622878a43f39ede0f6ffcdc31947d0`.
+Fresh offline audit evidence: Python 3.11.15; 89 tests collected; 12 synthetic cases; final F1 1.0000 with 0 unsupported claims; final-mode runtime 3 ms. The H.264 demo video is 280.000 seconds. Audited source commit: `d78e53fc1c6f1a96c9962431412711ae75e7be1a`.

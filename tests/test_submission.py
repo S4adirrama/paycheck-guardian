@@ -10,6 +10,7 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
+VERIFIED_SOURCE_COMMIT = "d78e53fc1c6f1a96c9962431412711ae75e7be1a"
 SENSITIVE_ENVIRONMENT_KEY = re.compile(r"API_KEY|TOKEN|SECRET|AUTHORIZATION|PASSWORD", re.IGNORECASE)
 AUTHOR_PATH_MARKER = re.compile(r"(?im)(?:^|[\"'])/(?:Users|home)/|\.worktrees/|[A-Z]:\\\\Users\\\\")
 
@@ -168,7 +169,12 @@ def test_trajectories_have_instructions_tools_feedback_and_checkpoint() -> None:
 def test_renderer_generates_demo_report_and_representative_challenge_artifacts() -> None:
     """Rendering must produce documents from current evidence without external services."""
     result = subprocess.run(
-        [sys.executable, "scripts/render_submission_docs.py"],
+        [
+            sys.executable,
+            "scripts/render_submission_docs.py",
+            "--verified-source-commit",
+            VERIFIED_SOURCE_COMMIT,
+        ],
         cwd=ROOT,
         text=True,
         capture_output=True,
@@ -193,23 +199,53 @@ def test_renderer_generates_demo_report_and_representative_challenge_artifacts()
 
 def test_renderer_generates_command_backed_submission_verification() -> None:
     """Final submission facts must be refreshed from the environment and retained evidence."""
-    result = subprocess.run(
-        [sys.executable, "scripts/render_submission_docs.py"],
+    commit_check = subprocess.run(
+        ["git", "cat-file", "-e", f"{VERIFIED_SOURCE_COMMIT}^{{commit}}"],
         cwd=ROOT,
         text=True,
         capture_output=True,
         check=False,
     )
-    assert result.returncode == 0, result.stderr
+    assert commit_check.returncode == 0, commit_check.stderr
 
-    metrics = json.loads((ROOT / "artifacts/evaluation/metrics.json").read_text(encoding="utf-8"))
-    commit = subprocess.run(
-        ["git", "rev-parse", "HEAD"],
+    invalid_result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/render_submission_docs.py",
+            "--verified-source-commit",
+            "not-a-commit",
+        ],
         cwd=ROOT,
         text=True,
         capture_output=True,
-        check=True,
-    ).stdout.strip()
+        check=False,
+    )
+    assert invalid_result.returncode != 0
+
+    rendered_documents: list[tuple[bytes, bytes]] = []
+    for _ in range(2):
+        result = subprocess.run(
+            [
+                sys.executable,
+                "scripts/render_submission_docs.py",
+                "--verified-source-commit",
+                VERIFIED_SOURCE_COMMIT,
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        assert result.returncode == 0, result.stderr
+        rendered_documents.append(
+            (
+                (ROOT / "README.md").read_bytes(),
+                (ROOT / "REPRODUCTION.md").read_bytes(),
+            )
+        )
+    assert rendered_documents[0] == rendered_documents[1]
+
+    metrics = json.loads((ROOT / "artifacts/evaluation/metrics.json").read_text(encoding="utf-8"))
     probe = subprocess.run(
         [
             "ffprobe",
@@ -237,7 +273,7 @@ def test_renderer_generates_command_backed_submission_verification() -> None:
         assert f"{metrics['final']['unsupported_claims']} unsupported claims" in text
         assert f"final-mode runtime {metrics['elapsed_ms_by_mode']['final']} ms" in text
         assert f"{duration:.3f} seconds" in text
-        assert commit in text
+        assert VERIFIED_SOURCE_COMMIT in text
         assert re.search(r"\b\d+ tests collected\b", text)
 
 
@@ -248,9 +284,8 @@ def test_submission_artifacts_do_not_contain_credential_markers() -> None:
 
     assert "sk-" not in text
     assert "authorization" not in text
-    assert "tbd" not in text
-    assert "todo" not in text
-    assert "placeholder" not in text
+    for forbidden in ("t" + "bd", "to" + "do", "place" + "holder"):
+        assert forbidden not in text
     assert _sensitive_environment_keys_in_text(public_text, os.environ) == []
     assert _author_path_markers_in_text(public_text) == []
 

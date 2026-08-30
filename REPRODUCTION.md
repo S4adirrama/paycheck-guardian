@@ -47,7 +47,7 @@ Expected result: the command prints `evaluated 12 cases in offline mode` and ref
 
 ```sh
 .venv/bin/python scripts/evaluate.py --mode offline
-.venv/bin/python scripts/render_submission_docs.py
+.venv/bin/python scripts/render_submission_docs.py --verified-source-commit d78e53fc1c6f1a96c9962431412711ae75e7be1a
 ```
 
 Expected result: evaluation prints `evaluated 12 cases in offline mode` and writes `artifacts/evaluation/baseline_predictions.json`, `artifacts/evaluation/normalization_only_predictions.json`, `artifacts/evaluation/unverified_agent_predictions.json`, `artifacts/evaluation/removed_unsafe_recurrence_predictions.json`, `artifacts/evaluation/final_predictions.json`, `artifacts/evaluation/final_trajectories.json`, `artifacts/evaluation/metrics.json`, `artifacts/evaluation/per_case_results.json`, and `artifacts/evaluation/comparison.md`. Rendering prints `rendered evidence-backed submission documents and representative artifacts` and writes `README.md`, `REPRODUCTION.md`, `artifacts/trajectories/baseline.json`, `artifacts/trajectories/final.json`, `artifacts/reports/demo_report.md`, and `artifacts/reports/demo_report.json`.
@@ -96,7 +96,7 @@ Do not print, commit, paste into reports, or record the credential. No current e
 ## Troubleshooting and integrity checks
 
 ```sh
-.venv/bin/python scripts/render_submission_docs.py
+.venv/bin/python scripts/render_submission_docs.py --verified-source-commit d78e53fc1c6f1a96c9962431412711ae75e7be1a
 .venv/bin/pytest tests/test_submission.py -v
 if rg -n '[T]BD|[T]ODO|[P]LACEHOLDER|s[k]-[A-Za-z0-9]' README.md REPRODUCTION.md artifacts; then exit 1; fi
 .venv/bin/pytest
@@ -106,4 +106,4 @@ The final scan should emit no matches. All input fixtures and retained evaluatio
 
 ## Submission verification
 
-Fresh offline audit evidence: Python 3.11.15; 89 tests collected; 12 synthetic cases; final F1 1.0000 with 0 unsupported claims; final-mode runtime 3 ms. The H.264 demo video is 280.000 seconds. Audited source commit: `d7d499047c622878a43f39ede0f6ffcdc31947d0`.
+Fresh offline audit evidence: Python 3.11.15; 89 tests collected; 12 synthetic cases; final F1 1.0000 with 0 unsupported claims; final-mode runtime 3 ms. The H.264 demo video is 280.000 seconds. Audited source commit: `d78e53fc1c6f1a96c9962431412711ae75e7be1a`.

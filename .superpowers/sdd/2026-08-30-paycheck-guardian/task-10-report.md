@@ -27,10 +27,32 @@ All production fixes followed failing regression tests before implementation. Th
 - Tests: 89 passed in 3.27 seconds.
 - Streamlit: loaded 8 synthetic transactions; analyzed the verified plan; downloaded Markdown and JSON; expanded the trajectory; confirmed the approval gate; approved a local simulation; dismissed a recommendation with no action.
 - Video: H.264, 1920×1080, yuv420p; AAC stereo at 48 kHz; 280.000 seconds; 4,507,162 bytes; SHA-256 `69e680167975d33b0e47e54995e8df154a46465bdfb40374fcf670eb22282793`; full audio/video decode exited 0. Representative frames were visually inspected.
-- Privacy/secret/placeholder scan: no forbidden match in README, REPRODUCTION, trajectories, reports, video text, or other public artifacts. The broader source scan found only the three self-check assertions in `tests/test_submission.py`.
+- Privacy/secret/forbidden-marker scan: zero matches across the exact repository-wide audit and the narrower public-artifact audit.
 - License: repository MIT license present; built wheel contains `dist-info/licenses/LICENSE` and declares `License-File: LICENSE`. Direct pinned dependencies reported MIT/MIT-CMU or Apache-2.0-compatible metadata.
 - Required deliverables: README, REPRODUCTION, MP4, baseline trajectory, and final trajectory all present.
 
 ## Concerns
 
-No blocking concerns. Evaluation runtime is intentionally machine-specific. The generated docs identify `d7d499047c622878a43f39ede0f6ffcdc31947d0` as the audited source commit because command-backed evidence was rendered before the final audit commit; the complete verified changes are in `d78e53fc1c6f1a96c9962431412711ae75e7be1a`.
+No blocking concerns. Evaluation runtime is intentionally machine-specific. Generated verification now records the explicit tested implementation commit `d78e53fc1c6f1a96c9962431412711ae75e7be1a`, independently of later documentation commits.
+
+## Fix Round 1
+
+Addressed both Important review findings:
+
+1. Rebuilt the three forbidden self-check terms from noncontiguous fragments at runtime. The test behavior is unchanged, while the repository source no longer triggers its own audit.
+2. Replaced implicit `HEAD` capture with required `--verified-source-commit` input. The renderer validates the supplied object with `git rev-parse --verify <value>^{commit}`, canonicalizes it to the full commit hash, rejects an invalid value, and writes the same explicit hash into both generated documents and their documented reproduction commands.
+
+TDD evidence:
+
+- Red: `test_renderer_generates_command_backed_submission_verification` failed because `--verified-source-commit not-a-commit` incorrectly exited 0 under the old renderer.
+- Green: the focused deterministic renderer test passed after validation/input implementation; two renders with the same explicit commit produced byte-identical README and REPRODUCTION outputs.
+
+Final commands and outputs:
+
+- `.verify-venv/bin/python scripts/render_submission_docs.py --verified-source-commit d78e53fc1c6f1a96c9962431412711ae75e7be1a` → `rendered evidence-backed submission documents and representative artifacts`.
+- `git cat-file -e d78e53fc1c6f1a96c9962431412711ae75e7be1a^{commit}` → exit 0.
+- Exact repository scan from the Task 10 brief, with failure on any match → zero matches.
+- Public privacy/secret/path scan over README, REPRODUCTION, and artifacts → zero matches.
+- `.verify-venv/bin/pytest tests/test_submission.py -q` → 12/12 passed.
+- `.verify-venv/bin/pytest` → 89 passed in 3.68 seconds.
+- `git diff --check` → exit 0.

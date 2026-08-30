@@ -7,6 +7,7 @@ the deterministic Alex demo to keep the report in sync with production code.
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
@@ -57,8 +58,13 @@ def _offline_command(command: list[str]) -> str:
     ).stdout.strip()
 
 
-def _submission_verification(metrics: dict[str, Any]) -> dict[str, object]:
+def _submission_verification(
+    metrics: dict[str, Any], verified_source_commit: str
+) -> dict[str, object]:
     """Collect exact submission facts from local commands and retained evidence."""
+    source_commit = _offline_command(
+        ["git", "rev-parse", "--verify", f"{verified_source_commit}^{{commit}}"]
+    )
     collection = _offline_command([sys.executable, "-m", "pytest", "--collect-only", "-q"])
     test_count = sum(int(match) for match in re.findall(r":\s+(\d+)$", collection, re.MULTILINE))
     if test_count == 0:
@@ -85,7 +91,7 @@ def _submission_verification(metrics: dict[str, Any]) -> dict[str, object]:
         "unsupported_claims": metrics["final"]["unsupported_claims"],
         "final_runtime_ms": metrics["elapsed_ms_by_mode"]["final"],
         "video_duration_seconds": duration,
-        "source_commit": _offline_command(["git", "rev-parse", "HEAD"]),
+        "source_commit": source_commit,
     }
 
 
@@ -313,7 +319,7 @@ Expected result: the command prints `evaluated {case_count} cases in offline mod
 
 ```sh
 .venv/bin/python scripts/evaluate.py --mode offline
-.venv/bin/python scripts/render_submission_docs.py
+.venv/bin/python scripts/render_submission_docs.py --verified-source-commit {verification['source_commit']}
 ```
 
 Expected result: evaluation prints `evaluated {case_count} cases in offline mode` and writes `artifacts/evaluation/baseline_predictions.json`, `artifacts/evaluation/normalization_only_predictions.json`, `artifacts/evaluation/unverified_agent_predictions.json`, `artifacts/evaluation/removed_unsafe_recurrence_predictions.json`, `artifacts/evaluation/final_predictions.json`, `artifacts/evaluation/final_trajectories.json`, `artifacts/evaluation/metrics.json`, `artifacts/evaluation/per_case_results.json`, and `artifacts/evaluation/comparison.md`. Rendering prints `rendered evidence-backed submission documents and representative artifacts` and writes `README.md`, `REPRODUCTION.md`, `artifacts/trajectories/baseline.json`, `artifacts/trajectories/final.json`, `artifacts/reports/demo_report.md`, and `artifacts/reports/demo_report.json`.
@@ -362,7 +368,7 @@ Do not print, commit, paste into reports, or record the credential. No current e
 ## Troubleshooting and integrity checks
 
 ```sh
-.venv/bin/python scripts/render_submission_docs.py
+.venv/bin/python scripts/render_submission_docs.py --verified-source-commit {verification['source_commit']}
 .venv/bin/pytest tests/test_submission.py -v
 if rg -n '[T]BD|[T]ODO|[P]LACEHOLDER|s[k]-[A-Za-z0-9]' README.md REPRODUCTION.md artifacts; then exit 1; fi
 .venv/bin/pytest
@@ -389,10 +395,17 @@ def _render_demo_report() -> tuple[dict[str, Any], str]:
 
 def main() -> None:
     """Render all tracked submission documents and representative artifacts."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--verified-source-commit",
+        required=True,
+        help="tested implementation commit to record in generated verification evidence",
+    )
+    args = parser.parse_args()
     metrics = _read_json(EVALUATION_DIR / "metrics.json")
     baseline = _read_json(EVALUATION_DIR / "baseline_predictions.json")
     final = _read_json(EVALUATION_DIR / "final_trajectories.json")
-    verification = _submission_verification(metrics)
+    verification = _submission_verification(metrics, args.verified_source_commit)
     baseline_events, final_events = _challenge_trajectories(baseline, final)
     demo_json, demo_markdown = _render_demo_report()
 
