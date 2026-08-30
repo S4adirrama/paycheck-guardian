@@ -271,13 +271,11 @@ if transactions:
     st.markdown("### 2. Analyze")
     analysis_date = st.date_input(
         "Analysis date",
-        value=st.session_state.get("analysis_date", DEMO_ANALYSIS_DATE),
         key="analysis_date",
         help="The date from which next-paycheck estimates are calculated.",
     )
     next_paycheck = st.date_input(
         "Next paycheck date",
-        value=st.session_state.get("next_paycheck", DEMO_NEXT_PAYCHECK),
         key="next_paycheck",
     )
     invalid_window = next_paycheck < analysis_date

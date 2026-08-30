@@ -52,6 +52,7 @@ def test_analysis_and_next_paycheck_dates_are_user_controlled() -> None:
     """Replacing upload dates with fixed demo constants would make real analysis misleading."""
     app = _loaded_demo()
 
+    assert not app.warning
     assert app.date_input(key="analysis_date").value == date(2026, 8, 1)
     assert app.date_input(key="next_paycheck").value == date(2026, 8, 15)
     app.date_input(key="analysis_date").set_value(date(2026, 8, 2)).run(timeout=20)
