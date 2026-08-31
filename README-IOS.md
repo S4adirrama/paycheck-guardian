@@ -2,6 +2,10 @@
 
 The native hackathon application is a Swift 6 / SwiftUI project backed by a local Swift Package. It runs offline, uses synthetic fixtures for the one-tap demo, and performs no bank, merchant, analytics, or cancellation network action.
 
+## 60-second promo
+
+The hackathon-ready English product film is at `artifacts/ios/promo/paycheck-guardian-promo.mp4`. Its editable Remotion source, exact reproduction commands, narration source, and audio generators are documented in `promo/README.md`.
+
 ## Run in Simulator
 
 Requirements: macOS with Xcode 16 or newer and an iOS 17-or-newer iPhone Simulator runtime. The retained audit used Xcode 26.2 and Swift 6.2.3.
