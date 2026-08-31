@@ -1,0 +1,182 @@
+{
+  "case_count": 12,
+  "case_fingerprints": {
+    "ambiguous_recurrence": "d45de5286877ec6699966fc35227fc7e795142fe2efacb6d492a060c4cdd48a5",
+    "annual_subscription": "26ca03bea1a302d6535353c0dec6d496556246f0c1a28f6a57c08f565197da91",
+    "challenge_alias_price_essential": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+    "duplicate_charge": "560370345d7dee4ebfd5b19270512274fd90a947aa3b5729c30176abdcd85471",
+    "essential_insurance": "758a5291c39b6b7a1d6f58135facbd0c35560ff249ac0dc85319d31e8619ff90",
+    "essential_rent": "bcd3c5b9cc531741abe67a02eba4dc2440df3b6765f425518bf0746f6ee2f0cc",
+    "food_delivery_pattern": "726fa53770853cd4c46aa92159e47ecba1dc58ae858ecf8d278a8c136e9d676d",
+    "merchant_aliases": "fcf07121fcbeb71a41497e6cc2d1173c53de4caff9de05ffec9323744ed64ff6",
+    "mixed_opportunities": "0de8f8dc8205d021d6940c37fc9e157fecf34a71c5deeb48aec1038d9b81908f",
+    "monthly_streaming": "cd1da0e1f52c21916c40a7ba92ce812a8faf0c483cfd823014b74cfe208de28f",
+    "subscription_price_drift": "febe0b2aeece175925818601da3c7ad781b098473e3cdd1a49b303c76d6ec336",
+    "trial_conversion": "be3c2ff7531cdc0024d25c14dec012c9f183a11e93b7fbeddc2dd36ea0cadb6d"
+  },
+  "elapsed_ms": 0,
+  "elapsed_ms_by_mode": {
+    "baseline": 0,
+    "final": 4,
+    "normalization_only": 0,
+    "removed_unsafe_recurrence": 0,
+    "unverified_agent": 1
+  },
+  "execution_mode": "offline",
+  "mode": "normalization_only",
+  "model_cost_usd": "0.00",
+  "package_version": "0.1.0",
+  "platform": "macOS-15.7.9-arm64-arm-64bit",
+  "predictions": {
+    "ambiguous_recurrence": [
+      {
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
+        "evidence_ids": [
+          "ar-h1",
+          "ar-h2"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "7.99",
+        "target": "Hulu"
+      }
+    ],
+    "annual_subscription": [],
+    "challenge_alias_price_essential": [
+      {
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
+        "evidence_ids": [
+          "ch-n1",
+          "ch-n2",
+          "ch-n3"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "16.49",
+        "target": "Netflix"
+      },
+      {
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
+        "evidence_ids": [
+          "ch-r1",
+          "ch-r2"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "1500.00",
+        "target": "Rent"
+      }
+    ],
+    "duplicate_charge": [],
+    "essential_insurance": [
+      {
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
+        "evidence_ids": [
+          "ei-i1",
+          "ei-i2"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "120.00",
+        "target": "State Farm"
+      }
+    ],
+    "essential_rent": [
+      {
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
+        "evidence_ids": [
+          "er-r1",
+          "er-r2"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "1500.00",
+        "target": "Rent"
+      }
+    ],
+    "food_delivery_pattern": [],
+    "merchant_aliases": [
+      {
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
+        "evidence_ids": [
+          "ma-n1",
+          "ma-n2",
+          "ma-n3"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "15.49",
+        "target": "Netflix"
+      }
+    ],
+    "mixed_opportunities": [
+      {
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
+        "evidence_ids": [
+          "mo-n1",
+          "mo-n2",
+          "mo-n3"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "15.49",
+        "target": "Netflix"
+      }
+    ],
+    "monthly_streaming": [
+      {
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
+        "evidence_ids": [
+          "ms-n1",
+          "ms-n2",
+          "ms-n3"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "15.49",
+        "target": "Netflix"
+      }
+    ],
+    "subscription_price_drift": [
+      {
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
+        "evidence_ids": [
+          "sd-s1",
+          "sd-s2",
+          "sd-s3"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "11.99",
+        "target": "Spotify"
+      }
+    ],
+    "trial_conversion": [
+      {
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
+        "evidence_ids": [
+          "tc-g1",
+          "tc-g2",
+          "tc-g3"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "75.00",
+        "target": "Grocery Mart"
+      },
+      {
+        "caveat": "Unverified recurrence estimate.",
+        "confidence": "low",
+        "evidence_ids": [
+          "tc-h1",
+          "tc-h2",
+          "tc-h3"
+        ],
+        "kind": "subscription",
+        "monthly_savings_usd": "9.99",
+        "target": "Hulu"
+      }
+    ]
+  },
+  "python_version": "3.11.15"
+}

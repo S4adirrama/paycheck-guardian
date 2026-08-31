@@ -1,0 +1,3 @@
+DATE: 2026-05-04
+MERCHANT: Planet Fitness
+TOTAL: 24.99

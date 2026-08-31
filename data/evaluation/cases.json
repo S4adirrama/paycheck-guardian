@@ -1,0 +1,152 @@
+{
+  "cases": [
+    {
+      "case_id": "monthly_streaming",
+      "transactions": [
+        {"transaction_id": "ms-n1", "date": "2026-05-01", "merchant_raw": "NETFLIX", "amount_usd": "15.49"},
+        {"transaction_id": "ms-n2", "date": "2026-05-31", "merchant_raw": "NETFLIX", "amount_usd": "15.49"},
+        {"transaction_id": "ms-n3", "date": "2026-06-30", "merchant_raw": "NETFLIX", "amount_usd": "15.49"},
+        {"transaction_id": "ms-x1", "date": "2026-07-02", "merchant_raw": "BOOK NOOK", "amount_usd": "22.10"},
+        {"transaction_id": "ms-x2", "date": "2026-07-05", "merchant_raw": "GAS STATION", "amount_usd": "38.00"}
+      ],
+      "ground_truth": [{"kind": "subscription", "target": "Netflix", "required_evidence_ids": ["ms-n1", "ms-n2", "ms-n3"], "monthly_savings_usd": "15.49"}]
+    },
+    {
+      "case_id": "merchant_aliases",
+      "transactions": [
+        {"transaction_id": "ma-n1", "date": "2026-05-03", "merchant_raw": "NETFLIX.COM", "amount_usd": "15.49"},
+        {"transaction_id": "ma-n2", "date": "2026-06-02", "merchant_raw": "NETFLIX * 800-585", "amount_usd": "15.49"},
+        {"transaction_id": "ma-n3", "date": "2026-07-02", "merchant_raw": "NETFLIX ORDER 23A", "amount_usd": "15.49"},
+        {"transaction_id": "ma-x1", "date": "2026-07-03", "merchant_raw": "HARDWARE DEPOT", "amount_usd": "14.00"},
+        {"transaction_id": "ma-x2", "date": "2026-07-04", "merchant_raw": "PARKING METER", "amount_usd": "5.00"}
+      ],
+      "ground_truth": [{"kind": "subscription", "target": "Netflix", "required_evidence_ids": ["ma-n1", "ma-n2", "ma-n3"], "monthly_savings_usd": "15.49"}]
+    },
+    {
+      "case_id": "duplicate_charge",
+      "transactions": [
+        {"transaction_id": "dc-d1", "date": "2026-07-09", "merchant_raw": "DOORDASH", "amount_usd": "29.50"},
+        {"transaction_id": "dc-d2", "date": "2026-07-10", "merchant_raw": "DOORDASH", "amount_usd": "29.50"},
+        {"transaction_id": "dc-x1", "date": "2026-07-11", "merchant_raw": "GROCERY MART", "amount_usd": "55.00"},
+        {"transaction_id": "dc-x2", "date": "2026-07-12", "merchant_raw": "MUSEUM", "amount_usd": "18.00"}
+      ],
+      "ground_truth": [{"kind": "duplicate", "target": "DoorDash", "required_evidence_ids": ["dc-d1", "dc-d2"], "monthly_savings_usd": "29.50"}]
+    },
+    {
+      "case_id": "annual_subscription",
+      "transactions": [
+        {"transaction_id": "as-p1", "date": "2025-07-01", "merchant_raw": "AMAZON PRIME", "amount_usd": "139.99"},
+        {"transaction_id": "as-p2", "date": "2026-07-01", "merchant_raw": "AMAZON PRIME", "amount_usd": "139.99"},
+        {"transaction_id": "as-x1", "date": "2026-07-02", "merchant_raw": "PHARMACY", "amount_usd": "12.00"},
+        {"transaction_id": "as-x2", "date": "2026-07-03", "merchant_raw": "GARDEN STORE", "amount_usd": "31.00"}
+      ],
+      "ground_truth": [{"kind": "subscription", "target": "Amazon Prime", "required_evidence_ids": ["as-p1", "as-p2"], "monthly_savings_usd": "11.67"}]
+    },
+    {
+      "case_id": "trial_conversion",
+      "transactions": [
+        {"transaction_id": "tc-h1", "date": "2026-05-01", "merchant_raw": "HULU", "amount_usd": "8.99"},
+        {"transaction_id": "tc-h2", "date": "2026-05-31", "merchant_raw": "HULU", "amount_usd": "9.99"},
+        {"transaction_id": "tc-h3", "date": "2026-06-30", "merchant_raw": "HULU", "amount_usd": "9.99"},
+        {"transaction_id": "tc-g1", "date": "2026-05-05", "merchant_raw": "GROCERY MART", "amount_usd": "20.00"},
+        {"transaction_id": "tc-g2", "date": "2026-06-05", "merchant_raw": "GROCERY MART", "amount_usd": "21.00"},
+        {"transaction_id": "tc-g3", "date": "2026-07-05", "merchant_raw": "GROCERY MART", "amount_usd": "75.00"},
+        {"transaction_id": "tc-x1", "date": "2026-07-01", "merchant_raw": "BAKERY", "amount_usd": "7.00"},
+        {"transaction_id": "tc-x2", "date": "2026-07-04", "merchant_raw": "FUEL STOP", "amount_usd": "44.00"}
+      ],
+      "ground_truth": [
+        {"kind": "subscription", "target": "Hulu", "required_evidence_ids": ["tc-h1", "tc-h2", "tc-h3"], "monthly_savings_usd": "9.99"},
+        {"kind": "anomaly", "target": "Grocery Mart", "required_evidence_ids": ["tc-g1", "tc-g2", "tc-g3"], "monthly_savings_usd": "54.50"}
+      ]
+    },
+    {
+      "case_id": "subscription_price_drift",
+      "transactions": [
+        {"transaction_id": "sd-s1", "date": "2026-05-02", "merchant_raw": "SPOTIFY", "amount_usd": "10.99"},
+        {"transaction_id": "sd-s2", "date": "2026-06-01", "merchant_raw": "SPOTIFY", "amount_usd": "11.99"},
+        {"transaction_id": "sd-s3", "date": "2026-07-01", "merchant_raw": "SPOTIFY", "amount_usd": "11.99"},
+        {"transaction_id": "sd-x1", "date": "2026-07-02", "merchant_raw": "PET SHOP", "amount_usd": "19.00"},
+        {"transaction_id": "sd-x2", "date": "2026-07-06", "merchant_raw": "BIKE SHOP", "amount_usd": "42.00"}
+      ],
+      "ground_truth": [{"kind": "subscription", "target": "Spotify", "required_evidence_ids": ["sd-s1", "sd-s2", "sd-s3"], "monthly_savings_usd": "11.99"}]
+    },
+    {
+      "case_id": "food_delivery_pattern",
+      "transactions": [
+        {"transaction_id": "fd-d1", "date": "2026-07-01", "merchant_raw": "DOORDASH", "amount_usd": "18.00"},
+        {"transaction_id": "fd-d2", "date": "2026-07-11", "merchant_raw": "DOORDASH", "amount_usd": "21.00"},
+        {"transaction_id": "fd-d3", "date": "2026-07-21", "merchant_raw": "DOORDASH", "amount_usd": "24.00"},
+        {"transaction_id": "fd-x1", "date": "2026-07-22", "merchant_raw": "LIBRARY", "amount_usd": "3.00"},
+        {"transaction_id": "fd-x2", "date": "2026-07-25", "merchant_raw": "FARMERS MARKET", "amount_usd": "28.00"}
+      ],
+      "ground_truth": [{"kind": "behavioral_pattern", "target": "DoorDash", "required_evidence_ids": ["fd-d1", "fd-d2", "fd-d3"], "monthly_savings_usd": "63.00"}]
+    },
+    {
+      "case_id": "ambiguous_recurrence",
+      "transactions": [
+        {"transaction_id": "ar-h1", "date": "2026-06-01", "merchant_raw": "HULU", "amount_usd": "7.99"},
+        {"transaction_id": "ar-h2", "date": "2026-07-01", "merchant_raw": "HULU", "amount_usd": "7.99"},
+        {"transaction_id": "ar-x1", "date": "2026-07-02", "merchant_raw": "CORNER STORE", "amount_usd": "8.00"},
+        {"transaction_id": "ar-x2", "date": "2026-07-05", "merchant_raw": "TRAIN TICKET", "amount_usd": "6.00"}
+      ],
+      "ground_truth": [{"kind": "subscription", "target": "Hulu", "required_evidence_ids": ["ar-h1", "ar-h2"], "monthly_savings_usd": "7.99", "expected_confidence": "low", "caveat_required": true}]
+    },
+    {
+      "case_id": "essential_rent",
+      "transactions": [
+        {"transaction_id": "er-r1", "date": "2026-06-01", "merchant_raw": "RENT", "amount_usd": "1500.00"},
+        {"transaction_id": "er-r2", "date": "2026-07-01", "merchant_raw": "RENT", "amount_usd": "1500.00"},
+        {"transaction_id": "er-x1", "date": "2026-07-02", "merchant_raw": "GROCERY MART", "amount_usd": "60.00"},
+        {"transaction_id": "er-x2", "date": "2026-07-03", "merchant_raw": "BUS PASS", "amount_usd": "25.00"}
+      ],
+      "ground_truth": []
+    },
+    {
+      "case_id": "essential_insurance",
+      "transactions": [
+        {"transaction_id": "ei-i1", "date": "2026-06-03", "merchant_raw": "STATE FARM", "amount_usd": "120.00"},
+        {"transaction_id": "ei-i2", "date": "2026-07-03", "merchant_raw": "STATE FARM", "amount_usd": "120.00"},
+        {"transaction_id": "ei-w1", "date": "2026-04-01", "merchant_raw": "CITY WATER", "amount_usd": "48.00"},
+        {"transaction_id": "ei-w2", "date": "2026-05-01", "merchant_raw": "CITY WATER", "amount_usd": "48.00"},
+        {"transaction_id": "ei-w3", "date": "2026-07-20", "merchant_raw": "CITY WATER", "amount_usd": "48.00"},
+        {"transaction_id": "ei-x1", "date": "2026-07-04", "merchant_raw": "GROCERY MART", "amount_usd": "42.00"},
+        {"transaction_id": "ei-x2", "date": "2026-07-05", "merchant_raw": "PARKING METER", "amount_usd": "4.00"}
+      ],
+      "ground_truth": []
+    },
+    {
+      "case_id": "mixed_opportunities",
+      "transactions": [
+        {"transaction_id": "mo-n1", "date": "2026-05-01", "merchant_raw": "NETFLIX", "amount_usd": "15.49"},
+        {"transaction_id": "mo-n2", "date": "2026-05-31", "merchant_raw": "NETFLIX", "amount_usd": "15.49"},
+        {"transaction_id": "mo-n3", "date": "2026-06-30", "merchant_raw": "NETFLIX", "amount_usd": "15.49"},
+        {"transaction_id": "mo-c1", "date": "2026-07-02", "merchant_raw": "CINEMA", "amount_usd": "18.00"},
+        {"transaction_id": "mo-c2", "date": "2026-07-03", "merchant_raw": "CINEMA", "amount_usd": "18.00"},
+        {"transaction_id": "mo-d1", "date": "2026-07-04", "merchant_raw": "DOORDASH", "amount_usd": "16.00"},
+        {"transaction_id": "mo-d2", "date": "2026-07-14", "merchant_raw": "DOORDASH", "amount_usd": "20.00"},
+        {"transaction_id": "mo-d3", "date": "2026-07-24", "merchant_raw": "DOORDASH", "amount_usd": "25.00"},
+        {"transaction_id": "mo-x1", "date": "2026-07-25", "merchant_raw": "GAS STATION", "amount_usd": "35.00"},
+        {"transaction_id": "mo-x2", "date": "2026-07-26", "merchant_raw": "BOOK NOOK", "amount_usd": "12.00"}
+      ],
+      "ground_truth": [
+        {"kind": "subscription", "target": "Netflix", "required_evidence_ids": ["mo-n1", "mo-n2", "mo-n3"], "monthly_savings_usd": "15.49"},
+        {"kind": "duplicate", "target": "Cinema", "required_evidence_ids": ["mo-c1", "mo-c2"], "monthly_savings_usd": "18.00"},
+        {"kind": "behavioral_pattern", "target": "DoorDash", "required_evidence_ids": ["mo-d1", "mo-d2", "mo-d3"], "monthly_savings_usd": "61.00"}
+      ]
+    },
+    {
+      "case_id": "challenge_alias_price_essential",
+      "is_challenge": true,
+      "transactions": [
+        {"transaction_id": "ch-n1", "date": "2026-05-01", "merchant_raw": "NETFLIX.COM", "amount_usd": "15.49"},
+        {"transaction_id": "ch-n2", "date": "2026-05-31", "merchant_raw": "NETFLIX ORDER 55", "amount_usd": "16.49"},
+        {"transaction_id": "ch-n3", "date": "2026-06-30", "merchant_raw": "NETFLIX", "amount_usd": "16.49"},
+        {"transaction_id": "ch-r1", "date": "2026-06-01", "merchant_raw": "RENT", "amount_usd": "1500.00"},
+        {"transaction_id": "ch-r2", "date": "2026-07-01", "merchant_raw": "RENT", "amount_usd": "1500.00"},
+        {"transaction_id": "ch-x1", "date": "2026-07-03", "merchant_raw": "PHARMACY", "amount_usd": "11.00"},
+        {"transaction_id": "ch-x2", "date": "2026-07-04", "merchant_raw": "GAS STATION", "amount_usd": "39.00"}
+      ],
+      "ground_truth": [{"kind": "subscription", "target": "Netflix", "required_evidence_ids": ["ch-n1", "ch-n2", "ch-n3"], "monthly_savings_usd": "16.49"}]
+    }
+  ]
+}

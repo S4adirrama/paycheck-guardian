@@ -1,0 +1,76 @@
+{
+  "baseline" : {
+    "evidence_coverage" : "1.0000",
+    "f1" : "0.4545",
+    "false_negatives" : 8,
+    "false_positives" : 4,
+    "mean_savings_error_usd" : "0.0000",
+    "precision" : "0.5556",
+    "recall" : "0.3846",
+    "true_positives" : 5,
+    "unsupported_claims" : 4
+  },
+  "case_count" : 12,
+  "case_fingerprints" : {
+    "ambiguous_recurrence" : "61cee321d181bb33",
+    "annual_subscription" : "54ef1f2519c1d71b",
+    "challenge_alias_price_essential" : "f78beb511a94fd68",
+    "duplicate_charge" : "04d4b77334017dd5",
+    "essential_insurance" : "c553ebe1c4368d03",
+    "essential_rent" : "3f699346de4e127e",
+    "food_delivery_pattern" : "bd0cf04178ecc7d7",
+    "merchant_aliases" : "cd9b94f31c4656c8",
+    "mixed_opportunities" : "95696eff8e272017",
+    "monthly_streaming" : "c27a39be8c600920",
+    "subscription_price_drift" : "311636e4c715d0d3",
+    "trial_conversion" : "faf3d39915687b59"
+  },
+  "execution_mode" : "offline",
+  "final" : {
+    "evidence_coverage" : "1.0000",
+    "f1" : "1.0000",
+    "false_negatives" : 0,
+    "false_positives" : 0,
+    "mean_savings_error_usd" : "0.0000",
+    "precision" : "1.0000",
+    "recall" : "1.0000",
+    "true_positives" : 13,
+    "unsupported_claims" : 0
+  },
+  "language" : "Swift",
+  "model_cost_usd" : "0.00",
+  "normalization_only" : {
+    "evidence_coverage" : "1.0000",
+    "f1" : "0.5833",
+    "false_negatives" : 6,
+    "false_positives" : 4,
+    "mean_savings_error_usd" : "0.0000",
+    "precision" : "0.6364",
+    "recall" : "0.5385",
+    "true_positives" : 7,
+    "unsupported_claims" : 4
+  },
+  "package_version" : "0.1.0",
+  "removed_unsafe_recurrence" : {
+    "evidence_coverage" : "1.0000",
+    "f1" : "0.0800",
+    "false_negatives" : 12,
+    "false_positives" : 11,
+    "mean_savings_error_usd" : "0.0000",
+    "precision" : "0.0833",
+    "recall" : "0.0769",
+    "true_positives" : 1,
+    "unsupported_claims" : 11
+  },
+  "unverified_agent" : {
+    "evidence_coverage" : "1.0000",
+    "f1" : "0.8966",
+    "false_negatives" : 0,
+    "false_positives" : 3,
+    "mean_savings_error_usd" : "0.0000",
+    "precision" : "0.8125",
+    "recall" : "1.0000",
+    "true_positives" : 13,
+    "unsupported_claims" : 3
+  }
+}

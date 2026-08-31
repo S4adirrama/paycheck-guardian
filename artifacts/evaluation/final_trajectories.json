@@ -1,0 +1,4607 @@
+{
+  "case_count": 12,
+  "case_fingerprints": {
+    "ambiguous_recurrence": "d45de5286877ec6699966fc35227fc7e795142fe2efacb6d492a060c4cdd48a5",
+    "annual_subscription": "26ca03bea1a302d6535353c0dec6d496556246f0c1a28f6a57c08f565197da91",
+    "challenge_alias_price_essential": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+    "duplicate_charge": "560370345d7dee4ebfd5b19270512274fd90a947aa3b5729c30176abdcd85471",
+    "essential_insurance": "758a5291c39b6b7a1d6f58135facbd0c35560ff249ac0dc85319d31e8619ff90",
+    "essential_rent": "bcd3c5b9cc531741abe67a02eba4dc2440df3b6765f425518bf0746f6ee2f0cc",
+    "food_delivery_pattern": "726fa53770853cd4c46aa92159e47ecba1dc58ae858ecf8d278a8c136e9d676d",
+    "merchant_aliases": "fcf07121fcbeb71a41497e6cc2d1173c53de4caff9de05ffec9323744ed64ff6",
+    "mixed_opportunities": "0de8f8dc8205d021d6940c37fc9e157fecf34a71c5deeb48aec1038d9b81908f",
+    "monthly_streaming": "cd1da0e1f52c21916c40a7ba92ce812a8faf0c483cfd823014b74cfe208de28f",
+    "subscription_price_drift": "febe0b2aeece175925818601da3c7ad781b098473e3cdd1a49b303c76d6ec336",
+    "trial_conversion": "be3c2ff7531cdc0024d25c14dec012c9f183a11e93b7fbeddc2dd36ea0cadb6d"
+  },
+  "elapsed_ms": 4,
+  "elapsed_ms_by_mode": {
+    "baseline": 0,
+    "final": 4,
+    "normalization_only": 0,
+    "removed_unsafe_recurrence": 0,
+    "unverified_agent": 1
+  },
+  "execution_mode": "offline",
+  "mode": "final",
+  "model_cost_usd": "0.00",
+  "package_version": "0.1.0",
+  "platform": "macOS-15.7.9-arm64-arm-64bit",
+  "python_version": "3.11.15",
+  "trajectories": {
+    "ambiguous_recurrence": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 4
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "d45de5286877ec6699966fc35227fc7e795142fe2efacb6d492a060c4cdd48a5",
+          "transaction_ids": [
+            "ar-h1",
+            "ar-h2",
+            "ar-x1",
+            "ar-x2"
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "cancellable": true,
+              "candidate_fingerprint": "6655350f20e9275085436f6f8d7faf73e3b960a6b7f4f82049425aaab343037e",
+              "category": "streaming",
+              "evidence_count": 2,
+              "evidence_ids": [
+                "ar-h1",
+                "ar-h2"
+              ],
+              "interval_days": 30,
+              "summary": "recurring cadence candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "d45de5286877ec6699966fc35227fc7e795142fe2efacb6d492a060c4cdd48a5",
+          "transaction_ids": [
+            "ar-h1",
+            "ar-h2",
+            "ar-x1",
+            "ar-x2"
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "d45de5286877ec6699966fc35227fc7e795142fe2efacb6d492a060c4cdd48a5",
+          "transaction_ids": [
+            "ar-h1",
+            "ar-h2",
+            "ar-x1",
+            "ar-x2"
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "d45de5286877ec6699966fc35227fc7e795142fe2efacb6d492a060c4cdd48a5",
+          "transaction_ids": [
+            "ar-h1",
+            "ar-h2",
+            "ar-x1",
+            "ar-x2"
+          ]
+        },
+        "tool_name": "find_anomalies",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {},
+        "tool_name": "find_anomalies",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "d45de5286877ec6699966fc35227fc7e795142fe2efacb6d492a060c4cdd48a5",
+          "transaction_ids": [
+            "ar-h1",
+            "ar-h2",
+            "ar-x1",
+            "ar-x2"
+          ]
+        },
+        "tool_name": "summarize_categories",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {},
+        "tool_name": "summarize_categories",
+        "tool_result": {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "candidate_fingerprint": "9b6308fdb162dfcb3c04fde94c876e131bbd53d56f2026c5e8e773bc43759a4e",
+              "category": "other",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "ar-x1",
+                "ar-x2"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "bc1d7f7e822752aac9a534dfcaa8792a9446607c2948894df9d1f99164cdfe91",
+              "category": "streaming",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "ar-h1",
+                "ar-h2"
+              ],
+              "summary": "category spending summary"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "ar-h1",
+              "ar-h2"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "985067c6bfa64ac6b32faedf3c1fcd619f003872fe10911862f3a50a35149dd1",
+            "recommendation_id": "subscription-hulu",
+            "status": "proposed",
+            "target_fingerprint": "5b077ed115403adfe87711bd95fbbb79309bb94b0c0cd3b4c05ae323330a8109",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "ar-h1",
+              "ar-h2"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "985067c6bfa64ac6b32faedf3c1fcd619f003872fe10911862f3a50a35149dd1",
+            "recommendation_id": "subscription-hulu",
+            "status": "proposed",
+            "target_fingerprint": "5b077ed115403adfe87711bd95fbbb79309bb94b0c0cd3b4c05ae323330a8109",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-ambiguous_recurrence",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "annual_subscription": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 4
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "subscription": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "26ca03bea1a302d6535353c0dec6d496556246f0c1a28f6a57c08f565197da91",
+          "transaction_ids": [
+            "as-p1",
+            "as-p2",
+            "as-x1",
+            "as-x2"
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "cancellable": true,
+              "candidate_fingerprint": "31d9c32669161737e6724cead77b8ced137013b014e9ab924eb805cba91b4809",
+              "category": "subscription",
+              "evidence_count": 2,
+              "evidence_ids": [
+                "as-p1",
+                "as-p2"
+              ],
+              "interval_days": 365,
+              "summary": "recurring cadence candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "subscription": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "26ca03bea1a302d6535353c0dec6d496556246f0c1a28f6a57c08f565197da91",
+          "transaction_ids": [
+            "as-p1",
+            "as-p2",
+            "as-x1",
+            "as-x2"
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "subscription": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "26ca03bea1a302d6535353c0dec6d496556246f0c1a28f6a57c08f565197da91",
+          "transaction_ids": [
+            "as-p1",
+            "as-p2",
+            "as-x1",
+            "as-x2"
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "subscription": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "26ca03bea1a302d6535353c0dec6d496556246f0c1a28f6a57c08f565197da91",
+          "transaction_ids": [
+            "as-p1",
+            "as-p2",
+            "as-x1",
+            "as-x2"
+          ]
+        },
+        "tool_name": "find_anomalies",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {},
+        "tool_name": "find_anomalies",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "subscription": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "26ca03bea1a302d6535353c0dec6d496556246f0c1a28f6a57c08f565197da91",
+          "transaction_ids": [
+            "as-p1",
+            "as-p2",
+            "as-x1",
+            "as-x2"
+          ]
+        },
+        "tool_name": "summarize_categories",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {},
+        "tool_name": "summarize_categories",
+        "tool_result": {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "candidate_fingerprint": "fd52e86d4e71cada5e3282e414fd902e048da08d2b86eb7c193dec6ab834738c",
+              "category": "other",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "as-x1",
+                "as-x2"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "a0d46e1c583b8d88a1b94c32ce6dab17ae57f7b34508ffff1141c3734c59cc91",
+              "category": "subscription",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "as-p1",
+                "as-p2"
+              ],
+              "summary": "category spending summary"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "as-p1",
+              "as-p2"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "881895eaaf578a749e50b8accc40c25606bb49761466c2fa5823d1dc427a20e6",
+            "recommendation_id": "subscription-amazon-prime",
+            "status": "proposed",
+            "target_fingerprint": "6c6c4eb1f4fd669790979f11e0c4735b2f5d56eb519124254ed2e818c804d0c4",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "as-p1",
+              "as-p2"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "881895eaaf578a749e50b8accc40c25606bb49761466c2fa5823d1dc427a20e6",
+            "recommendation_id": "subscription-amazon-prime",
+            "status": "proposed",
+            "target_fingerprint": "6c6c4eb1f4fd669790979f11e0c4735b2f5d56eb519124254ed2e818c804d0c4",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-annual_subscription",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "challenge_alias_price_essential": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 7
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "category_counts": {
+            "housing": 2,
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 7,
+          "transaction_count": 7,
+          "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+          "transaction_ids": [
+            "ch-n1",
+            "ch-n2",
+            "ch-n3",
+            "ch-r1",
+            "ch-r2",
+            "ch-x1",
+            "ch-x2"
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "cancellable": true,
+              "candidate_fingerprint": "e9631945fe91f6688ad7bb08a970130a74101dd9a4318945c0ac9af3d9ce9220",
+              "category": "streaming",
+              "evidence_count": 3,
+              "evidence_ids": [
+                "ch-n1",
+                "ch-n2",
+                "ch-n3"
+              ],
+              "interval_days": 30,
+              "summary": "recurring cadence candidate"
+            },
+            {
+              "cancellable": false,
+              "candidate_fingerprint": "3ea97788b7f8ae042b98cba09bdcce6d20cc9ae0008500e9da359e89e9afba58",
+              "category": "housing",
+              "evidence_count": 2,
+              "evidence_ids": [
+                "ch-r1",
+                "ch-r2"
+              ],
+              "interval_days": 30,
+              "summary": "recurring cadence candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "category_counts": {
+            "housing": 2,
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 7,
+          "transaction_count": 7,
+          "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+          "transaction_ids": [
+            "ch-n1",
+            "ch-n2",
+            "ch-n3",
+            "ch-r1",
+            "ch-r2",
+            "ch-x1",
+            "ch-x2"
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "category_counts": {
+            "housing": 2,
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 7,
+          "transaction_count": 7,
+          "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+          "transaction_ids": [
+            "ch-n1",
+            "ch-n2",
+            "ch-n3",
+            "ch-r1",
+            "ch-r2",
+            "ch-x1",
+            "ch-x2"
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "category_counts": {
+            "housing": 2,
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 7,
+          "transaction_count": 7,
+          "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+          "transaction_ids": [
+            "ch-n1",
+            "ch-n2",
+            "ch-n3",
+            "ch-r1",
+            "ch-r2",
+            "ch-x1",
+            "ch-x2"
+          ]
+        },
+        "tool_name": "find_anomalies",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {},
+        "tool_name": "find_anomalies",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "category_counts": {
+            "housing": 2,
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 7,
+          "transaction_count": 7,
+          "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+          "transaction_ids": [
+            "ch-n1",
+            "ch-n2",
+            "ch-n3",
+            "ch-r1",
+            "ch-r2",
+            "ch-x1",
+            "ch-x2"
+          ]
+        },
+        "tool_name": "summarize_categories",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {},
+        "tool_name": "summarize_categories",
+        "tool_result": {
+          "candidate_count": 3,
+          "candidates": [
+            {
+              "candidate_fingerprint": "9cf6d849b59b4c7c13b332d44ee3c4881d1b3446cc3fe0121aaddd22fe0755ec",
+              "category": "housing",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "ch-r1",
+                "ch-r2"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "a1e897b41d03bda3230e6b47aaf40f6c01ecbefebe9ae25141f309c1fb7b7517",
+              "category": "other",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "ch-x1",
+                "ch-x2"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "8a02454dde7781079c90677ba3b34556fc38267d0a4ad785dfbe72ef9429ab53",
+              "category": "streaming",
+              "charge_count": 3,
+              "evidence_count": 3,
+              "evidence_ids": [
+                "ch-n1",
+                "ch-n2",
+                "ch-n3"
+              ],
+              "summary": "category spending summary"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "ch-n1",
+              "ch-n2",
+              "ch-n3"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "57eeb097a29ff2ee902cc639c9293db88f786b6462e140b1e7aa33755ff45eb2",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "ch-n1",
+              "ch-n2",
+              "ch-n3"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "57eeb097a29ff2ee902cc639c9293db88f786b6462e140b1e7aa33755ff45eb2",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "ch-r1",
+              "ch-r2"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "351b78c518f3670c8e0107bcee7109eec4bdeb65d44a357af207b71fb7e83a6d",
+            "recommendation_id": "subscription-rent",
+            "status": "proposed",
+            "target_fingerprint": "cef981d2ca50cf9b235cf449f8a24149cc9a31ca6be71484b6017b679dfcfaab",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000014Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "ch-r1",
+              "ch-r2"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "351b78c518f3670c8e0107bcee7109eec4bdeb65d44a357af207b71fb7e83a6d",
+            "recommendation_id": "subscription-rent",
+            "status": "proposed",
+            "target_fingerprint": "cef981d2ca50cf9b235cf449f8a24149cc9a31ca6be71484b6017b679dfcfaab",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": false,
+          "reason_count": 2,
+          "reasons": [
+            "essential payment evidence cannot support subscription cancellation advice",
+            "cancellation target is outside the positive semantic allowlist"
+          ],
+          "summary": "rejected candidate"
+        },
+        "verification_feedback": [
+          "essential payment evidence cannot support subscription cancellation advice",
+          "cancellation target is outside the positive semantic allowlist"
+        ]
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-challenge_alias_price_essential",
+        "timestamp": "1970-01-01T00:00:00.000015Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "duplicate_charge": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 4
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 2,
+            "other": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "560370345d7dee4ebfd5b19270512274fd90a947aa3b5729c30176abdcd85471",
+          "transaction_ids": [
+            "dc-d1",
+            "dc-d2",
+            "dc-x1",
+            "dc-x2"
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 2,
+            "other": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "560370345d7dee4ebfd5b19270512274fd90a947aa3b5729c30176abdcd85471",
+          "transaction_ids": [
+            "dc-d1",
+            "dc-d2",
+            "dc-x1",
+            "dc-x2"
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "candidate_fingerprint": "7136f3d09ae110a8340dcac70c58d3141374ab552ae637a16012c69b339f4d56",
+              "evidence_count": 2,
+              "evidence_ids": [
+                "dc-d1",
+                "dc-d2"
+              ],
+              "summary": "near-date matching charge candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 2,
+            "other": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "560370345d7dee4ebfd5b19270512274fd90a947aa3b5729c30176abdcd85471",
+          "transaction_ids": [
+            "dc-d1",
+            "dc-d2",
+            "dc-x1",
+            "dc-x2"
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 2,
+            "other": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "560370345d7dee4ebfd5b19270512274fd90a947aa3b5729c30176abdcd85471",
+          "transaction_ids": [
+            "dc-d1",
+            "dc-d2",
+            "dc-x1",
+            "dc-x2"
+          ]
+        },
+        "tool_name": "find_anomalies",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {},
+        "tool_name": "find_anomalies",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 2,
+            "other": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "560370345d7dee4ebfd5b19270512274fd90a947aa3b5729c30176abdcd85471",
+          "transaction_ids": [
+            "dc-d1",
+            "dc-d2",
+            "dc-x1",
+            "dc-x2"
+          ]
+        },
+        "tool_name": "summarize_categories",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {},
+        "tool_name": "summarize_categories",
+        "tool_result": {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "candidate_fingerprint": "3cee4cdfe40879aa04363c9940fb8f07ec7ebd0df7c8d8f91c438ae4a673c8ad",
+              "category": "food_delivery",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "dc-d1",
+                "dc-d2"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "675c3e1923099eb048b73a335537e55f56e28feeff8659be46215dda33cf1b09",
+              "category": "other",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "dc-x1",
+                "dc-x2"
+              ],
+              "summary": "category spending summary"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "dc-d1",
+              "dc-d2"
+            ],
+            "kind": "duplicate",
+            "recommendation_fingerprint": "e5879ddff5116080c7a732c97b9b446e82ce123e537bd1f5d02c5291a21e15fc",
+            "recommendation_id": "duplicate-doordash-dc-d1-dc-d2",
+            "status": "proposed",
+            "target_fingerprint": "346fe5036f27e89f36179aaa0b7be0cc54df4dbe7eb3cfbe82aa0033897bd568",
+            "verified_action": "review_duplicate"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "dc-d1",
+              "dc-d2"
+            ],
+            "kind": "duplicate",
+            "recommendation_fingerprint": "e5879ddff5116080c7a732c97b9b446e82ce123e537bd1f5d02c5291a21e15fc",
+            "recommendation_id": "duplicate-doordash-dc-d1-dc-d2",
+            "status": "proposed",
+            "target_fingerprint": "346fe5036f27e89f36179aaa0b7be0cc54df4dbe7eb3cfbe82aa0033897bd568",
+            "verified_action": "review_duplicate"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-duplicate_charge",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "essential_insurance": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 7
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "category_counts": {
+            "insurance": 2,
+            "other": 5
+          },
+          "synthetic_count": 7,
+          "transaction_count": 7,
+          "transaction_fingerprint": "758a5291c39b6b7a1d6f58135facbd0c35560ff249ac0dc85319d31e8619ff90",
+          "transaction_ids": [
+            "ei-i1",
+            "ei-i2",
+            "ei-w1",
+            "ei-w2",
+            "ei-w3",
+            "ei-x1",
+            "ei-x2"
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "cancellable": false,
+              "candidate_fingerprint": "0cbe44e30d940e45a88b02d07855954931097c3a9b87700aed3b8d9687c47c6f",
+              "category": "insurance",
+              "evidence_count": 2,
+              "evidence_ids": [
+                "ei-i1",
+                "ei-i2"
+              ],
+              "interval_days": 30,
+              "summary": "recurring cadence candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "category_counts": {
+            "insurance": 2,
+            "other": 5
+          },
+          "synthetic_count": 7,
+          "transaction_count": 7,
+          "transaction_fingerprint": "758a5291c39b6b7a1d6f58135facbd0c35560ff249ac0dc85319d31e8619ff90",
+          "transaction_ids": [
+            "ei-i1",
+            "ei-i2",
+            "ei-w1",
+            "ei-w2",
+            "ei-w3",
+            "ei-x1",
+            "ei-x2"
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "category_counts": {
+            "insurance": 2,
+            "other": 5
+          },
+          "synthetic_count": 7,
+          "transaction_count": 7,
+          "transaction_fingerprint": "758a5291c39b6b7a1d6f58135facbd0c35560ff249ac0dc85319d31e8619ff90",
+          "transaction_ids": [
+            "ei-i1",
+            "ei-i2",
+            "ei-w1",
+            "ei-w2",
+            "ei-w3",
+            "ei-x1",
+            "ei-x2"
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "category_counts": {
+            "insurance": 2,
+            "other": 5
+          },
+          "synthetic_count": 7,
+          "transaction_count": 7,
+          "transaction_fingerprint": "758a5291c39b6b7a1d6f58135facbd0c35560ff249ac0dc85319d31e8619ff90",
+          "transaction_ids": [
+            "ei-i1",
+            "ei-i2",
+            "ei-w1",
+            "ei-w2",
+            "ei-w3",
+            "ei-x1",
+            "ei-x2"
+          ]
+        },
+        "tool_name": "find_anomalies",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {},
+        "tool_name": "find_anomalies",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "category_counts": {
+            "insurance": 2,
+            "other": 5
+          },
+          "synthetic_count": 7,
+          "transaction_count": 7,
+          "transaction_fingerprint": "758a5291c39b6b7a1d6f58135facbd0c35560ff249ac0dc85319d31e8619ff90",
+          "transaction_ids": [
+            "ei-i1",
+            "ei-i2",
+            "ei-w1",
+            "ei-w2",
+            "ei-w3",
+            "ei-x1",
+            "ei-x2"
+          ]
+        },
+        "tool_name": "summarize_categories",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {},
+        "tool_name": "summarize_categories",
+        "tool_result": {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "candidate_fingerprint": "a50e01d98d09dedd7e1bc7af4a2dd19f505f4fbca6ac25a0eb371a04bd80a386",
+              "category": "insurance",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "ei-i1",
+                "ei-i2"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "19ba942d57d6a2e670054101029e11ab7350c46ee58272005415db41b80a38a6",
+              "category": "other",
+              "charge_count": 5,
+              "evidence_count": 5,
+              "evidence_ids": [
+                "ei-w1",
+                "ei-w2",
+                "ei-x1",
+                "ei-x2",
+                "ei-w3"
+              ],
+              "summary": "category spending summary"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "ei-i1",
+              "ei-i2"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "44f9fb891fc483a8b756a25759a742f9295487dc1621a00becee3b10e9e5ca72",
+            "recommendation_id": "subscription-state-farm",
+            "status": "proposed",
+            "target_fingerprint": "b533d6014d13a2c891696be13d678c987f96e9e07ccdf217b4d61d3f2e15c16e",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "ei-i1",
+              "ei-i2"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "44f9fb891fc483a8b756a25759a742f9295487dc1621a00becee3b10e9e5ca72",
+            "recommendation_id": "subscription-state-farm",
+            "status": "proposed",
+            "target_fingerprint": "b533d6014d13a2c891696be13d678c987f96e9e07ccdf217b4d61d3f2e15c16e",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": false,
+          "reason_count": 2,
+          "reasons": [
+            "essential payment evidence cannot support subscription cancellation advice",
+            "cancellation target is outside the positive semantic allowlist"
+          ],
+          "summary": "rejected candidate"
+        },
+        "verification_feedback": [
+          "essential payment evidence cannot support subscription cancellation advice",
+          "cancellation target is outside the positive semantic allowlist"
+        ]
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-essential_insurance",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 0
+        },
+        "verification_feedback": []
+      }
+    ],
+    "essential_rent": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 4
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "category_counts": {
+            "housing": 2,
+            "other": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "bcd3c5b9cc531741abe67a02eba4dc2440df3b6765f425518bf0746f6ee2f0cc",
+          "transaction_ids": [
+            "er-r1",
+            "er-r2",
+            "er-x1",
+            "er-x2"
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "cancellable": false,
+              "candidate_fingerprint": "4974c372d9a8db6599c04e18506c5217dfcd6f1f003a97d4e7441b1a84b99eda",
+              "category": "housing",
+              "evidence_count": 2,
+              "evidence_ids": [
+                "er-r1",
+                "er-r2"
+              ],
+              "interval_days": 30,
+              "summary": "recurring cadence candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "category_counts": {
+            "housing": 2,
+            "other": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "bcd3c5b9cc531741abe67a02eba4dc2440df3b6765f425518bf0746f6ee2f0cc",
+          "transaction_ids": [
+            "er-r1",
+            "er-r2",
+            "er-x1",
+            "er-x2"
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "category_counts": {
+            "housing": 2,
+            "other": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "bcd3c5b9cc531741abe67a02eba4dc2440df3b6765f425518bf0746f6ee2f0cc",
+          "transaction_ids": [
+            "er-r1",
+            "er-r2",
+            "er-x1",
+            "er-x2"
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "category_counts": {
+            "housing": 2,
+            "other": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "bcd3c5b9cc531741abe67a02eba4dc2440df3b6765f425518bf0746f6ee2f0cc",
+          "transaction_ids": [
+            "er-r1",
+            "er-r2",
+            "er-x1",
+            "er-x2"
+          ]
+        },
+        "tool_name": "find_anomalies",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {},
+        "tool_name": "find_anomalies",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "category_counts": {
+            "housing": 2,
+            "other": 2
+          },
+          "synthetic_count": 4,
+          "transaction_count": 4,
+          "transaction_fingerprint": "bcd3c5b9cc531741abe67a02eba4dc2440df3b6765f425518bf0746f6ee2f0cc",
+          "transaction_ids": [
+            "er-r1",
+            "er-r2",
+            "er-x1",
+            "er-x2"
+          ]
+        },
+        "tool_name": "summarize_categories",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {},
+        "tool_name": "summarize_categories",
+        "tool_result": {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "candidate_fingerprint": "74983734d05e6b060b4f3c97e6e39347d2da63c3d59327a274130cc541c2d7cf",
+              "category": "housing",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "er-r1",
+                "er-r2"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "5200b61a1028223ed9fb1ec65fe4913650c854e02735ce4fa2b7035dbf86a350",
+              "category": "other",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "er-x1",
+                "er-x2"
+              ],
+              "summary": "category spending summary"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "er-r1",
+              "er-r2"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "c4a5753a4aa9110f0b2c1950365b46ec451ea6e4bdb8a39e23c34432af862184",
+            "recommendation_id": "subscription-rent",
+            "status": "proposed",
+            "target_fingerprint": "cef981d2ca50cf9b235cf449f8a24149cc9a31ca6be71484b6017b679dfcfaab",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "er-r1",
+              "er-r2"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "c4a5753a4aa9110f0b2c1950365b46ec451ea6e4bdb8a39e23c34432af862184",
+            "recommendation_id": "subscription-rent",
+            "status": "proposed",
+            "target_fingerprint": "cef981d2ca50cf9b235cf449f8a24149cc9a31ca6be71484b6017b679dfcfaab",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": false,
+          "reason_count": 2,
+          "reasons": [
+            "essential payment evidence cannot support subscription cancellation advice",
+            "cancellation target is outside the positive semantic allowlist"
+          ],
+          "summary": "rejected candidate"
+        },
+        "verification_feedback": [
+          "essential payment evidence cannot support subscription cancellation advice",
+          "cancellation target is outside the positive semantic allowlist"
+        ]
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-essential_rent",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 0
+        },
+        "verification_feedback": []
+      }
+    ],
+    "food_delivery_pattern": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 5
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 3,
+            "other": 2
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "726fa53770853cd4c46aa92159e47ecba1dc58ae858ecf8d278a8c136e9d676d",
+          "transaction_ids": [
+            "fd-d1",
+            "fd-d2",
+            "fd-d3",
+            "fd-x1",
+            "fd-x2"
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 3,
+            "other": 2
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "726fa53770853cd4c46aa92159e47ecba1dc58ae858ecf8d278a8c136e9d676d",
+          "transaction_ids": [
+            "fd-d1",
+            "fd-d2",
+            "fd-d3",
+            "fd-x1",
+            "fd-x2"
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 3,
+            "other": 2
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "726fa53770853cd4c46aa92159e47ecba1dc58ae858ecf8d278a8c136e9d676d",
+          "transaction_ids": [
+            "fd-d1",
+            "fd-d2",
+            "fd-d3",
+            "fd-x1",
+            "fd-x2"
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "candidate_fingerprint": "a0a8fe11a1ee4a8ec487eacacc91cbe8c30245674c2f99fbd1907cf9d479223f",
+              "category": "food_delivery",
+              "charge_count": 3,
+              "evidence_count": 3,
+              "evidence_ids": [
+                "fd-d1",
+                "fd-d2",
+                "fd-d3"
+              ],
+              "summary": "discretionary frequency candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 3,
+            "other": 2
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "726fa53770853cd4c46aa92159e47ecba1dc58ae858ecf8d278a8c136e9d676d",
+          "transaction_ids": [
+            "fd-d1",
+            "fd-d2",
+            "fd-d3",
+            "fd-x1",
+            "fd-x2"
+          ]
+        },
+        "tool_name": "find_anomalies",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {},
+        "tool_name": "find_anomalies",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 3,
+            "other": 2
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "726fa53770853cd4c46aa92159e47ecba1dc58ae858ecf8d278a8c136e9d676d",
+          "transaction_ids": [
+            "fd-d1",
+            "fd-d2",
+            "fd-d3",
+            "fd-x1",
+            "fd-x2"
+          ]
+        },
+        "tool_name": "summarize_categories",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {},
+        "tool_name": "summarize_categories",
+        "tool_result": {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "candidate_fingerprint": "70613101773f7301489e29881afb14ffa902d9ddd08cc643b47085b4532bb1b6",
+              "category": "food_delivery",
+              "charge_count": 3,
+              "evidence_count": 3,
+              "evidence_ids": [
+                "fd-d1",
+                "fd-d2",
+                "fd-d3"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "777aa0fca0999b0e99680fcdd34d53e34c8780a39985f48c428f125ef253920b",
+              "category": "other",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "fd-x1",
+                "fd-x2"
+              ],
+              "summary": "category spending summary"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "fd-d1",
+              "fd-d2",
+              "fd-d3"
+            ],
+            "kind": "behavioral_pattern",
+            "recommendation_fingerprint": "aaa7165a9ca934fc70ab166c451d830e3a0d3fa153d4a0327e72fd3d767dc489",
+            "recommendation_id": "pattern-doordash-fd-d1-fd-d2-fd-d3",
+            "status": "proposed",
+            "target_fingerprint": "346fe5036f27e89f36179aaa0b7be0cc54df4dbe7eb3cfbe82aa0033897bd568",
+            "verified_action": "reduce_discretionary_spending"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "fd-d1",
+              "fd-d2",
+              "fd-d3"
+            ],
+            "kind": "behavioral_pattern",
+            "recommendation_fingerprint": "aaa7165a9ca934fc70ab166c451d830e3a0d3fa153d4a0327e72fd3d767dc489",
+            "recommendation_id": "pattern-doordash-fd-d1-fd-d2-fd-d3",
+            "status": "proposed",
+            "target_fingerprint": "346fe5036f27e89f36179aaa0b7be0cc54df4dbe7eb3cfbe82aa0033897bd568",
+            "verified_action": "reduce_discretionary_spending"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-food_delivery_pattern",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "merchant_aliases": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 5
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "fcf07121fcbeb71a41497e6cc2d1173c53de4caff9de05ffec9323744ed64ff6",
+          "transaction_ids": [
+            "ma-n1",
+            "ma-n2",
+            "ma-n3",
+            "ma-x1",
+            "ma-x2"
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "cancellable": true,
+              "candidate_fingerprint": "554dbab3590ea79243a9392fe286fdc4dd847afe38203945b4a13f77c2a9f9ed",
+              "category": "streaming",
+              "evidence_count": 3,
+              "evidence_ids": [
+                "ma-n1",
+                "ma-n2",
+                "ma-n3"
+              ],
+              "interval_days": 30,
+              "summary": "recurring cadence candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "fcf07121fcbeb71a41497e6cc2d1173c53de4caff9de05ffec9323744ed64ff6",
+          "transaction_ids": [
+            "ma-n1",
+            "ma-n2",
+            "ma-n3",
+            "ma-x1",
+            "ma-x2"
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "fcf07121fcbeb71a41497e6cc2d1173c53de4caff9de05ffec9323744ed64ff6",
+          "transaction_ids": [
+            "ma-n1",
+            "ma-n2",
+            "ma-n3",
+            "ma-x1",
+            "ma-x2"
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "fcf07121fcbeb71a41497e6cc2d1173c53de4caff9de05ffec9323744ed64ff6",
+          "transaction_ids": [
+            "ma-n1",
+            "ma-n2",
+            "ma-n3",
+            "ma-x1",
+            "ma-x2"
+          ]
+        },
+        "tool_name": "find_anomalies",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {},
+        "tool_name": "find_anomalies",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "fcf07121fcbeb71a41497e6cc2d1173c53de4caff9de05ffec9323744ed64ff6",
+          "transaction_ids": [
+            "ma-n1",
+            "ma-n2",
+            "ma-n3",
+            "ma-x1",
+            "ma-x2"
+          ]
+        },
+        "tool_name": "summarize_categories",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {},
+        "tool_name": "summarize_categories",
+        "tool_result": {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "candidate_fingerprint": "741e01b48f962d175065a46d0318dbed5a16a40a45f5d3df430f3f78f9b3d9b6",
+              "category": "other",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "ma-x1",
+                "ma-x2"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "475fd7e9340f43910de97810992e7b4b13302ad93453b528ba3a1dff9a9f3b42",
+              "category": "streaming",
+              "charge_count": 3,
+              "evidence_count": 3,
+              "evidence_ids": [
+                "ma-n1",
+                "ma-n2",
+                "ma-n3"
+              ],
+              "summary": "category spending summary"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "ma-n1",
+              "ma-n2",
+              "ma-n3"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "7077b2980914802272adce552eb4696956f24bc97135c241a5cda215a88bae8b",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "ma-n1",
+              "ma-n2",
+              "ma-n3"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "7077b2980914802272adce552eb4696956f24bc97135c241a5cda215a88bae8b",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-merchant_aliases",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "mixed_opportunities": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 10
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 3,
+            "other": 4,
+            "streaming": 3
+          },
+          "synthetic_count": 10,
+          "transaction_count": 10,
+          "transaction_fingerprint": "0de8f8dc8205d021d6940c37fc9e157fecf34a71c5deeb48aec1038d9b81908f",
+          "transaction_ids": [
+            "mo-n1",
+            "mo-n2",
+            "mo-n3",
+            "mo-c1",
+            "mo-c2",
+            "mo-d1",
+            "mo-d2",
+            "mo-d3",
+            "mo-x1",
+            "mo-x2"
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "cancellable": true,
+              "candidate_fingerprint": "c0b7f3cf0cbeff0df213b1dae9a5505ff401718668e4a2afbc29966ae1a45a99",
+              "category": "streaming",
+              "evidence_count": 3,
+              "evidence_ids": [
+                "mo-n1",
+                "mo-n2",
+                "mo-n3"
+              ],
+              "interval_days": 30,
+              "summary": "recurring cadence candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 3,
+            "other": 4,
+            "streaming": 3
+          },
+          "synthetic_count": 10,
+          "transaction_count": 10,
+          "transaction_fingerprint": "0de8f8dc8205d021d6940c37fc9e157fecf34a71c5deeb48aec1038d9b81908f",
+          "transaction_ids": [
+            "mo-n1",
+            "mo-n2",
+            "mo-n3",
+            "mo-c1",
+            "mo-c2",
+            "mo-d1",
+            "mo-d2",
+            "mo-d3",
+            "mo-x1",
+            "mo-x2"
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "candidate_fingerprint": "950b10234697be8f6d1877a35157b39f53b61a0163a5e71cd7d41de47b9d036f",
+              "evidence_count": 2,
+              "evidence_ids": [
+                "mo-c1",
+                "mo-c2"
+              ],
+              "summary": "near-date matching charge candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 3,
+            "other": 4,
+            "streaming": 3
+          },
+          "synthetic_count": 10,
+          "transaction_count": 10,
+          "transaction_fingerprint": "0de8f8dc8205d021d6940c37fc9e157fecf34a71c5deeb48aec1038d9b81908f",
+          "transaction_ids": [
+            "mo-n1",
+            "mo-n2",
+            "mo-n3",
+            "mo-c1",
+            "mo-c2",
+            "mo-d1",
+            "mo-d2",
+            "mo-d3",
+            "mo-x1",
+            "mo-x2"
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "candidate_fingerprint": "f3826430f7dcc425f57aa8132e04e456ef7d35defc2bcafb280b53f81f77f8ae",
+              "category": "food_delivery",
+              "charge_count": 3,
+              "evidence_count": 3,
+              "evidence_ids": [
+                "mo-d1",
+                "mo-d2",
+                "mo-d3"
+              ],
+              "summary": "discretionary frequency candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 3,
+            "other": 4,
+            "streaming": 3
+          },
+          "synthetic_count": 10,
+          "transaction_count": 10,
+          "transaction_fingerprint": "0de8f8dc8205d021d6940c37fc9e157fecf34a71c5deeb48aec1038d9b81908f",
+          "transaction_ids": [
+            "mo-n1",
+            "mo-n2",
+            "mo-n3",
+            "mo-c1",
+            "mo-c2",
+            "mo-d1",
+            "mo-d2",
+            "mo-d3",
+            "mo-x1",
+            "mo-x2"
+          ]
+        },
+        "tool_name": "find_anomalies",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {},
+        "tool_name": "find_anomalies",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "category_counts": {
+            "food_delivery": 3,
+            "other": 4,
+            "streaming": 3
+          },
+          "synthetic_count": 10,
+          "transaction_count": 10,
+          "transaction_fingerprint": "0de8f8dc8205d021d6940c37fc9e157fecf34a71c5deeb48aec1038d9b81908f",
+          "transaction_ids": [
+            "mo-n1",
+            "mo-n2",
+            "mo-n3",
+            "mo-c1",
+            "mo-c2",
+            "mo-d1",
+            "mo-d2",
+            "mo-d3",
+            "mo-x1",
+            "mo-x2"
+          ]
+        },
+        "tool_name": "summarize_categories",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {},
+        "tool_name": "summarize_categories",
+        "tool_result": {
+          "candidate_count": 3,
+          "candidates": [
+            {
+              "candidate_fingerprint": "ceb9745479c167015e85fa9d1dee82ac44cfee765dbfd9a2db59f559f1e6a807",
+              "category": "food_delivery",
+              "charge_count": 3,
+              "evidence_count": 3,
+              "evidence_ids": [
+                "mo-d1",
+                "mo-d2",
+                "mo-d3"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "2919f9a5f7bf211c332c4638d7e55c86d330448ccac16b25b8e3a79a9d441944",
+              "category": "other",
+              "charge_count": 4,
+              "evidence_count": 4,
+              "evidence_ids": [
+                "mo-c1",
+                "mo-c2",
+                "mo-x1",
+                "mo-x2"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "799476284d3660f3b400cb07bc86894a134044ad46767b5ec0696848a156144e",
+              "category": "streaming",
+              "charge_count": 3,
+              "evidence_count": 3,
+              "evidence_ids": [
+                "mo-n1",
+                "mo-n2",
+                "mo-n3"
+              ],
+              "summary": "category spending summary"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "mo-n1",
+              "mo-n2",
+              "mo-n3"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "b2af765e64ee7bcd57559f9232870cc567683d6b2d364ecd96c0fdff0f01958d",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "mo-n1",
+              "mo-n2",
+              "mo-n3"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "b2af765e64ee7bcd57559f9232870cc567683d6b2d364ecd96c0fdff0f01958d",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "mo-c1",
+              "mo-c2"
+            ],
+            "kind": "duplicate",
+            "recommendation_fingerprint": "e62b340342b68f5b99b62e6ba91c5b2e15db59faa4551da67e7c9d1ff9efd158",
+            "recommendation_id": "duplicate-cinema-mo-c1-mo-c2",
+            "status": "proposed",
+            "target_fingerprint": "e62d3e8ccb76c7568714d1580e211364cb29b03556b82a16f8cdff5fd194fc6a",
+            "verified_action": "review_duplicate"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000014Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 2,
+            "evidence_ids": [
+              "mo-c1",
+              "mo-c2"
+            ],
+            "kind": "duplicate",
+            "recommendation_fingerprint": "e62b340342b68f5b99b62e6ba91c5b2e15db59faa4551da67e7c9d1ff9efd158",
+            "recommendation_id": "duplicate-cinema-mo-c1-mo-c2",
+            "status": "proposed",
+            "target_fingerprint": "e62d3e8ccb76c7568714d1580e211364cb29b03556b82a16f8cdff5fd194fc6a",
+            "verified_action": "review_duplicate"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000015Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "mo-d1",
+              "mo-d2",
+              "mo-d3"
+            ],
+            "kind": "behavioral_pattern",
+            "recommendation_fingerprint": "a44bbdb5fd16981061248c21cd36e6d8e743bd32ba0c16cd437e93d2c6e9631d",
+            "recommendation_id": "pattern-doordash-mo-d1-mo-d2-mo-d3",
+            "status": "proposed",
+            "target_fingerprint": "346fe5036f27e89f36179aaa0b7be0cc54df4dbe7eb3cfbe82aa0033897bd568",
+            "verified_action": "reduce_discretionary_spending"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000016Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "mo-d1",
+              "mo-d2",
+              "mo-d3"
+            ],
+            "kind": "behavioral_pattern",
+            "recommendation_fingerprint": "a44bbdb5fd16981061248c21cd36e6d8e743bd32ba0c16cd437e93d2c6e9631d",
+            "recommendation_id": "pattern-doordash-mo-d1-mo-d2-mo-d3",
+            "status": "proposed",
+            "target_fingerprint": "346fe5036f27e89f36179aaa0b7be0cc54df4dbe7eb3cfbe82aa0033897bd568",
+            "verified_action": "reduce_discretionary_spending"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-mixed_opportunities",
+        "timestamp": "1970-01-01T00:00:00.000017Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 3
+        },
+        "verification_feedback": []
+      }
+    ],
+    "monthly_streaming": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 5
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "cd1da0e1f52c21916c40a7ba92ce812a8faf0c483cfd823014b74cfe208de28f",
+          "transaction_ids": [
+            "ms-n1",
+            "ms-n2",
+            "ms-n3",
+            "ms-x1",
+            "ms-x2"
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "cancellable": true,
+              "candidate_fingerprint": "73a40fe1cdd414e70e85bb3e8e9a81aae8492dd1295c82aa1f9b8d0e9a324de3",
+              "category": "streaming",
+              "evidence_count": 3,
+              "evidence_ids": [
+                "ms-n1",
+                "ms-n2",
+                "ms-n3"
+              ],
+              "interval_days": 30,
+              "summary": "recurring cadence candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "cd1da0e1f52c21916c40a7ba92ce812a8faf0c483cfd823014b74cfe208de28f",
+          "transaction_ids": [
+            "ms-n1",
+            "ms-n2",
+            "ms-n3",
+            "ms-x1",
+            "ms-x2"
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "cd1da0e1f52c21916c40a7ba92ce812a8faf0c483cfd823014b74cfe208de28f",
+          "transaction_ids": [
+            "ms-n1",
+            "ms-n2",
+            "ms-n3",
+            "ms-x1",
+            "ms-x2"
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "cd1da0e1f52c21916c40a7ba92ce812a8faf0c483cfd823014b74cfe208de28f",
+          "transaction_ids": [
+            "ms-n1",
+            "ms-n2",
+            "ms-n3",
+            "ms-x1",
+            "ms-x2"
+          ]
+        },
+        "tool_name": "find_anomalies",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {},
+        "tool_name": "find_anomalies",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 2,
+            "streaming": 3
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "cd1da0e1f52c21916c40a7ba92ce812a8faf0c483cfd823014b74cfe208de28f",
+          "transaction_ids": [
+            "ms-n1",
+            "ms-n2",
+            "ms-n3",
+            "ms-x1",
+            "ms-x2"
+          ]
+        },
+        "tool_name": "summarize_categories",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {},
+        "tool_name": "summarize_categories",
+        "tool_result": {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "candidate_fingerprint": "c755d1eee495b1c64231ab3ffd19e5377534072583fa31e6233e76fe427c1cbd",
+              "category": "other",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "ms-x1",
+                "ms-x2"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "8c489bf38f2124b2e1c7ac993ced35ab02f69d55f4e4a6229074c31546c493ab",
+              "category": "streaming",
+              "charge_count": 3,
+              "evidence_count": 3,
+              "evidence_ids": [
+                "ms-n1",
+                "ms-n2",
+                "ms-n3"
+              ],
+              "summary": "category spending summary"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "ms-n1",
+              "ms-n2",
+              "ms-n3"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "22ecf3cf1a10ff9ac78b452d4b7000be62dc7935fe323f9024ca86eb516182e4",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "ms-n1",
+              "ms-n2",
+              "ms-n3"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "22ecf3cf1a10ff9ac78b452d4b7000be62dc7935fe323f9024ca86eb516182e4",
+            "recommendation_id": "subscription-netflix",
+            "status": "proposed",
+            "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-monthly_streaming",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "subscription_price_drift": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 5
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "category_counts": {
+            "music": 3,
+            "other": 2
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "febe0b2aeece175925818601da3c7ad781b098473e3cdd1a49b303c76d6ec336",
+          "transaction_ids": [
+            "sd-s1",
+            "sd-s2",
+            "sd-s3",
+            "sd-x1",
+            "sd-x2"
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "cancellable": true,
+              "candidate_fingerprint": "d0f40cca7f4447e0b373001796bdb4efdc47b9570476c158675967bef9315f62",
+              "category": "music",
+              "evidence_count": 3,
+              "evidence_ids": [
+                "sd-s1",
+                "sd-s2",
+                "sd-s3"
+              ],
+              "interval_days": 30,
+              "summary": "recurring cadence candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "category_counts": {
+            "music": 3,
+            "other": 2
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "febe0b2aeece175925818601da3c7ad781b098473e3cdd1a49b303c76d6ec336",
+          "transaction_ids": [
+            "sd-s1",
+            "sd-s2",
+            "sd-s3",
+            "sd-x1",
+            "sd-x2"
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "category_counts": {
+            "music": 3,
+            "other": 2
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "febe0b2aeece175925818601da3c7ad781b098473e3cdd1a49b303c76d6ec336",
+          "transaction_ids": [
+            "sd-s1",
+            "sd-s2",
+            "sd-s3",
+            "sd-x1",
+            "sd-x2"
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "category_counts": {
+            "music": 3,
+            "other": 2
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "febe0b2aeece175925818601da3c7ad781b098473e3cdd1a49b303c76d6ec336",
+          "transaction_ids": [
+            "sd-s1",
+            "sd-s2",
+            "sd-s3",
+            "sd-x1",
+            "sd-x2"
+          ]
+        },
+        "tool_name": "find_anomalies",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {},
+        "tool_name": "find_anomalies",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "category_counts": {
+            "music": 3,
+            "other": 2
+          },
+          "synthetic_count": 5,
+          "transaction_count": 5,
+          "transaction_fingerprint": "febe0b2aeece175925818601da3c7ad781b098473e3cdd1a49b303c76d6ec336",
+          "transaction_ids": [
+            "sd-s1",
+            "sd-s2",
+            "sd-s3",
+            "sd-x1",
+            "sd-x2"
+          ]
+        },
+        "tool_name": "summarize_categories",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {},
+        "tool_name": "summarize_categories",
+        "tool_result": {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "candidate_fingerprint": "c324df4dc676db1ecaa11c5e53ea932c369b25ab13bcd1990ab4776fbc0c26c3",
+              "category": "music",
+              "charge_count": 3,
+              "evidence_count": 3,
+              "evidence_ids": [
+                "sd-s1",
+                "sd-s2",
+                "sd-s3"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "0b5db0055ad7655bb1db7df08ad3071cc65b0f4799db738e323f6749f6416739",
+              "category": "other",
+              "charge_count": 2,
+              "evidence_count": 2,
+              "evidence_ids": [
+                "sd-x1",
+                "sd-x2"
+              ],
+              "summary": "category spending summary"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "sd-s1",
+              "sd-s2",
+              "sd-s3"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "bccd89cc6abad43de04ad4d430efa4054538ea7c7204c966c220c165e16156a4",
+            "recommendation_id": "subscription-spotify",
+            "status": "proposed",
+            "target_fingerprint": "66ce554e08d95919d28eba38311d7648efbec5a1bf7aa4871cf61feaf8845750",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "sd-s1",
+              "sd-s2",
+              "sd-s3"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "bccd89cc6abad43de04ad4d430efa4054538ea7c7204c966c220c165e16156a4",
+            "recommendation_id": "subscription-spotify",
+            "status": "proposed",
+            "target_fingerprint": "66ce554e08d95919d28eba38311d7648efbec5a1bf7aa4871cf61feaf8845750",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-subscription_price_drift",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 1
+        },
+        "verification_feedback": []
+      }
+    ],
+    "trial_conversion": [
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_started",
+        "human_checkpoint": null,
+        "instruction": "Use deterministic tools and verification; do not perform external actions.",
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00Z",
+        "tool_input": {
+          "transaction_count": 8
+        },
+        "tool_name": null,
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000001Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 5,
+            "streaming": 3
+          },
+          "synthetic_count": 8,
+          "transaction_count": 8,
+          "transaction_fingerprint": "be3c2ff7531cdc0024d25c14dec012c9f183a11e93b7fbeddc2dd36ea0cadb6d",
+          "transaction_ids": [
+            "tc-h1",
+            "tc-h2",
+            "tc-h3",
+            "tc-g1",
+            "tc-g2",
+            "tc-g3",
+            "tc-x1",
+            "tc-x2"
+          ]
+        },
+        "tool_name": "find_recurring",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000002Z",
+        "tool_input": {},
+        "tool_name": "find_recurring",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "cancellable": true,
+              "candidate_fingerprint": "bb2e877ac5145ec0f6eb9e814b69e3369504649d3108727f6c7079cc60b7296f",
+              "category": "streaming",
+              "evidence_count": 3,
+              "evidence_ids": [
+                "tc-h1",
+                "tc-h2",
+                "tc-h3"
+              ],
+              "interval_days": 30,
+              "summary": "recurring cadence candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000003Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 5,
+            "streaming": 3
+          },
+          "synthetic_count": 8,
+          "transaction_count": 8,
+          "transaction_fingerprint": "be3c2ff7531cdc0024d25c14dec012c9f183a11e93b7fbeddc2dd36ea0cadb6d",
+          "transaction_ids": [
+            "tc-h1",
+            "tc-h2",
+            "tc-h3",
+            "tc-g1",
+            "tc-g2",
+            "tc-g3",
+            "tc-x1",
+            "tc-x2"
+          ]
+        },
+        "tool_name": "find_duplicates",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000004Z",
+        "tool_input": {},
+        "tool_name": "find_duplicates",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000005Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 5,
+            "streaming": 3
+          },
+          "synthetic_count": 8,
+          "transaction_count": 8,
+          "transaction_fingerprint": "be3c2ff7531cdc0024d25c14dec012c9f183a11e93b7fbeddc2dd36ea0cadb6d",
+          "transaction_ids": [
+            "tc-h1",
+            "tc-h2",
+            "tc-h3",
+            "tc-g1",
+            "tc-g2",
+            "tc-g3",
+            "tc-x1",
+            "tc-x2"
+          ]
+        },
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000006Z",
+        "tool_input": {},
+        "tool_name": "find_discretionary_patterns",
+        "tool_result": {
+          "candidate_count": 0,
+          "candidates": []
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000007Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 5,
+            "streaming": 3
+          },
+          "synthetic_count": 8,
+          "transaction_count": 8,
+          "transaction_fingerprint": "be3c2ff7531cdc0024d25c14dec012c9f183a11e93b7fbeddc2dd36ea0cadb6d",
+          "transaction_ids": [
+            "tc-h1",
+            "tc-h2",
+            "tc-h3",
+            "tc-g1",
+            "tc-g2",
+            "tc-g3",
+            "tc-x1",
+            "tc-x2"
+          ]
+        },
+        "tool_name": "find_anomalies",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000008Z",
+        "tool_input": {},
+        "tool_name": "find_anomalies",
+        "tool_result": {
+          "candidate_count": 1,
+          "candidates": [
+            {
+              "candidate_fingerprint": "65438f3984fc65780ba3a0b5c5a491790491cad44b27ec406f7c7c4b2368845c",
+              "category": "other",
+              "evidence_count": 3,
+              "evidence_ids": [
+                "tc-g1",
+                "tc-g2",
+                "tc-g3"
+              ],
+              "summary": "material high-outlier candidate"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000009Z",
+        "tool_input": {
+          "category_counts": {
+            "other": 5,
+            "streaming": 3
+          },
+          "synthetic_count": 8,
+          "transaction_count": 8,
+          "transaction_fingerprint": "be3c2ff7531cdc0024d25c14dec012c9f183a11e93b7fbeddc2dd36ea0cadb6d",
+          "transaction_ids": [
+            "tc-h1",
+            "tc-h2",
+            "tc-h3",
+            "tc-g1",
+            "tc-g2",
+            "tc-g3",
+            "tc-x1",
+            "tc-x2"
+          ]
+        },
+        "tool_name": "summarize_categories",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "analysis",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000010Z",
+        "tool_input": {},
+        "tool_name": "summarize_categories",
+        "tool_result": {
+          "candidate_count": 2,
+          "candidates": [
+            {
+              "candidate_fingerprint": "53b5b8fbfa54a9c0647b6d354d8fe4af00bbbe3edbb06e75ab3180dbd1d35fed",
+              "category": "other",
+              "charge_count": 5,
+              "evidence_count": 5,
+              "evidence_ids": [
+                "tc-g1",
+                "tc-g2",
+                "tc-x1",
+                "tc-x2",
+                "tc-g3"
+              ],
+              "summary": "category spending summary"
+            },
+            {
+              "candidate_fingerprint": "2c21ff3e7486a7d11a86ce0e9601be200845c83b8d5160da2faaf108c7a7b52f",
+              "category": "streaming",
+              "charge_count": 3,
+              "evidence_count": 3,
+              "evidence_ids": [
+                "tc-h1",
+                "tc-h2",
+                "tc-h3"
+              ],
+              "summary": "category spending summary"
+            }
+          ]
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000011Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "tc-h1",
+              "tc-h2",
+              "tc-h3"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "0834fdf21e770484862c25d76515a7cb4029b824830e2b56f276e59fe408aaeb",
+            "recommendation_id": "subscription-hulu",
+            "status": "proposed",
+            "target_fingerprint": "5b077ed115403adfe87711bd95fbbb79309bb94b0c0cd3b4c05ae323330a8109",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000012Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "tc-h1",
+              "tc-h2",
+              "tc-h3"
+            ],
+            "kind": "subscription",
+            "recommendation_fingerprint": "0834fdf21e770484862c25d76515a7cb4029b824830e2b56f276e59fe408aaeb",
+            "recommendation_id": "subscription-hulu",
+            "status": "proposed",
+            "target_fingerprint": "5b077ed115403adfe87711bd95fbbb79309bb94b0c0cd3b4c05ae323330a8109",
+            "verified_action": "cancel_subscription"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_called",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000013Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "tc-g1",
+              "tc-g2",
+              "tc-g3"
+            ],
+            "kind": "anomaly",
+            "recommendation_fingerprint": "ff92376fa425b10c6fb8b5b2002211428b2f501ad3bc329a222f78893fd47bad",
+            "recommendation_id": "anomaly-grocery-mart-tc-g1-tc-g2-tc-g3",
+            "status": "proposed",
+            "target_fingerprint": "7c7b5c071567c3caee9221018bb0aad26bab835e694b1653935954ef657e34d5",
+            "verified_action": "review_anomaly"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {},
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "verifier",
+        "event_type": "tool_result",
+        "human_checkpoint": null,
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000014Z",
+        "tool_input": {
+          "recommendation": {
+            "evidence_count": 3,
+            "evidence_ids": [
+              "tc-g1",
+              "tc-g2",
+              "tc-g3"
+            ],
+            "kind": "anomaly",
+            "recommendation_fingerprint": "ff92376fa425b10c6fb8b5b2002211428b2f501ad3bc329a222f78893fd47bad",
+            "recommendation_id": "anomaly-grocery-mart-tc-g1-tc-g2-tc-g3",
+            "status": "proposed",
+            "target_fingerprint": "7c7b5c071567c3caee9221018bb0aad26bab835e694b1653935954ef657e34d5",
+            "verified_action": "review_anomaly"
+          }
+        },
+        "tool_name": "verify_recommendation",
+        "tool_result": {
+          "accepted": true,
+          "reason_count": 0,
+          "reasons": [],
+          "summary": "accepted verified candidate"
+        },
+        "verification_feedback": []
+      },
+      {
+        "attempt": 1,
+        "component": "agent",
+        "event_type": "run_completed",
+        "human_checkpoint": "recommendations_ready_for_human_review",
+        "instruction": null,
+        "run_id": "evaluation-trial_conversion",
+        "timestamp": "1970-01-01T00:00:00.000015Z",
+        "tool_input": {},
+        "tool_name": null,
+        "tool_result": {
+          "verified_recommendation_count": 2
+        },
+        "verification_feedback": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,678 @@
+{
+  "analysis_date": "2026-08-01",
+  "dispositions": [],
+  "next_paycheck": "2026-08-15",
+  "recommendations": [
+    {
+      "caveat": "Savings are an estimate based on the observed 30-day pattern.",
+      "confidence": "high",
+      "evidence_transaction_ids": [
+        "ccbf9f1b47c7",
+        "1dda08548c55",
+        "6c02aad2cb4f"
+      ],
+      "kind": "behavioral_pattern",
+      "monthly_savings_usd": "63.00",
+      "next_paycheck_savings_usd": "29.00",
+      "rationale": "Repeated discretionary purchases at DoorDash form a verified pattern; reduce it only if that fits your priorities.",
+      "recommendation_id": "pattern-doordash-ccbf9f1b47c7-1dda08548c55-6c02aad2cb4f",
+      "status": "proposed",
+      "title": "Set a spending limit for DoorDash",
+      "verified_action": "reduce_discretionary_spending",
+      "verified_target": "DoorDash"
+    },
+    {
+      "caveat": "Savings are an estimate pending merchant confirmation.",
+      "confidence": "medium",
+      "evidence_transaction_ids": [
+        "0950021ae93d",
+        "231e8546b7d8"
+      ],
+      "kind": "duplicate",
+      "monthly_savings_usd": "18.00",
+      "next_paycheck_savings_usd": "8.28",
+      "rationale": "Two matching charges occurred within two days; confirm one was not duplicated.",
+      "recommendation_id": "duplicate-cinema-0950021ae93d-231e8546b7d8",
+      "status": "proposed",
+      "title": "Review possible duplicate Cinema charge",
+      "verified_action": "review_duplicate",
+      "verified_target": "Cinema"
+    },
+    {
+      "caveat": "Savings are estimates based on the observed recurring charges.",
+      "confidence": "high",
+      "evidence_transaction_ids": [
+        "f52df1bd0a81",
+        "10456e426d13",
+        "ad4e57e119d2"
+      ],
+      "kind": "subscription",
+      "monthly_savings_usd": "16.49",
+      "next_paycheck_savings_usd": "7.59",
+      "rationale": "Verified recurring evidence supports reviewing whether Netflix is still wanted; confirm before any local cancellation simulation.",
+      "recommendation_id": "subscription-netflix",
+      "status": "proposed",
+      "title": "Review cancelling Netflix",
+      "verified_action": "cancel_subscription",
+      "verified_target": "Netflix"
+    }
+  ],
+  "run_id": "alex-demo-run",
+  "simulated_actions": [],
+  "trajectory": [
+    {
+      "attempt": 1,
+      "component": "agent",
+      "event_type": "run_started",
+      "human_checkpoint": null,
+      "instruction": "Use deterministic tools and verification; do not perform external actions.",
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00Z",
+      "tool_input": {
+        "transaction_count": 8
+      },
+      "tool_name": null,
+      "tool_result": {},
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "analysis",
+      "event_type": "tool_called",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000001Z",
+      "tool_input": {
+        "category_counts": {
+          "food_delivery": 3,
+          "other": 2,
+          "streaming": 3
+        },
+        "synthetic_count": 8,
+        "transaction_count": 8,
+        "transaction_fingerprint": "e6f2d3d85e96acaaeb79aa21b48bc70fc5118da3b05f6bf8dfbe29f40c707303",
+        "transaction_ids": [
+          "f52df1bd0a81",
+          "10456e426d13",
+          "ad4e57e119d2",
+          "0950021ae93d",
+          "231e8546b7d8",
+          "ccbf9f1b47c7",
+          "1dda08548c55",
+          "6c02aad2cb4f"
+        ]
+      },
+      "tool_name": "find_recurring",
+      "tool_result": {},
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "analysis",
+      "event_type": "tool_result",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000002Z",
+      "tool_input": {},
+      "tool_name": "find_recurring",
+      "tool_result": {
+        "candidate_count": 1,
+        "candidates": [
+          {
+            "cancellable": true,
+            "candidate_fingerprint": "43175d23668eece2d8b8fb978905856e9eb569132345a22cb546e3709ed62bc6",
+            "category": "streaming",
+            "evidence_count": 3,
+            "evidence_ids": [
+              "f52df1bd0a81",
+              "10456e426d13",
+              "ad4e57e119d2"
+            ],
+            "interval_days": 30,
+            "summary": "recurring cadence candidate"
+          }
+        ]
+      },
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "analysis",
+      "event_type": "tool_called",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000003Z",
+      "tool_input": {
+        "category_counts": {
+          "food_delivery": 3,
+          "other": 2,
+          "streaming": 3
+        },
+        "synthetic_count": 8,
+        "transaction_count": 8,
+        "transaction_fingerprint": "e6f2d3d85e96acaaeb79aa21b48bc70fc5118da3b05f6bf8dfbe29f40c707303",
+        "transaction_ids": [
+          "f52df1bd0a81",
+          "10456e426d13",
+          "ad4e57e119d2",
+          "0950021ae93d",
+          "231e8546b7d8",
+          "ccbf9f1b47c7",
+          "1dda08548c55",
+          "6c02aad2cb4f"
+        ]
+      },
+      "tool_name": "find_duplicates",
+      "tool_result": {},
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "analysis",
+      "event_type": "tool_result",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000004Z",
+      "tool_input": {},
+      "tool_name": "find_duplicates",
+      "tool_result": {
+        "candidate_count": 1,
+        "candidates": [
+          {
+            "candidate_fingerprint": "da65ebdc684fe87f5db7b8651702ab3979e7e91c76ec8d66ede5321f71a63f27",
+            "evidence_count": 2,
+            "evidence_ids": [
+              "0950021ae93d",
+              "231e8546b7d8"
+            ],
+            "summary": "near-date matching charge candidate"
+          }
+        ]
+      },
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "analysis",
+      "event_type": "tool_called",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000005Z",
+      "tool_input": {
+        "category_counts": {
+          "food_delivery": 3,
+          "other": 2,
+          "streaming": 3
+        },
+        "synthetic_count": 8,
+        "transaction_count": 8,
+        "transaction_fingerprint": "e6f2d3d85e96acaaeb79aa21b48bc70fc5118da3b05f6bf8dfbe29f40c707303",
+        "transaction_ids": [
+          "f52df1bd0a81",
+          "10456e426d13",
+          "ad4e57e119d2",
+          "0950021ae93d",
+          "231e8546b7d8",
+          "ccbf9f1b47c7",
+          "1dda08548c55",
+          "6c02aad2cb4f"
+        ]
+      },
+      "tool_name": "find_discretionary_patterns",
+      "tool_result": {},
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "analysis",
+      "event_type": "tool_result",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000006Z",
+      "tool_input": {},
+      "tool_name": "find_discretionary_patterns",
+      "tool_result": {
+        "candidate_count": 1,
+        "candidates": [
+          {
+            "candidate_fingerprint": "5a1e7d3735249ffa8e1d3661328596a41f438782c3fa11e34f2d50dc1ecbef06",
+            "category": "food_delivery",
+            "charge_count": 3,
+            "evidence_count": 3,
+            "evidence_ids": [
+              "ccbf9f1b47c7",
+              "1dda08548c55",
+              "6c02aad2cb4f"
+            ],
+            "summary": "discretionary frequency candidate"
+          }
+        ]
+      },
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "analysis",
+      "event_type": "tool_called",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000007Z",
+      "tool_input": {
+        "category_counts": {
+          "food_delivery": 3,
+          "other": 2,
+          "streaming": 3
+        },
+        "synthetic_count": 8,
+        "transaction_count": 8,
+        "transaction_fingerprint": "e6f2d3d85e96acaaeb79aa21b48bc70fc5118da3b05f6bf8dfbe29f40c707303",
+        "transaction_ids": [
+          "f52df1bd0a81",
+          "10456e426d13",
+          "ad4e57e119d2",
+          "0950021ae93d",
+          "231e8546b7d8",
+          "ccbf9f1b47c7",
+          "1dda08548c55",
+          "6c02aad2cb4f"
+        ]
+      },
+      "tool_name": "find_anomalies",
+      "tool_result": {},
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "analysis",
+      "event_type": "tool_result",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000008Z",
+      "tool_input": {},
+      "tool_name": "find_anomalies",
+      "tool_result": {
+        "candidate_count": 0,
+        "candidates": []
+      },
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "analysis",
+      "event_type": "tool_called",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000009Z",
+      "tool_input": {
+        "category_counts": {
+          "food_delivery": 3,
+          "other": 2,
+          "streaming": 3
+        },
+        "synthetic_count": 8,
+        "transaction_count": 8,
+        "transaction_fingerprint": "e6f2d3d85e96acaaeb79aa21b48bc70fc5118da3b05f6bf8dfbe29f40c707303",
+        "transaction_ids": [
+          "f52df1bd0a81",
+          "10456e426d13",
+          "ad4e57e119d2",
+          "0950021ae93d",
+          "231e8546b7d8",
+          "ccbf9f1b47c7",
+          "1dda08548c55",
+          "6c02aad2cb4f"
+        ]
+      },
+      "tool_name": "summarize_categories",
+      "tool_result": {},
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "analysis",
+      "event_type": "tool_result",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000010Z",
+      "tool_input": {},
+      "tool_name": "summarize_categories",
+      "tool_result": {
+        "candidate_count": 3,
+        "candidates": [
+          {
+            "candidate_fingerprint": "697c9ed04adbf2d24af8f192ea0d3bdddccf2513cad9e876825e64987214e8e5",
+            "category": "food_delivery",
+            "charge_count": 3,
+            "evidence_count": 3,
+            "evidence_ids": [
+              "ccbf9f1b47c7",
+              "1dda08548c55",
+              "6c02aad2cb4f"
+            ],
+            "summary": "category spending summary"
+          },
+          {
+            "candidate_fingerprint": "e9d871c7f21dace0f35c4347aa859e3a0ae12e4eb9dc3351e5bfce9a8a64550a",
+            "category": "other",
+            "charge_count": 2,
+            "evidence_count": 2,
+            "evidence_ids": [
+              "0950021ae93d",
+              "231e8546b7d8"
+            ],
+            "summary": "category spending summary"
+          },
+          {
+            "candidate_fingerprint": "4dfb98e8b5011daa84b804e5bdbf4a864d3656c7540d062bccf6b5ee39c375e6",
+            "category": "streaming",
+            "charge_count": 3,
+            "evidence_count": 3,
+            "evidence_ids": [
+              "f52df1bd0a81",
+              "10456e426d13",
+              "ad4e57e119d2"
+            ],
+            "summary": "category spending summary"
+          }
+        ]
+      },
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "verifier",
+      "event_type": "tool_called",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000011Z",
+      "tool_input": {
+        "recommendation": {
+          "evidence_count": 3,
+          "evidence_ids": [
+            "f52df1bd0a81",
+            "10456e426d13",
+            "ad4e57e119d2"
+          ],
+          "kind": "subscription",
+          "recommendation_fingerprint": "a9d401c1d463bdc5f04231162616316a488b1099c6a0d45c3c0e02b42cb3cab0",
+          "recommendation_id": "subscription-netflix",
+          "status": "proposed",
+          "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+          "verified_action": "cancel_subscription"
+        }
+      },
+      "tool_name": "verify_recommendation",
+      "tool_result": {},
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "verifier",
+      "event_type": "tool_result",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000012Z",
+      "tool_input": {
+        "recommendation": {
+          "evidence_count": 3,
+          "evidence_ids": [
+            "f52df1bd0a81",
+            "10456e426d13",
+            "ad4e57e119d2"
+          ],
+          "kind": "subscription",
+          "recommendation_fingerprint": "a9d401c1d463bdc5f04231162616316a488b1099c6a0d45c3c0e02b42cb3cab0",
+          "recommendation_id": "subscription-netflix",
+          "status": "proposed",
+          "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+          "verified_action": "cancel_subscription"
+        }
+      },
+      "tool_name": "verify_recommendation",
+      "tool_result": {
+        "accepted": true,
+        "reason_count": 0,
+        "reasons": [],
+        "summary": "accepted verified candidate"
+      },
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "verifier",
+      "event_type": "tool_called",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000013Z",
+      "tool_input": {
+        "recommendation": {
+          "evidence_count": 2,
+          "evidence_ids": [
+            "0950021ae93d",
+            "231e8546b7d8"
+          ],
+          "kind": "duplicate",
+          "recommendation_fingerprint": "0ade4322672d8e25c33aa491830459b9277d7f93e0b4523d46e137628818b4c8",
+          "recommendation_id": "duplicate-cinema-0950021ae93d-231e8546b7d8",
+          "status": "proposed",
+          "target_fingerprint": "e62d3e8ccb76c7568714d1580e211364cb29b03556b82a16f8cdff5fd194fc6a",
+          "verified_action": "review_duplicate"
+        }
+      },
+      "tool_name": "verify_recommendation",
+      "tool_result": {},
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "verifier",
+      "event_type": "tool_result",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000014Z",
+      "tool_input": {
+        "recommendation": {
+          "evidence_count": 2,
+          "evidence_ids": [
+            "0950021ae93d",
+            "231e8546b7d8"
+          ],
+          "kind": "duplicate",
+          "recommendation_fingerprint": "0ade4322672d8e25c33aa491830459b9277d7f93e0b4523d46e137628818b4c8",
+          "recommendation_id": "duplicate-cinema-0950021ae93d-231e8546b7d8",
+          "status": "proposed",
+          "target_fingerprint": "e62d3e8ccb76c7568714d1580e211364cb29b03556b82a16f8cdff5fd194fc6a",
+          "verified_action": "review_duplicate"
+        }
+      },
+      "tool_name": "verify_recommendation",
+      "tool_result": {
+        "accepted": true,
+        "reason_count": 0,
+        "reasons": [],
+        "summary": "accepted verified candidate"
+      },
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "verifier",
+      "event_type": "tool_called",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000015Z",
+      "tool_input": {
+        "recommendation": {
+          "evidence_count": 3,
+          "evidence_ids": [
+            "ccbf9f1b47c7",
+            "1dda08548c55",
+            "6c02aad2cb4f"
+          ],
+          "kind": "behavioral_pattern",
+          "recommendation_fingerprint": "3b0d1ea831172948ab1540f72aa1253a7c2422c9fbbfdbc3fc58bbfa409373bd",
+          "recommendation_id": "pattern-doordash-ccbf9f1b47c7-1dda08548c55-6c02aad2cb4f",
+          "status": "proposed",
+          "target_fingerprint": "346fe5036f27e89f36179aaa0b7be0cc54df4dbe7eb3cfbe82aa0033897bd568",
+          "verified_action": "reduce_discretionary_spending"
+        }
+      },
+      "tool_name": "verify_recommendation",
+      "tool_result": {},
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "verifier",
+      "event_type": "tool_result",
+      "human_checkpoint": null,
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000016Z",
+      "tool_input": {
+        "recommendation": {
+          "evidence_count": 3,
+          "evidence_ids": [
+            "ccbf9f1b47c7",
+            "1dda08548c55",
+            "6c02aad2cb4f"
+          ],
+          "kind": "behavioral_pattern",
+          "recommendation_fingerprint": "3b0d1ea831172948ab1540f72aa1253a7c2422c9fbbfdbc3fc58bbfa409373bd",
+          "recommendation_id": "pattern-doordash-ccbf9f1b47c7-1dda08548c55-6c02aad2cb4f",
+          "status": "proposed",
+          "target_fingerprint": "346fe5036f27e89f36179aaa0b7be0cc54df4dbe7eb3cfbe82aa0033897bd568",
+          "verified_action": "reduce_discretionary_spending"
+        }
+      },
+      "tool_name": "verify_recommendation",
+      "tool_result": {
+        "accepted": true,
+        "reason_count": 0,
+        "reasons": [],
+        "summary": "accepted verified candidate"
+      },
+      "verification_feedback": []
+    },
+    {
+      "attempt": 1,
+      "component": "agent",
+      "event_type": "run_completed",
+      "human_checkpoint": "recommendations_ready_for_human_review",
+      "instruction": null,
+      "run_id": "alex-demo-run",
+      "timestamp": "1970-01-01T00:00:00.000017Z",
+      "tool_input": {},
+      "tool_name": null,
+      "tool_result": {
+        "verified_recommendation_count": 3
+      },
+      "verification_feedback": []
+    }
+  ],
+  "transactions": [
+    {
+      "amount_usd": "15.49",
+      "category": "streaming",
+      "date": "2026-05-01",
+      "is_synthetic": true,
+      "merchant_normalized": "Netflix",
+      "merchant_raw": "NETFLIX.COM",
+      "source_reference": "transactions.csv:2",
+      "source_type": "bank_csv",
+      "transaction_id": "f52df1bd0a81"
+    },
+    {
+      "amount_usd": "16.49",
+      "category": "streaming",
+      "date": "2026-05-31",
+      "is_synthetic": true,
+      "merchant_normalized": "Netflix",
+      "merchant_raw": "NETFLIX.COM",
+      "source_reference": "transactions.csv:3",
+      "source_type": "bank_csv",
+      "transaction_id": "10456e426d13"
+    },
+    {
+      "amount_usd": "16.49",
+      "category": "streaming",
+      "date": "2026-06-30",
+      "is_synthetic": true,
+      "merchant_normalized": "Netflix",
+      "merchant_raw": "NETFLIX.COM",
+      "source_reference": "transactions.csv:4",
+      "source_type": "bank_csv",
+      "transaction_id": "ad4e57e119d2"
+    },
+    {
+      "amount_usd": "18.00",
+      "category": "other",
+      "date": "2026-07-01",
+      "is_synthetic": true,
+      "merchant_normalized": "Cinema",
+      "merchant_raw": "Cinema",
+      "source_reference": "transactions.csv:5",
+      "source_type": "bank_csv",
+      "transaction_id": "0950021ae93d"
+    },
+    {
+      "amount_usd": "18.00",
+      "category": "other",
+      "date": "2026-07-02",
+      "is_synthetic": true,
+      "merchant_normalized": "Cinema",
+      "merchant_raw": "Cinema",
+      "source_reference": "transactions.csv:6",
+      "source_type": "bank_csv",
+      "transaction_id": "231e8546b7d8"
+    },
+    {
+      "amount_usd": "20.00",
+      "category": "food_delivery",
+      "date": "2026-07-29",
+      "is_synthetic": true,
+      "merchant_normalized": "DoorDash",
+      "merchant_raw": "DoorDash",
+      "source_reference": "transactions.csv:7",
+      "source_type": "bank_csv",
+      "transaction_id": "ccbf9f1b47c7"
+    },
+    {
+      "amount_usd": "21.00",
+      "category": "food_delivery",
+      "date": "2026-07-30",
+      "is_synthetic": true,
+      "merchant_normalized": "DoorDash",
+      "merchant_raw": "DoorDash",
+      "source_reference": "transactions.csv:8",
+      "source_type": "bank_csv",
+      "transaction_id": "1dda08548c55"
+    },
+    {
+      "amount_usd": "22.00",
+      "category": "food_delivery",
+      "date": "2026-07-31",
+      "is_synthetic": true,
+      "merchant_normalized": "DoorDash",
+      "merchant_raw": "DoorDash",
+      "source_reference": "transactions.csv:9",
+      "source_type": "bank_csv",
+      "transaction_id": "6c02aad2cb4f"
+    }
+  ]
+}

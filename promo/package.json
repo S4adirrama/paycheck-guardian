@@ -1,0 +1,25 @@
+{
+  "name": "paycheck-guardian-promo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts PaycheckGuardianPromo ../artifacts/ios/promo/paycheck-guardian-promo.mp4 --codec=h264 --audio-codec=aac --crf=18",
+    "still": "remotion still src/index.ts PaycheckGuardianPromo ../artifacts/ios/promo/poster.png --frame=1665"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.518",
+    "@remotion/media-utils": "4.0.518",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "remotion": "4.0.518"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.10",
+    "@types/react-dom": "19.1.7",
+    "typescript": "5.9.2",
+    "vitest": "3.2.7"
+  }
+}

@@ -1,0 +1,965 @@
+{
+  "case_count": 12,
+  "case_fingerprints": {
+    "ambiguous_recurrence": "d45de5286877ec6699966fc35227fc7e795142fe2efacb6d492a060c4cdd48a5",
+    "annual_subscription": "26ca03bea1a302d6535353c0dec6d496556246f0c1a28f6a57c08f565197da91",
+    "challenge_alias_price_essential": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+    "duplicate_charge": "560370345d7dee4ebfd5b19270512274fd90a947aa3b5729c30176abdcd85471",
+    "essential_insurance": "758a5291c39b6b7a1d6f58135facbd0c35560ff249ac0dc85319d31e8619ff90",
+    "essential_rent": "bcd3c5b9cc531741abe67a02eba4dc2440df3b6765f425518bf0746f6ee2f0cc",
+    "food_delivery_pattern": "726fa53770853cd4c46aa92159e47ecba1dc58ae858ecf8d278a8c136e9d676d",
+    "merchant_aliases": "fcf07121fcbeb71a41497e6cc2d1173c53de4caff9de05ffec9323744ed64ff6",
+    "mixed_opportunities": "0de8f8dc8205d021d6940c37fc9e157fecf34a71c5deeb48aec1038d9b81908f",
+    "monthly_streaming": "cd1da0e1f52c21916c40a7ba92ce812a8faf0c483cfd823014b74cfe208de28f",
+    "subscription_price_drift": "febe0b2aeece175925818601da3c7ad781b098473e3cdd1a49b303c76d6ec336",
+    "trial_conversion": "be3c2ff7531cdc0024d25c14dec012c9f183a11e93b7fbeddc2dd36ea0cadb6d"
+  },
+  "elapsed_ms_by_mode": {
+    "baseline": 0,
+    "final": 4,
+    "normalization_only": 0,
+    "removed_unsafe_recurrence": 0,
+    "unverified_agent": 1
+  },
+  "execution_mode": "offline",
+  "mode": "offline",
+  "model_cost_usd": "0.00",
+  "package_version": "0.1.0",
+  "per_case": {
+    "ambiguous_recurrence": {
+      "baseline": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "final": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "normalization_only": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "removed_unsafe_recurrence": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "unverified_agent": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      }
+    },
+    "annual_subscription": {
+      "baseline": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 0,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 0
+      },
+      "final": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "normalization_only": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 0,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 0
+      },
+      "removed_unsafe_recurrence": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 0,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 0
+      },
+      "unverified_agent": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      }
+    },
+    "challenge_alias_price_essential": {
+      "baseline": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 1,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 1
+      },
+      "final": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "normalization_only": {
+        "evidence_coverage": "1.0000",
+        "f1": "0.6667",
+        "false_negatives": 0,
+        "false_positives": 1,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.5000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 1
+      },
+      "removed_unsafe_recurrence": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 2,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 2
+      },
+      "unverified_agent": {
+        "evidence_coverage": "1.0000",
+        "f1": "0.6667",
+        "false_negatives": 0,
+        "false_positives": 1,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.5000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 1
+      }
+    },
+    "duplicate_charge": {
+      "baseline": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 0,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 0
+      },
+      "final": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "normalization_only": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 0,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 0
+      },
+      "removed_unsafe_recurrence": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 0,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 0
+      },
+      "unverified_agent": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      }
+    },
+    "essential_insurance": {
+      "baseline": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 0,
+        "false_positives": 1,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "1.0000",
+        "true_positives": 0,
+        "unsupported_claims": 1
+      },
+      "final": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "1.0000",
+        "true_positives": 0,
+        "unsupported_claims": 0
+      },
+      "normalization_only": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 0,
+        "false_positives": 1,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "1.0000",
+        "true_positives": 0,
+        "unsupported_claims": 1
+      },
+      "removed_unsafe_recurrence": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 0,
+        "false_positives": 2,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "1.0000",
+        "true_positives": 0,
+        "unsupported_claims": 2
+      },
+      "unverified_agent": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 0,
+        "false_positives": 1,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "1.0000",
+        "true_positives": 0,
+        "unsupported_claims": 1
+      }
+    },
+    "essential_rent": {
+      "baseline": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 0,
+        "false_positives": 1,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "1.0000",
+        "true_positives": 0,
+        "unsupported_claims": 1
+      },
+      "final": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "1.0000",
+        "true_positives": 0,
+        "unsupported_claims": 0
+      },
+      "normalization_only": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 0,
+        "false_positives": 1,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "1.0000",
+        "true_positives": 0,
+        "unsupported_claims": 1
+      },
+      "removed_unsafe_recurrence": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 0,
+        "false_positives": 1,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "1.0000",
+        "true_positives": 0,
+        "unsupported_claims": 1
+      },
+      "unverified_agent": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 0,
+        "false_positives": 1,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "1.0000",
+        "true_positives": 0,
+        "unsupported_claims": 1
+      }
+    },
+    "food_delivery_pattern": {
+      "baseline": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 0,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 0
+      },
+      "final": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "normalization_only": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 0,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 0
+      },
+      "removed_unsafe_recurrence": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 0,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 0
+      },
+      "unverified_agent": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      }
+    },
+    "merchant_aliases": {
+      "baseline": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 0,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 0
+      },
+      "final": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "normalization_only": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "removed_unsafe_recurrence": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 1,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 1
+      },
+      "unverified_agent": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      }
+    },
+    "mixed_opportunities": {
+      "baseline": {
+        "evidence_coverage": "1.0000",
+        "f1": "0.5000",
+        "false_negatives": 2,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "0.3333",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "final": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 3,
+        "unsupported_claims": 0
+      },
+      "normalization_only": {
+        "evidence_coverage": "1.0000",
+        "f1": "0.5000",
+        "false_negatives": 2,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "0.3333",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "removed_unsafe_recurrence": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 3,
+        "false_positives": 1,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 1
+      },
+      "unverified_agent": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 3,
+        "unsupported_claims": 0
+      }
+    },
+    "monthly_streaming": {
+      "baseline": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "final": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "normalization_only": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "removed_unsafe_recurrence": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 1,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 1
+      },
+      "unverified_agent": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      }
+    },
+    "subscription_price_drift": {
+      "baseline": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "final": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "normalization_only": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      },
+      "removed_unsafe_recurrence": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 1,
+        "false_positives": 1,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 1
+      },
+      "unverified_agent": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 1,
+        "unsupported_claims": 0
+      }
+    },
+    "trial_conversion": {
+      "baseline": {
+        "evidence_coverage": "1.0000",
+        "f1": "0.5000",
+        "false_negatives": 1,
+        "false_positives": 1,
+        "matched_pairs": [
+          [
+            1,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.5000",
+        "recall": "0.5000",
+        "true_positives": 1,
+        "unsupported_claims": 1
+      },
+      "final": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 2,
+        "unsupported_claims": 0
+      },
+      "normalization_only": {
+        "evidence_coverage": "1.0000",
+        "f1": "0.5000",
+        "false_negatives": 1,
+        "false_positives": 1,
+        "matched_pairs": [
+          [
+            1,
+            0
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.5000",
+        "recall": "0.5000",
+        "true_positives": 1,
+        "unsupported_claims": 1
+      },
+      "removed_unsafe_recurrence": {
+        "evidence_coverage": "0.0000",
+        "f1": "0.0000",
+        "false_negatives": 2,
+        "false_positives": 2,
+        "matched_pairs": [],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "0.0000",
+        "recall": "0.0000",
+        "true_positives": 0,
+        "unsupported_claims": 2
+      },
+      "unverified_agent": {
+        "evidence_coverage": "1.0000",
+        "f1": "1.0000",
+        "false_negatives": 0,
+        "false_positives": 0,
+        "matched_pairs": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "mean_savings_error_usd": "0.0000",
+        "precision": "1.0000",
+        "recall": "1.0000",
+        "true_positives": 2,
+        "unsupported_claims": 0
+      }
+    }
+  },
+  "platform": "macOS-15.7.9-arm64-arm-64bit",
+  "python_version": "3.11.15"
+}

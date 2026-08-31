@@ -10,3 +10,10 @@ __pycache__/
 tmp/
 uploads/
 *.pyc
+*.egg-info/
+**/.build/
+DerivedData/
+*.xcresult/
+node_modules/
+.remotion/
+artifacts/video/frames/concat.txt

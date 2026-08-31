@@ -1,0 +1,400 @@
+[
+  {
+    "attempt": 1,
+    "component": "agent",
+    "event_type": "instruction",
+    "instruction": "Use deterministic tools and verification; do not perform external actions.",
+    "source_event_index": 0,
+    "timestamp": "1970-01-01T00:00:00Z",
+    "tool_input": {
+      "transaction_count": 7
+    }
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_call",
+    "source_event_index": 1,
+    "timestamp": "1970-01-01T00:00:00.000001Z",
+    "tool_input": {
+      "category_counts": {
+        "housing": 2,
+        "other": 2,
+        "streaming": 3
+      },
+      "synthetic_count": 7,
+      "transaction_count": 7,
+      "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+      "transaction_ids": [
+        "ch-n1",
+        "ch-n2",
+        "ch-n3",
+        "ch-r1",
+        "ch-r2",
+        "ch-x1",
+        "ch-x2"
+      ]
+    },
+    "tool_name": "find_recurring"
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_result",
+    "source_event_index": 2,
+    "timestamp": "1970-01-01T00:00:00.000002Z",
+    "tool_name": "find_recurring",
+    "tool_result": {
+      "candidate_count": 2,
+      "candidates": [
+        {
+          "cancellable": true,
+          "candidate_fingerprint": "e9631945fe91f6688ad7bb08a970130a74101dd9a4318945c0ac9af3d9ce9220",
+          "category": "streaming",
+          "evidence_count": 3,
+          "evidence_ids": [
+            "ch-n1",
+            "ch-n2",
+            "ch-n3"
+          ],
+          "interval_days": 30,
+          "summary": "recurring cadence candidate"
+        },
+        {
+          "cancellable": false,
+          "candidate_fingerprint": "3ea97788b7f8ae042b98cba09bdcce6d20cc9ae0008500e9da359e89e9afba58",
+          "category": "housing",
+          "evidence_count": 2,
+          "evidence_ids": [
+            "ch-r1",
+            "ch-r2"
+          ],
+          "interval_days": 30,
+          "summary": "recurring cadence candidate"
+        }
+      ]
+    }
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_call",
+    "source_event_index": 3,
+    "timestamp": "1970-01-01T00:00:00.000003Z",
+    "tool_input": {
+      "category_counts": {
+        "housing": 2,
+        "other": 2,
+        "streaming": 3
+      },
+      "synthetic_count": 7,
+      "transaction_count": 7,
+      "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+      "transaction_ids": [
+        "ch-n1",
+        "ch-n2",
+        "ch-n3",
+        "ch-r1",
+        "ch-r2",
+        "ch-x1",
+        "ch-x2"
+      ]
+    },
+    "tool_name": "find_duplicates"
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_result",
+    "source_event_index": 4,
+    "timestamp": "1970-01-01T00:00:00.000004Z",
+    "tool_name": "find_duplicates",
+    "tool_result": {
+      "candidate_count": 0,
+      "candidates": []
+    }
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_call",
+    "source_event_index": 5,
+    "timestamp": "1970-01-01T00:00:00.000005Z",
+    "tool_input": {
+      "category_counts": {
+        "housing": 2,
+        "other": 2,
+        "streaming": 3
+      },
+      "synthetic_count": 7,
+      "transaction_count": 7,
+      "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+      "transaction_ids": [
+        "ch-n1",
+        "ch-n2",
+        "ch-n3",
+        "ch-r1",
+        "ch-r2",
+        "ch-x1",
+        "ch-x2"
+      ]
+    },
+    "tool_name": "find_discretionary_patterns"
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_result",
+    "source_event_index": 6,
+    "timestamp": "1970-01-01T00:00:00.000006Z",
+    "tool_name": "find_discretionary_patterns",
+    "tool_result": {
+      "candidate_count": 0,
+      "candidates": []
+    }
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_call",
+    "source_event_index": 7,
+    "timestamp": "1970-01-01T00:00:00.000007Z",
+    "tool_input": {
+      "category_counts": {
+        "housing": 2,
+        "other": 2,
+        "streaming": 3
+      },
+      "synthetic_count": 7,
+      "transaction_count": 7,
+      "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+      "transaction_ids": [
+        "ch-n1",
+        "ch-n2",
+        "ch-n3",
+        "ch-r1",
+        "ch-r2",
+        "ch-x1",
+        "ch-x2"
+      ]
+    },
+    "tool_name": "find_anomalies"
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_result",
+    "source_event_index": 8,
+    "timestamp": "1970-01-01T00:00:00.000008Z",
+    "tool_name": "find_anomalies",
+    "tool_result": {
+      "candidate_count": 0,
+      "candidates": []
+    }
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_call",
+    "source_event_index": 9,
+    "timestamp": "1970-01-01T00:00:00.000009Z",
+    "tool_input": {
+      "category_counts": {
+        "housing": 2,
+        "other": 2,
+        "streaming": 3
+      },
+      "synthetic_count": 7,
+      "transaction_count": 7,
+      "transaction_fingerprint": "b9c222e77e2a46385cf78b372d7b29e5ae99f0017cd12936198275932176f7dc",
+      "transaction_ids": [
+        "ch-n1",
+        "ch-n2",
+        "ch-n3",
+        "ch-r1",
+        "ch-r2",
+        "ch-x1",
+        "ch-x2"
+      ]
+    },
+    "tool_name": "summarize_categories"
+  },
+  {
+    "attempt": 1,
+    "component": "analysis",
+    "event_type": "tool_result",
+    "source_event_index": 10,
+    "timestamp": "1970-01-01T00:00:00.000010Z",
+    "tool_name": "summarize_categories",
+    "tool_result": {
+      "candidate_count": 3,
+      "candidates": [
+        {
+          "candidate_fingerprint": "9cf6d849b59b4c7c13b332d44ee3c4881d1b3446cc3fe0121aaddd22fe0755ec",
+          "category": "housing",
+          "charge_count": 2,
+          "evidence_count": 2,
+          "evidence_ids": [
+            "ch-r1",
+            "ch-r2"
+          ],
+          "summary": "category spending summary"
+        },
+        {
+          "candidate_fingerprint": "a1e897b41d03bda3230e6b47aaf40f6c01ecbefebe9ae25141f309c1fb7b7517",
+          "category": "other",
+          "charge_count": 2,
+          "evidence_count": 2,
+          "evidence_ids": [
+            "ch-x1",
+            "ch-x2"
+          ],
+          "summary": "category spending summary"
+        },
+        {
+          "candidate_fingerprint": "8a02454dde7781079c90677ba3b34556fc38267d0a4ad785dfbe72ef9429ab53",
+          "category": "streaming",
+          "charge_count": 3,
+          "evidence_count": 3,
+          "evidence_ids": [
+            "ch-n1",
+            "ch-n2",
+            "ch-n3"
+          ],
+          "summary": "category spending summary"
+        }
+      ]
+    }
+  },
+  {
+    "attempt": 1,
+    "component": "verifier",
+    "event_type": "tool_call",
+    "source_event_index": 11,
+    "timestamp": "1970-01-01T00:00:00.000011Z",
+    "tool_input": {
+      "recommendation": {
+        "evidence_count": 3,
+        "evidence_ids": [
+          "ch-n1",
+          "ch-n2",
+          "ch-n3"
+        ],
+        "kind": "subscription",
+        "recommendation_fingerprint": "57eeb097a29ff2ee902cc639c9293db88f786b6462e140b1e7aa33755ff45eb2",
+        "recommendation_id": "subscription-netflix",
+        "status": "proposed",
+        "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+        "verified_action": "cancel_subscription"
+      }
+    },
+    "tool_name": "verify_recommendation"
+  },
+  {
+    "attempt": 1,
+    "component": "verifier",
+    "event_type": "verification",
+    "feedback": [],
+    "source_event_index": 12,
+    "timestamp": "1970-01-01T00:00:00.000012Z",
+    "tool_input": {
+      "recommendation": {
+        "evidence_count": 3,
+        "evidence_ids": [
+          "ch-n1",
+          "ch-n2",
+          "ch-n3"
+        ],
+        "kind": "subscription",
+        "recommendation_fingerprint": "57eeb097a29ff2ee902cc639c9293db88f786b6462e140b1e7aa33755ff45eb2",
+        "recommendation_id": "subscription-netflix",
+        "status": "proposed",
+        "target_fingerprint": "e64c775c30a75df5384ecf3b6ee2d78f79197ae17ae94339e7f0ff520690c925",
+        "verified_action": "cancel_subscription"
+      }
+    },
+    "tool_name": "verify_recommendation",
+    "tool_result": {
+      "accepted": true,
+      "reason_count": 0,
+      "reasons": [],
+      "summary": "accepted verified candidate"
+    }
+  },
+  {
+    "attempt": 1,
+    "component": "verifier",
+    "event_type": "tool_call",
+    "source_event_index": 13,
+    "timestamp": "1970-01-01T00:00:00.000013Z",
+    "tool_input": {
+      "recommendation": {
+        "evidence_count": 2,
+        "evidence_ids": [
+          "ch-r1",
+          "ch-r2"
+        ],
+        "kind": "subscription",
+        "recommendation_fingerprint": "351b78c518f3670c8e0107bcee7109eec4bdeb65d44a357af207b71fb7e83a6d",
+        "recommendation_id": "subscription-rent",
+        "status": "proposed",
+        "target_fingerprint": "cef981d2ca50cf9b235cf449f8a24149cc9a31ca6be71484b6017b679dfcfaab",
+        "verified_action": "cancel_subscription"
+      }
+    },
+    "tool_name": "verify_recommendation"
+  },
+  {
+    "attempt": 1,
+    "component": "verifier",
+    "event_type": "verification",
+    "feedback": [
+      "essential payment evidence cannot support subscription cancellation advice",
+      "cancellation target is outside the positive semantic allowlist"
+    ],
+    "source_event_index": 14,
+    "timestamp": "1970-01-01T00:00:00.000014Z",
+    "tool_input": {
+      "recommendation": {
+        "evidence_count": 2,
+        "evidence_ids": [
+          "ch-r1",
+          "ch-r2"
+        ],
+        "kind": "subscription",
+        "recommendation_fingerprint": "351b78c518f3670c8e0107bcee7109eec4bdeb65d44a357af207b71fb7e83a6d",
+        "recommendation_id": "subscription-rent",
+        "status": "proposed",
+        "target_fingerprint": "cef981d2ca50cf9b235cf449f8a24149cc9a31ca6be71484b6017b679dfcfaab",
+        "verified_action": "cancel_subscription"
+      }
+    },
+    "tool_name": "verify_recommendation",
+    "tool_result": {
+      "accepted": false,
+      "reason_count": 2,
+      "reasons": [
+        "essential payment evidence cannot support subscription cancellation advice",
+        "cancellation target is outside the positive semantic allowlist"
+      ],
+      "summary": "rejected candidate"
+    }
+  },
+  {
+    "event_type": "retry",
+    "performed": false,
+    "reason": "No correction was attempted: the retained verifier feedback rejects the essential Rent candidate rather than identifying a repairable arithmetic or evidence issue.",
+    "source_artifact": "artifacts/evaluation/final_trajectories.json"
+  },
+  {
+    "attempt": 1,
+    "checkpoint": "recommendations_ready_for_human_review",
+    "component": "agent",
+    "event_type": "human_checkpoint",
+    "source_event_index": 15,
+    "timestamp": "1970-01-01T00:00:00.000015Z",
+    "tool_result": {
+      "verified_recommendation_count": 1
+    }
+  }
+]
