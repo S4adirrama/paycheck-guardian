@@ -113,7 +113,7 @@ Use exact runtime versions and scripts:
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
     "typescript": "5.9.2",
-    "vitest": "3.2.4"
+    "vitest": "3.2.7"
   }
 }
 ```

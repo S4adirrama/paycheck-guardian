@@ -14,4 +14,6 @@ uploads/
 **/.build/
 DerivedData/
 *.xcresult/
+node_modules/
+.remotion/
 artifacts/video/frames/concat.txt
