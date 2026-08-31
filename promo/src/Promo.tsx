@@ -1,5 +1,5 @@
 import type {FC} from 'react';
-import {AbsoluteFill, Sequence} from 'remotion';
+import {AbsoluteFill, Audio, Sequence, staticFile} from 'remotion';
 import {Caption} from './components/Caption';
 import {CAPTIONS} from './content';
 import {ApprovalScene} from './scenes/ApprovalScene';
@@ -25,6 +25,8 @@ const visualScenes = [
 
 export const Promo: FC = () => (
   <AbsoluteFill>
+    <Audio src={staticFile('audio/soundtrack.wav')} volume={0.3} />
+    <Audio src={staticFile('audio/narration.wav')} volume={1} />
     {visualScenes.map(({timing, component: Scene}) => (
       <Sequence key={timing.key} from={timing.from} durationInFrames={timing.duration} premountFor={FPS}>
         <Scene />

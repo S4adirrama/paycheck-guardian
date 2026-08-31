@@ -1,0 +1,8 @@
+Your paycheck shouldn’t disappear without answers. [[slnc 650]]
+Recurring charges, duplicates, and everyday spending patterns can hide in plain sight. [[slnc 650]]
+Paycheck Guardian reviews local transaction evidence and turns it into a short, verified plan — without connecting to your bank. [[slnc 700]]
+Run the demo and see what could stay in your account before the next paycheck. Every recommendation is independently checked. [[slnc 650]]
+Open the evidence to inspect the transactions, the calculation, the confidence, and the caveat. [[slnc 650]]
+Then you decide: approve a local simulation, or dismiss it instantly. No merchant is contacted. No real cancellation happens. [[slnc 700]]
+And the privacy-safe agent trace shows how every tool call and verification decision was made. [[slnc 650]]
+Paycheck Guardian. Verified. Explainable. In your control.
